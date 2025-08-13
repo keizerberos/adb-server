@@ -1,0 +1,54 @@
+{
+   "ime_1":{
+      "name":"ADB_COMMAND",
+      "desc":"Enable IME",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"ime enable com.android.adbkeyboard/.AdbIME"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "ime_2"
+      ]
+   },
+   "ime_2":{
+      "name":"ADB_COMMAND",
+      "desc":"Set IME",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"ime set com.android.adbkeyboard/.AdbIME"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         
+      ]
+   }
+}

@@ -1,11 +1,18 @@
 const { FastServer } = require('./fast-server');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+
+const {Executor,genPlant} = require("./executor.js");
 const short = require('short-uuid');
 const fs = require('fs');
 let devicesData = JSON.parse(fs.readFileSync('./data/devices.json', 'utf8'));
 let actionsData = JSON.parse(fs.readFileSync('./data/actions.json', 'utf8'));
-let taskData 	= JSON.parse(fs.readFileSync('./data/task.json', 'utf8'));
+let patternsData = JSON.parse(fs.readFileSync('./data/patterns.json', 'utf8'));
+
+let tasks = {};
+let actions = {};
+const taskPath = "./data/tasks";
+const actionsPath = "./data/actions";
 
 let Log = null;
 
@@ -23,16 +30,51 @@ function ddelete(array, id, val) {
 	if (el != null)
 		array.splice(array.indexOf(el), 1);
 }
+function scanTasksFolfer() {
+	fs.readdirSync(taskPath).forEach((file) => {
+   		let base = taskPath + '/' + file;
+		if (!fs.statSync(base).isDirectory()) {
+			console.log("base",base);
+			const content = fs.readFileSync(base, 'utf8');
+			if (content=='') return;
+			const task =  JSON.parse(content);
+			Object.keys(task).forEach(k=>tasks[k] = task[k]);			
+		}
+	});
+	fs.readdirSync(actionsPath).forEach((file) => {
+   		let base = actionsPath + '/' + file;
+		if (!fs.statSync(base).isDirectory()) {
+			console.log("base",base);
+			const content = fs.readFileSync(base, 'utf8');
+			if (content=='') return;
+			const action =  JSON.parse(content);
+			Object.keys(action).forEach(k=>actions[k] = action[k]);	
+		}
+	});
+	//console.log("tasks",tasks)
+	//console.log("actions",actions)
+}
 class AdbSocketServer {
 	constructor(Logger) {
 		Log = Logger;
+		this.executor = new Executor();
 		const clients = [];
 		const devices = [];
 		const clusters = [];
 		this.startServer(clients, clusters, devices);
 		this.startServerCluster(clients, clusters, devices);
+		scanTasksFolfer();
+		this.executor.setActions(actions);
+		this.executor.setPatterns(patternsData);
+		this.drawProgressForm();		
 	}
 	//UI
+	drawProgressForm(){		
+		Object.keys(tasks).forEach(k => {
+			tasks[k]['progressPath'] = genPlant(tasks[k]);
+			console.log("progressPath",tasks[k]['progressPath']);
+		});
+	}
 	startServer(clients, clusters, devices) {
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
 		const httpServer = createServer(fastServer);
@@ -42,12 +84,31 @@ class AdbSocketServer {
 				methods: ["GET", "POST"],
 			}
 		});
+		this.executor.on('send',(data)=>{
+			console.log(data);
+			const device = dget(devices, 'serial', data.devices);
+			if (device != null) {
+				const cluster = dget(clusters, 'uuid', device.clusterId);
+				
+				cluster.socket.emit(data.action, data);
+			}
+		});
+		this.executor.on('task.progress',(deviceId,progress)=>{
+			Log.i("task.progress");
+			Log.o(progress);
+			const device = dget(devices, 'serial', deviceId);
+			if (device != null) {								
+				clients.forEach(client => client.socket.emit("task.progress", {serial:deviceId,data:progress}));
+			}
+		});
 		io.on("connection", (socket) => {
 			let uuid = short.generate();
 			clients.push({ socket: socket, uuid: uuid });
 			Log.i("Socket connected " + uuid);
 
 			socket.emit("clusters", clusters.map(c => c.uuid));
+			socket.emit("tasks", tasks);
+			socket.emit("actions", actions);
 			socket.emit("devices", devices);
 
 			socket.on("disconnect", () => {
@@ -57,6 +118,17 @@ class AdbSocketServer {
 			socket.on("device.assign", (data) => {
 				Log.i("device.assign ");
 				Log.o(data);
+				
+			});
+			socket.on("tasks.stop", (data) => {
+				Log.i("tasks.stop ");
+				Log.o(data);				
+				this.executor.stop();
+			});
+			socket.on("tasks.execute", (data) => {
+				Log.i("tasks.execute ");
+				Log.o(data);
+				this.executor.startTask(data.devices,data.task);
 			});
 			socket.on("device.adb", (data) => {
 				Log.i("device.adb data");
@@ -68,10 +140,6 @@ class AdbSocketServer {
 						cluster.socket.emit("adb", data);
 					}
 				}
-			});
-			socket.on("device.adb", (data) => {
-				Log.i("device.adb data");
-				Log.o(data);
 				if (data.action == 'Screen') {
 					const device = dget(devices, 'serial', data.devices);
 					if (device != null) {
@@ -80,7 +148,6 @@ class AdbSocketServer {
 					}
 				}
 			});
-
 		});
 		httpServer.listen(7000, () => {
 			Log.i("Server connected");
@@ -103,10 +170,10 @@ class AdbSocketServer {
 			clients.forEach(client => client.socket.emit("cluster.connect", uuid));
 			socket.on("disconnect", () => {
 				Log.i("Cluster Socket disconnected " + uuid);
-				let clusterDevices = devices.filter(d => d.clusterId == uuid);			
-				console.log("delete devices",clusterDevices);
-				clusterDevices.forEach(device => clients.forEach(client => client.socket.emit("device.disconnect", device)));	
-				clusterDevices.forEach(device => { ddelete(devices, 'serial', device.serial)});
+				let clusterDevices = devices.filter(d => d.clusterId == uuid);
+				console.log("delete devices", clusterDevices);
+				clusterDevices.forEach(device => clients.forEach(client => client.socket.emit("device.disconnect", device)));
+				clusterDevices.forEach(device => { ddelete(devices, 'serial', device.serial) });
 				ddelete(clusters, 'uuid', uuid);
 				clients.forEach(client => client.socket.emit("cluster.disconnect", uuid));
 			});
@@ -127,9 +194,9 @@ class AdbSocketServer {
 			});
 
 			socket.on("device.connect", (device) => {
-				console.log("device.connect", device)				
+				console.log("device.connect", device)
 				const createdDevice = dget(devices, 'serial', device.serial);
-			
+
 				if (createdDevice == null)
 					devices.push(device);
 				if (devicesData.devicesAssign[device.serial] != null)
@@ -146,6 +213,9 @@ class AdbSocketServer {
 				clients.forEach(client => client.socket.emit("device.disconnect", device));
 			});
 			socket.on("device.capture", (data) => {
+				//console.log("device.capture",data);
+				console.log("device.capture",data.data.length);
+				this.executor.screen(data.serial,data.data);
 				clients.forEach(client => client.socket.emit("device.capture", data));
 			});
 		});

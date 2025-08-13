@@ -1,0 +1,14 @@
+{
+   "facebook_like_x2":{
+      "name":"facebook_like facebook",
+      "description":"<i class=\"bi bi-facebook\"></i> Facebook - \"Me gusta\" - 2 cuentas",
+      "functions":{
+         "link":"fburl"
+      },
+      "params":{
+         "link":"https://www.facebook.com/100064177324343/posts/pfbid0V1QR37nGwNiAUwSeV3hF38fp7yNLNAuChtqnbR2VDradn64fwdDrBn8FSQwF6NePl"
+      },
+      "start":"fb_like_1",
+      "end":"fb_like_c_5"
+   }
+}

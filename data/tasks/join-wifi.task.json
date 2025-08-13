@@ -1,0 +1,16 @@
+{	
+	"wifi_change":{
+		"name": "Cambiar WIFI",
+		"description": "<i class='bi bi-gear'></i> Cambiar Wifi",
+		"type": "config",
+		"params": {
+			"ssid": "",
+			"password_type": "WPA",
+			"password": ""
+		},
+		"functions": {
+		},
+		"start": "wifi_action_1",
+		"end": "wifi_action_1"
+	}
+}
