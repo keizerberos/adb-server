@@ -1,7 +1,7 @@
 {
    "facebook_like_x2":{
       "name":"facebook_like facebook",
-      "description":"<i class=\"bi bi-facebook\"></i> Facebook - \"Me gusta\" - 2 cuentas",
+      "description":"<i class=\"bi bi-facebook\"></i> Facebook - \"Me gusta\" - 3 cuentas",
       "functions":{
          "link":"fburl"
       },

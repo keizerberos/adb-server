@@ -79,6 +79,8 @@ class AdbSocketServer {
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
 		const httpServer = createServer(fastServer);
 		const io = new Server(httpServer, {
+				pingInterval: 1000, 
+				pingTimeout: 1500,
 			cors: {
 				origin: "*",
 				methods: ["GET", "POST"],
@@ -97,7 +99,8 @@ class AdbSocketServer {
 			Log.i("task.progress");
 			Log.o(progress);
 			const device = dget(devices, 'serial', deviceId);
-			if (device != null) {								
+			if (device != null) {							
+				device['progress'] = progress;
 				clients.forEach(client => client.socket.emit("task.progress", {serial:deviceId,data:progress}));
 			}
 		});
@@ -125,6 +128,51 @@ class AdbSocketServer {
 				Log.o(data);				
 				this.executor.stop();
 			});
+			socket.on("adb.install.keyboard", (data) => {
+				Log.i("adb.install.keyboard ");
+				Log.o(data);				
+				const device = dget(devices, 'serial', data.devices);
+				if (device != null) {
+					const cluster = dget(clusters, 'uuid', device.clusterId);
+					cluster.socket.emit("install.keyboard", data);
+				}
+			});
+			socket.on("adb.install.wifi", (data) => {
+				Log.i("adb.install.wifi ");
+				Log.o(data);				
+				const device = dget(devices, 'serial', data.devices);
+				if (device != null) {
+					const cluster = dget(clusters, 'uuid', device.clusterId);
+					cluster.socket.emit("install.wifi", data);
+				}
+			});
+			socket.on("adb.install.gni", (data) => {
+				Log.i("adb.install.gni ");
+				Log.o(data);				
+				const device = dget(devices, 'serial', data.devices);
+				if (device != null) {
+					const cluster = dget(clusters, 'uuid', device.clusterId);
+					cluster.socket.emit("install.gni", data);
+				}
+			});
+			socket.on("tethering.start", (data) => {
+				Log.i("tethering.start");
+				Log.o(data);				
+				const device = dget(devices, 'serial', data.devices);
+				if (device != null) {
+					const cluster = dget(clusters, 'uuid', device.clusterId);
+					cluster.socket.emit("tethering.start", data);
+				}
+			});
+			socket.on("tethering.stop", (data) => {
+				Log.i("tethering.stop");
+				Log.o(data);				
+				const device = dget(devices, 'serial', data.devices);
+				if (device != null) {
+					const cluster = dget(clusters, 'uuid', device.clusterId);
+					cluster.socket.emit("tethering.stop", data);
+				}
+			});
 			socket.on("tasks.execute", (data) => {
 				Log.i("tasks.execute ");
 				Log.o(data);
@@ -138,6 +186,20 @@ class AdbSocketServer {
 					if (device != null) {
 						const cluster = dget(clusters, 'uuid', device.clusterId);
 						cluster.socket.emit("adb", data);
+					}
+				}
+				if (data.action == 'Unlock') {
+					const device = dget(devices, 'serial', data.devices);
+					if (device != null) {
+						const cluster = dget(clusters, 'uuid', device.clusterId);
+						cluster.socket.emit("Unlock", data);
+					}
+				}
+				if (data.action == 'Lock') {
+					const device = dget(devices, 'serial', data.devices);
+					if (device != null) {
+						const cluster = dget(clusters, 'uuid', device.clusterId);
+						cluster.socket.emit("Lock", data);
 					}
 				}
 				if (data.action == 'Screen') {
