@@ -1,14 +1,14 @@
 {
-   "tiktok_like_x2":{
-      "name":"Like en tiktok",
-      "description":"<i class=\"bi bi-tiktok\"></i> Tiktok - \"Me gusta\" - 2 cuentas",
-      "params":{
-         "link":"https://www.tiktok.com/@alisonquispelaura/video/7502860649257569591"
-      },
-      "functions":{
-         "link":"tkurl"
-      },
-      "start":"tk_1_action_2",
-      "end":"tk_2_action_5"
-   }
+	"tiktok_like_x3": {
+		"name": "Like en x3 tiktok",
+		"description": "<i class=\"bi bi-tiktok\"></i> Tiktok - \"Me gusta\" - 3 cuentas",
+		"params": {
+			"link": "https://www.tiktok.com/@alisonquispelaura/video/7502860649257569591"
+		},
+		"functions": {
+			"link": "tkurl"
+		},
+		"start": "tk_x3_open_apk",
+		"end": "tk_x3_back_3"
+	}
 }

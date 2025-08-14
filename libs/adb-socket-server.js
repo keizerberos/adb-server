@@ -79,8 +79,6 @@ class AdbSocketServer {
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
 		const httpServer = createServer(fastServer);
 		const io = new Server(httpServer, {
-				pingInterval: 1000, 
-				pingTimeout: 1500,
 			cors: {
 				origin: "*",
 				methods: ["GET", "POST"],
@@ -96,8 +94,8 @@ class AdbSocketServer {
 			}
 		});
 		this.executor.on('task.progress',(deviceId,progress)=>{
-			Log.i("task.progress");
-			Log.o(progress);
+			//Log.i("task.progress");
+			//Log.o(progress);
 			const device = dget(devices, 'serial', deviceId);
 			if (device != null) {							
 				device['progress'] = progress;
@@ -219,6 +217,10 @@ class AdbSocketServer {
 	startServerCluster(clients, clusters, devices) {
 		const httpCluster = createServer();
 		const ioCluster = new Server(httpCluster, {
+			pingInterval: 3800, 
+			pingTimeout: 3500,
+			maxHttpBufferSize: 1e8 ,
+			forceNew: true,
 			cors: {
 				origin: "*",
 				methods: ["GET", "POST"],
@@ -241,18 +243,22 @@ class AdbSocketServer {
 			});
 			socket.on("devices", (clusterDevices) => {
 				Log.i("Devices received");
-				Log.o(clusterDevices);
+				//Log.o(clusterDevices);
+				let changes = 0;
 				clusterDevices.forEach(device => {
 					const deviceTemp = dget(devices, 'serial', device.serial);
-					if (deviceTemp == null)
-						devices.push(device);
+					if (deviceTemp == null){
+						devices.push(device);changes++;}
 					if (devicesData.devicesAssign[device.serial] != null)
 						device['number'] = devicesData.devicesAssign[device.serial].number;
 					else
 						device['number'] = -1;
 					device['clusterId'] = uuid;
 				});
-				clients.forEach(client => client.socket.emit("devices", devices));
+				if(changes>0){
+					console.log("changes",changes);
+					clients.forEach(client => client.socket.emit("devices", devices));
+				}
 			});
 
 			socket.on("device.connect", (device) => {

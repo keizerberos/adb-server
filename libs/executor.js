@@ -200,7 +200,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 	setTimeout(() => {
 		
 		devicesActions[deviceId]['progress']['completed'].push(nodeAction);
-		devicesActions[deviceId]['progress']['current'] = actionIndex;
+		devicesActions[deviceId]['progress']['current'] = nodeAction;
 		events['task.progress'].forEach(fn=>fn(deviceId, devicesActions[deviceId]['progress']));
 		//$(".act-" + deviceId).html(currentAction.name + "<br> " + currentAction.desc);
 		if (currentAction.type == "static") {
@@ -424,19 +424,20 @@ function executeTask(devices, task) {
 	let countEnded = 0;
 	devices.forEach((d, ii) => {
 		devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
-		devicesActions[d.serial]['progress'] = {path:task.progressPath,completed:[],current:[tasks.start]};
+		devicesActions[d.serial]['progress'] = {path:task.progressPath,state:'progress',completed:[],current:[tasks.start]};
+		events['task.progress'].forEach(fn=>fn(d.serial, devicesActions[d.serial]['progress']));
 		//$(".act-" + d.id).removeClass("d-none");
 		executeGraph(task.start, d.serial, ii, params, () => {
 			countEnded++;
 			console.log("executeTask:executeGraph.ended")
+			
+			devicesActions[d.serial]['progress']['state'] = 'ended';
+			events['task.progress'].forEach(fn=>fn(d.serial, devicesActions[d.serial]['progress']));
 			if (countEnded >= devices.length) {
 				//$(".action-title").addClass("d-none");
 				console.log("all ended")
 				countEnded = 0;
 				signalStop = false;
-				//$(".bPlay").removeClass("d-none");
-				//$(".bStop").addClass("d-none");
-				//---refresh()
 			}
 		}, () => {
 			console.log("executeTask:executeGraph.incomplete")

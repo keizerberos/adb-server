@@ -1,0 +1,15 @@
+{
+   "open_url":{
+      "name":"Abrir Url",
+      "description":"<i class=\"bi bi-gear\"></i> Abrir Url",
+      "type":"config",
+      "params":{
+         "link":""
+      },
+      "functions":{
+         "link":"fburl"
+      },
+      "start":"uri_1",
+      "end":"uri_1"
+   }
+}

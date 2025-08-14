@@ -1,33 +1,7 @@
 {
-   "fbc2_action_1":{
-      "name":"STOP_APK",
-      "desc":"Stop apk",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"stopApk",
-         "devices":"{deviceId}",
-         "data":{
-            "apk":"com.facebook.lite"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":1000,
-      "postDelay":5000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action_2"
-      ]
-   },
-   "fbc2_action_2":{
+   "tk3_x3_start_1":{
       "name":"START_APK",
-      "desc":"Start apk link",
+      "desc":"Start apk",
       "trigger":[
          
       ],
@@ -35,359 +9,29 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"am start -a android.intent.action.VIEW -d {link}"
+            "command":"am start -a android.intent.action.VIEW -d {link} com.zhiliaoapp.musically"
          }
       },
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":15000,
-      "maxLoop":3,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action_3_b",
-         "fbc2_action_3_c"
-      ]
-   },
-   "fbc2_action_3_b":{
-      "name":"PATTERN",
-      "desc":"Pattern find icon",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_2_comment_icon",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{devices}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap {wm} {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":1400,
-      "postDelay":5000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action_4aa"
-      ]
-   },
-   "fbc2_action_3_c":{
-      "name":"SWIPE",
-      "desc":"Swipe down",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input swipe 300 1000 300 500"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":500,
-      "postDelay":1200,
-      "maxLoop":12,
-      "loop":0,
-      "maxTry":12,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action_3_b",
-         "fbc2_action_3_c"
-      ],
-      "beforeLoop":"fbc2_action_5"
-   },
-   "fbc2_action_4aa":{
-      "name":"CLEAR_TEXT",
-      "desc":"Clear input text",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"am broadcast -a ADB_CLEAR_TEXT"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":500,
-      "postDelay":1000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action_4a"
-      ]
-   },
-   "fbc2_action_4a":{
-      "name":"INPUT_TEXT",
-      "desc":"Input comment",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"am broadcast -a ADB_INPUT_TEXT --es msg '{comment}'"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":500,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action_4"
-      ]
-   },
-   "fbc2_action_4":{
-      "name":"INPUT_BACK",
-      "desc":"Close input box",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"am broadcast -a ADB_EDITOR_CODE --ei code 5"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":500,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action_4b",
-         "fbc2_action_4c",
-         "fbc2_action_4b",
-         "fbc2_action_4c",
-         "fbc2_action_4b",
-         "fbc2_action_4c",
-         "fbc2_action_4b",
-         "fbc2_action_4c",
-         "fbc2_action_4b",
-         "fbc2_action_4c"
-      ]
-   },
-   "fbc2_action_4b":{
-      "name":"PATTERN",
-      "desc":"Find send button 1",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_fb_send_1",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{devices}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap {wm} {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":200,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action_5"
-      ]
-   },
-   "fbc2_action_4c":{
-      "name":"PATTERN",
-      "desc":"Find send button 2",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_fb_send_2",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{devices}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap {wm} {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":200,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action_5"
-      ]
-   },
-   "fbc2_action_5":{
-      "name":"HOME",
-      "desc":"Back to home",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input keyevent 3"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":5000,
-      "postDelay":1000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fb_like_a_1"
-      ]
-   },
-   "fb_like_a_1":{
-      "name":"OPEN_APK",
-      "desc":"Open Facebook APK",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"am start -a android.intent.action.VIEW -d https://www.facebook.com"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":1000,
-      "postDelay":10000,
+      "postDelay":13000,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_a_2"
+         "tk3_x3_psend_1","tk3_x3_psend_1","tk3_x3_psend_1","tk3_x3_psend_1","tk3_x3_psend_1","tk3_x3_psend_1","tk3_x3_psend_1","tk3_x3_psend_1","tk3_x3_click_1"
       ]
    },
-   "fb_like_a_2":{
-      "name":"INPUT_TAP",
-      "desc":"Click config icon",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap 658 110"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":2000,
-      "postDelay":5000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fb_like_a_3",
-         "fb_like_a_3"
-      ]
-   },
-   "fb_like_a_3":{
+   "tk3_x3_psend_1":{
       "name":"PATTERN",
-      "desc":"Click change account",
+      "desc":"Find pattern send icon",
       "trigger":[
          {
             "type":"pattern",
-            "pattern":"pattern_2_change_acc_txt",
+            "pattern":"tk3_pattern_icon_comment",
             "condition":true,
             "cmd":{
                "action":"Screen",
@@ -416,195 +60,20 @@
       "order":0,
       "type":"pattern",
       "preDelay":200,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fb_like_a_3a",
-         "fb_like_a_3a",
-         "fb_like_a_3a",
-         "fb_like_a_3a",
-         "fb_like_a_3a",
-         "fb_like_a_3a",
-         "fb_like_a_3a",
-         "fb_like_a_4"
-      ]
-   },
-   "fb_like_a_3a":{
-      "name":"PATTERN",
-      "desc":"Find start session icon",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_fb_inisesion",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{deviceId}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap {wm} {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":300,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action2_2"
-      ]
-   },
-   "fb_like_a_4":{
-      "name":"INPUT_TAP",
-      "desc":"Click on second account",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap 447 1418"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":1000,
-      "postDelay":5000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action2_2"
-      ]
-   },
-   "fbc2_action2_1":{
-      "name":"STOP_APK",
-      "desc":"Stop apk",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"stopApk",
-         "devices":"{deviceId}",
-         "data":{
-            "apk":"com.facebook.lite"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":1000,
-      "postDelay":5000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action_2"
-      ]
-   },
-   "fbc2_action2_2":{
-      "name":"START_APK",
-      "desc":"Start apk link",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"am start -a android.intent.action.VIEW -d {link}"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":1000,
-      "postDelay":15000,
-      "maxLoop":3,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action2_3_b",
-         "fbc2_action2_3_c"
-      ]
-   },
-   "fbc2_action2_3_b":{
-      "name":"PATTERN",
-      "desc":"Pattern find icon",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_2_comment_icon",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{devices}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap {wm} {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":1400,
-      "postDelay":5000,
+      "postDelay":4000,
       "maxLoop":10,
       "loop":0,
       "maxTry":10,
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_4aa"
-      ]
+         "tk3_x3_click_1"
+      ],
+      "beforeLoop":"tk3_x3_click_1"
    },
-   "fbc2_action2_3_c":{
-      "name":"SWIPE",
-      "desc":"Swipe down",
+   "tk3_x3_click_1":{
+      "name":"CLICK",
+      "desc":"CLICK",
       "trigger":[
          
       ],
@@ -612,231 +81,26 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input swipe 300 1000 300 500"
+            "command":"input tap 180 1459"
          }
       },
       "order":0,
       "type":"static",
       "preDelay":500,
-      "postDelay":1200,
-      "maxLoop":12,
-      "loop":0,
-      "maxTry":12,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action2_3_b",
-         "fbc2_action2_3_c"
-      ],
-      "beforeLoop":"fbc2_action2_5"
-   },
-   "fbc2_action2_4aa":{
-      "name":"CLEAR_TEXT",
-      "desc":"Clear input text",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"am broadcast -a ADB_CLEAR_TEXT"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":500,
-      "postDelay":1000,
+      "postDelay":3000,
       "maxLoop":10,
       "loop":0,
       "maxTry":10,
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_4a"
-      ]
-   },
-   "fbc2_action2_4a":{
-      "name":"INPUT_TEXT",
-      "desc":"Input comment",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"am broadcast -a ADB_INPUT_TEXT --es msg '{comment}'"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":500,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action2_4"
-      ]
-   },
-   "fbc2_action2_4":{
-      "name":"INPUT_BACK",
-      "desc":"Close input box",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"am broadcast -a ADB_EDITOR_CODE --ei code 5"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":500,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action2_4b",
-         "fbc2_action2_4c",
-         "fbc2_action2_4b",
-         "fbc2_action2_4c",
-         "fbc2_action2_4b",
-         "fbc2_action2_4c",
-         "fbc2_action2_4b",
-         "fbc2_action2_4c",
-         "fbc2_action2_4b",
-         "fbc2_action2_4c"
-      ]
-   },
-   "fbc2_action2_4b":{
-      "name":"PATTERN",
-      "desc":"Find send button 1",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_fb_send_1",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{devices}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap {wm} {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":200,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action2_5"
-      ]
-   },
-   "fbc2_action2_4c":{
-      "name":"PATTERN",
-      "desc":"Find send button 2",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_fb_send_2",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{devices}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap {wm} {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":200,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action2_5"
-      ]
-   },
-   "fbc2_action2_5":{
-      "name":"HOME",
-      "desc":"Back to home",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input keyevent 3"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":5000,
-      "postDelay":1000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fb_like_a_1_x3"
+         "tk3_x3_clear_1"
       ]
    },
    
-   "fb_like_a_1_x3":{
-      "name":"OPEN_APK",
-      "desc":"Open Facebook APK",
+   "tk3_x3_clear_1":{
+      "name":"CLEAR_TEXT",
+      "desc":"Clear input text",
       "trigger":[
          
       ],
@@ -844,56 +108,90 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"am start -a android.intent.action.VIEW -d https://www.facebook.com"
+            "command":"am broadcast -a ADB_CLEAR_TEXT"
          }
       },
       "order":0,
       "type":"static",
-      "preDelay":1000,
-      "postDelay":10000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fb_like_a_2_x3"
-      ]
-   },
-   "fb_like_a_2_x3":{
-      "name":"INPUT_TAP",
-      "desc":"Click config icon",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap 658 110"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":2000,
-      "postDelay":5000,
+      "preDelay":500,
+      "postDelay":1000,
       "maxLoop":10,
       "loop":0,
       "maxTry":10,
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_a_3_x3",
-         "fb_like_a_3_x3"
+         "tk3_x3_input_1"
       ]
    },
-   "fb_like_a_3_x3":{
+   "tk3_x3_input_1":{
+      "name":"INPUT_TEXT",
+      "desc":"Input comment",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am broadcast -a ADB_INPUT_TEXT --es msg '{comment}'"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_inputback_1"
+      ]
+   },
+   "tk3_x3_inputback_1":{
+      "name":"INPUT_BACK",
+      "desc":"Close input box",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am broadcast -a ADB_EDITOR_CODE --ei code 5"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_send_1",
+         "tk3_x3_send_1",
+         "tk3_x3_send_1",
+         "tk3_x3_send_1",
+         "tk3_x3_send_1",
+         "tk3_x3_send_1",
+         "tk3_x3_send_1",
+         "tk3_x3_send_1",
+         "tk3_x3_send_1",
+         "tk3_x3_send_1"
+      ]
+   },
+   "tk3_x3_send_1":{
       "name":"PATTERN",
-      "desc":"Click change account",
+      "desc":"Find pattern send icon",
       "trigger":[
          {
             "type":"pattern",
-            "pattern":"pattern_2_change_acc_txt",
+            "pattern":"pattern_tk1_send",
             "condition":true,
             "cmd":{
                "action":"Screen",
@@ -922,30 +220,102 @@
       "order":0,
       "type":"pattern",
       "preDelay":200,
-      "postDelay":2000,
+      "postDelay":4000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_home_1"
+      ],
+      "beforeLoop":"tk3_x3_home_1"
+   },
+   "tk3_x3_home_1":{
+      "name":"HOME",
+      "desc":"Go home",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"\"input keyevent 4 & sleep 1; input keyevent 3\""
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":1000,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_a_3a_x3",
-         "fb_like_a_3a_x3",
-         "fb_like_a_3a_x3",
-         "fb_like_a_3a_x3",
-         "fb_like_a_3a_x3",
-         "fb_like_a_3a_x3",
-         "fb_like_a_3a_x3",
-         "fb_like_a_4_x3"
+         "tk3_x3_cc_start_1"
       ]
    },
-   "fb_like_a_3a_x3":{
-      "name":"PATTERN",
-      "desc":"Find start session icon",
+	"tk3_x3_cc_start_1":{
+      "name":"START_APK",
+      "desc":"Start apk",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am start -n com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":15000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_cc_profile_1"
+      ]
+   },
+   "tk3_x3_cc_profile_1":{
+      "name":"APK_CLICK",
+      "desc":"click on icon",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 646 1457"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_cc_change_pattern_1","tk3_x3_cc_change_pattern_1","tk3_x3_cc_change_pattern_1","tk3_x3_cc_change_pattern_1"
+      ]
+   },
+   "tk3_x3_cc_email_1":{
+      "name":"TK_CLOSE_EMAIL",
+      "desc":"Close add email",
       "trigger":[
          {
             "type":"pattern",
-            "pattern":"pattern_fb_inisesion",
+            "pattern":"pattern_tk1_add_email",
             "condition":true,
             "cmd":{
                "action":"Screen",
@@ -968,25 +338,71 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap {wm} {hm}"
+            "command":"input tap 660 360"
          }
       },
       "order":0,
       "type":"pattern",
-      "preDelay":300,
+      "preDelay":200,
       "postDelay":2000,
       "maxLoop":10,
       "loop":0,
-      "maxTry":1,
+      "maxTry":10,
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_2_x3"
+         "tk3_x3_cc_email_1",
+         "tk3_x3_cc_change_1"
+      ]
+   },   
+   "tk3_x3_cc_change_pattern_1":{
+      "name":"TK_CLOSE_EMAIL",
+      "desc":"Close add email",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"tk3_pattern_editprofile",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{deviceId}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 325 {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":200,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":500,
+      "next":[
+         "tk3_x3_cc_changeclick_1"
       ]
    },
-   "fb_like_a_4_x3":{
-      "name":"INPUT_TAP",
-      "desc":"Click on second account",
+   "tk3_x3_cc_change_1":{
+      "name":"CLICK",
+      "desc":"Click change icon",
       "trigger":[
          
       ],
@@ -994,27 +410,99 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 447 1418"
+            "command":"input tap 325 368"
          }
       },
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":5000,
+      "postDelay":1000,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_2_x3"
+         "tk3_x3_cc_changeclick_1"
+      ]
+   },
+   "tk3_x3_cc_changeclick_1":{
+      "name":"CLICK ",
+      "desc":"Click second account",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 333 1143"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_cc_closefriends_1",
+         "tk3_x3_start_2"
+      ]
+   },
+   "tk3_x3_cc_closefriends_1":{
+      "name":"TK_CLOSE_EMAIL",
+      "desc":"Close add email",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"pattern_tk1_follow_friends",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{deviceId}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 648 376"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":200,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":500,
+      "next":[
+         "tk3_x3_start_2"
       ]
    },
 
    
-   "fbc2_action2_2_x3":{
+   "tk3_x3_start_2":{
       "name":"START_APK",
-      "desc":"Start apk link",
+      "desc":"Start apk",
       "trigger":[
          
       ],
@@ -1022,34 +510,33 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"am start -a android.intent.action.VIEW -d {link}"
+            "command":"am start -a android.intent.action.VIEW -d {link} com.zhiliaoapp.musically"
          }
       },
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":15000,
-      "maxLoop":3,
+      "postDelay":13000,
+      "maxLoop":10,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_3_b_x3",
-         "fbc2_action2_3_c_x3"
+         "tk3_x3_psend_2","tk3_x3_psend_2","tk3_x3_psend_2","tk3_x3_psend_2","tk3_x3_psend_2","tk3_x3_psend_2","tk3_x3_psend_2","tk3_x3_psend_2","tk3_x3_click_2"
       ]
    },
-   "fbc2_action2_3_b_x3":{
+   "tk3_x3_psend_2":{
       "name":"PATTERN",
-      "desc":"Pattern find icon",
+      "desc":"Find pattern send icon",
       "trigger":[
          {
             "type":"pattern",
-            "pattern":"pattern_2_comment_icon",
+            "pattern":"tk3_pattern_icon_comment",
             "condition":true,
             "cmd":{
                "action":"Screen",
-               "devices":"{devices}",
+               "devices":"{deviceId}",
                "data":{
                   "savePath":"{screen_path}"
                }
@@ -1073,20 +560,21 @@
       },
       "order":0,
       "type":"pattern",
-      "preDelay":1400,
-      "postDelay":5000,
+      "preDelay":200,
+      "postDelay":4000,
       "maxLoop":10,
       "loop":0,
       "maxTry":10,
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_4aa_x3"
-      ]
+         "tk3_x3_click_2"
+      ],
+      "beforeLoop":"tk3_x3_click_2"
    },
-   "fbc2_action2_3_c_x3":{
-      "name":"SWIPE",
-      "desc":"Swipe down",
+   "tk3_x3_click_2":{
+      "name":"CLICK",
+      "desc":"CLICK",
       "trigger":[
          
       ],
@@ -1094,25 +582,24 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input swipe 300 1000 300 500"
+            "command":"input tap 180 1459"
          }
       },
       "order":0,
       "type":"static",
       "preDelay":500,
-      "postDelay":1200,
-      "maxLoop":12,
+      "postDelay":3000,
+      "maxLoop":10,
       "loop":0,
-      "maxTry":12,
+      "maxTry":10,
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_3_b",
-         "fbc2_action2_3_c"
-      ],
-      "beforeLoop":"fbc2_action2_5_x3"
+         "tk3_x3_clear_2"
+      ]
    },
-   "fbc2_action2_4aa_x3":{
+   
+   "tk3_x3_clear_2":{
       "name":"CLEAR_TEXT",
       "desc":"Clear input text",
       "trigger":[
@@ -1135,10 +622,10 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_4a_x3"
+         "tk3_x3_input_2"
       ]
    },
-   "fbc2_action2_4a_x3":{
+   "tk3_x3_input_2":{
       "name":"INPUT_TEXT",
       "desc":"Input comment",
       "trigger":[
@@ -1161,10 +648,10 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_4_x3"
+         "tk3_x3_inputback_2"
       ]
    },
-   "fbc2_action2_4_x3":{
+   "tk3_x3_inputback_2":{
       "name":"INPUT_BACK",
       "desc":"Close input box",
       "trigger":[
@@ -1187,29 +674,29 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_4b_x3",
-         "fbc2_action2_4c_x3",
-         "fbc2_action2_4b_x3",
-         "fbc2_action2_4c_x3",
-         "fbc2_action2_4b_x3",
-         "fbc2_action2_4c_x3",
-         "fbc2_action2_4b_x3",
-         "fbc2_action2_4c_x3",
-         "fbc2_action2_4b_x3",
-         "fbc2_action2_4c_x3"
+         "tk3_x3_send_2",
+         "tk3_x3_send_2",
+         "tk3_x3_send_2",
+         "tk3_x3_send_2",
+         "tk3_x3_send_2",
+         "tk3_x3_send_2",
+         "tk3_x3_send_2",
+         "tk3_x3_send_2",
+         "tk3_x3_send_2",
+         "tk3_x3_send_2"
       ]
    },
-   "fbc2_action2_4b_x3":{
+   "tk3_x3_send_2":{
       "name":"PATTERN",
-      "desc":"Find send button 1",
+      "desc":"Find pattern send icon",
       "trigger":[
          {
             "type":"pattern",
-            "pattern":"pattern_fb_send_1",
+            "pattern":"pattern_tk1_send",
             "condition":true,
             "cmd":{
                "action":"Screen",
-               "devices":"{devices}",
+               "devices":"{deviceId}",
                "data":{
                   "savePath":"{screen_path}"
                }
@@ -1234,64 +721,20 @@
       "order":0,
       "type":"pattern",
       "preDelay":200,
-      "postDelay":2000,
+      "postDelay":4000,
       "maxLoop":10,
       "loop":0,
       "maxTry":10,
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_5_x3"
-      ]
-   },
-   "fbc2_action2_4c_x3":{
-      "name":"PATTERN",
-      "desc":"Find send button 2",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_fb_send_2",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{devices}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
+         "tk3_x3_home_2"
       ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap {wm} {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":200,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action2_5_x3"
-      ]
+      "beforeLoop":"tk3_x3_home_2"
    },
-   "fbc2_action2_5_x3":{
+   "tk3_x3_home_2":{
       "name":"HOME",
-      "desc":"Back to home",
+      "desc":"Go home",
       "trigger":[
          
       ],
@@ -1299,16 +742,517 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input keyevent 3"
+            "command":"\"input keyevent 4 & sleep 1; input keyevent 3\""
          }
       },
       "order":0,
       "type":"static",
-      "preDelay":5000,
+      "preDelay":1000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_cc_start_2"
+      ]
+   },
+	"tk3_x3_cc_start_2":{
+      "name":"START_APK",
+      "desc":"Start apk",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am start -n com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":15000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_cc_profile_2"
+      ]
+   },
+   "tk3_x3_cc_profile_2":{
+      "name":"APK_CLICK",
+      "desc":"click on icon",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 646 1457"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_cc_change_pattern_2","tk3_x3_cc_change_pattern_2","tk3_x3_cc_change_pattern_2","tk3_x3_cc_change_pattern_2","tk3_x3_cc_change_pattern_2"
+      ]
+   },
+   "tk3_x3_cc_email_2":{
+      "name":"TK_CLOSE_EMAIL",
+      "desc":"Close add email",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"pattern_tk1_add_email",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{deviceId}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 660 360"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":200,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_cc_email_2",
+         "tk3_x3_cc_change_2"
+      ]
+   },      
+   "tk3_x3_cc_change_pattern_2":{
+      "name":"TK_CLOSE_EMAIL",
+      "desc":"Close add email",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"tk3_pattern_editprofile",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{deviceId}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 325 {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":200,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":500,
+      "next":[
+         "tk3_x3_cc_changeclick_2"
+      ]
+   },
+   "tk3_x3_cc_change_2":{
+      "name":"CLICK",
+      "desc":"Click change icon",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 325 368"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_cc_changeclick_2"
+      ]
+   },
+   "tk3_x3_cc_changeclick_2":{
+      "name":"CLICK ",
+      "desc":"Click second account",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 333 1143"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_cc_closefriends_2",
+         "tk3_x3_start_3"
+      ]
+   },
+   "tk3_x3_cc_closefriends_2":{
+      "name":"TK_CLOSE_EMAIL",
+      "desc":"Close add email",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"pattern_tk1_follow_friends",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{deviceId}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 648 376"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":200,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":500,
+      "next":[
+         "tk3_x3_start_3"
+      ]
+   },
+
+
+   "tk3_x3_start_3":{
+      "name":"START_APK",
+      "desc":"Start apk",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am start -a android.intent.action.VIEW -d {link} com.zhiliaoapp.musically"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":13000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_psend_3","tk3_x3_psend_3","tk3_x3_psend_3","tk3_x3_psend_3","tk3_x3_psend_3","tk3_x3_psend_3","tk3_x3_psend_3","tk3_x3_psend_3","tk3_x3_click_3"
+      ]
+   },
+   "tk3_x3_psend_3":{
+      "name":"PATTERN",
+      "desc":"Find pattern send icon",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"tk3_pattern_icon_comment",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{deviceId}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap {wm} {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":200,
+      "postDelay":4000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_click_3"
+      ],
+      "beforeLoop":"tk3_x3_click_3"
+   },
+   "tk3_x3_click_3":{
+      "name":"CLICK",
+      "desc":"CLICK",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 180 1459"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_clear_3"
+      ]
+   },
+   
+   "tk3_x3_clear_3":{
+      "name":"CLEAR_TEXT",
+      "desc":"Clear input text",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am broadcast -a ADB_CLEAR_TEXT"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
       "postDelay":1000,
       "maxLoop":10,
       "loop":0,
       "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_input_3"
+      ]
+   },
+   "tk3_x3_input_3":{
+      "name":"INPUT_TEXT",
+      "desc":"Input comment",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am broadcast -a ADB_INPUT_TEXT --es msg '{comment}'"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_inputback_3"
+      ]
+   },
+   "tk3_x3_inputback_3":{
+      "name":"INPUT_BACK",
+      "desc":"Close input box",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am broadcast -a ADB_EDITOR_CODE --ei code 5"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_send_3",
+         "tk3_x3_send_3",
+         "tk3_x3_send_3",
+         "tk3_x3_send_3",
+         "tk3_x3_send_3",
+         "tk3_x3_send_3",
+         "tk3_x3_send_3",
+         "tk3_x3_send_3",
+         "tk3_x3_send_3",
+         "tk3_x3_send_3"
+      ]
+   },
+   "tk3_x3_send_3":{
+      "name":"PATTERN",
+      "desc":"Find pattern send icon",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"pattern_tk1_send",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{deviceId}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap {wm} {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":200,
+      "postDelay":4000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk3_x3_home_3"
+      ],
+      "beforeLoop":"tk3_x3_home_3"
+   },
+   "tk3_x3_home_3":{
+      "name":"HOME",
+      "desc":"Go home",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"\"input keyevent 4 & sleep 1; input keyevent 3\""
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[

@@ -1,0 +1,23 @@
+{
+   "tiktok_comment_x3":{
+      "name":"Comentarios en tiktok",
+      "description":"<i class=\"bi bi-tiktok\"></i> Tiktok - Enviar comentarios - 3 cuentas",
+      "params":{
+         "link":"https://www.tiktok.com/@li_storys/video/7496004726841068808",
+         "comment":""
+      },
+      "functions":{
+         "link":"tkurl"
+      },
+      "poolparams":{
+         "comment":{
+            "start":0,
+            "random":false,
+            "fields":[
+            ]
+         }
+      },
+      "start":"tk3_x3_start_1",
+      "end":"tk3_x3_home_3"
+   }
+}

@@ -145,14 +145,15 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":3000,
+      "postDelay":1000,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3_c_click_ch_profile_pattern","tk_x3_c_click_ch_profile_pattern","tk_x3_c_click_ch_profile_pattern","tk_x3_c_click_ch_profile_pattern"
+         "tk_x3_c_close_add_email",
+         "tk_x3_c_click_ch_profile"
       ]
    },
    "tk_x3_c_close_add_email":{
@@ -199,51 +200,6 @@
       "next":[
          "tk_x3_c_close_add_email",
          "tk_x3_c_click_ch_profile"
-      ]
-   },
-   "tk_x3_c_click_ch_profile_pattern":{
-      "name":"TK_CLOSE_EMAIL",
-      "desc":"Close add email",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"tk3_pattern_editprofile",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{deviceId}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap 325 {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":200,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":500,
-      "next":[
-         "tk_x3_c_click_seccond_acc"
       ]
    },
    "tk_x3_c_click_ch_profile":{
@@ -490,14 +446,15 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":3000,
+      "postDelay":1000,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3_c_click_ch_profile_pattern_2","tk_x3_c_click_ch_profile_pattern_2","tk_x3_c_click_ch_profile_pattern_2","tk_x3_c_click_ch_profile_pattern_2"
+         "tk_x3_c_close_add_email_2",
+         "tk_x3_c_click_ch_profile_2"
       ]
    },
    "tk_x3_c_close_add_email_2":{
@@ -544,51 +501,6 @@
       "next":[
          "tk_x3_c_close_add_email_2",
          "tk_x3_c_click_ch_profile_2"
-      ]
-   },   
-   "tk_x3_c_click_ch_profile_pattern_2":{
-      "name":"TK_CLOSE_EMAIL",
-      "desc":"Close add email",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"tk3_pattern_editprofile",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{deviceId}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap 325 {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":200,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":500,
-      "next":[
-         "tk_x3_c_click_seccond_acc_2"
       ]
    },
    "tk_x3_c_click_ch_profile_2":{
