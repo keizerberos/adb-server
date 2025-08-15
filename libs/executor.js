@@ -424,7 +424,7 @@ function executeTask(devices, task) {
 	let countEnded = 0;
 	devices.forEach((d, ii) => {
 		devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
-		devicesActions[d.serial]['progress'] = {path:task.progressPath,state:'progress',completed:[],current:[tasks.start]};
+		devicesActions[d.serial]['progress'] = {path:task.progressPath,state:'progress',completed:[],current:[task.start],start:task.start,end:task.end};
 		events['task.progress'].forEach(fn=>fn(d.serial, devicesActions[d.serial]['progress']));
 		//$(".act-" + d.id).removeClass("d-none");
 		executeGraph(task.start, d.serial, ii, params, () => {
@@ -476,6 +476,7 @@ class Executor{
 	screen(id,img){
 		
 		if(img.length>0){
+			try{
 			loadImage(img).then((img)=>{
 				eventNodes.forEach((e,i)=>{
 					if ( e.deviceId == id){
@@ -485,6 +486,16 @@ class Executor{
 					}
 				});
 			});
+			}catch(e){
+				let data = {
+					"action": "Screen",
+					"devices": id,
+					"data": {
+						"savePath": "{screen_path}"
+					}
+				};
+				events['send'].forEach(fn=>fn(data));
+			}
 		}else{
 			let data = {
 				"action": "Screen",

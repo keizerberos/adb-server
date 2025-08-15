@@ -78,6 +78,22 @@ class AdbSocketServer {
 	startServer(clients, clusters, devices) {
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
 		const httpServer = createServer(fastServer);
+		fastServer.get("/tasks",(req,res)=>{ 
+			const task = tasks[req.query.id];
+			res.setHeader('Content-Type', 'application/json');
+			if (task==null){
+				res.send(JSON.stringify(tasks));  
+			}else
+				res.send(JSON.stringify(task));
+		});
+		fastServer.get("/actions",(req,res)=>{
+			const task = tasks[req.query.taskId];
+			const actionsData = {};
+			task.progressPath.forEach(p=> actionsData[p.id] = actions[p.id]);
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify(actionsData));
+		});
+		
 		const io = new Server(httpServer, {
 			cors: {
 				origin: "*",
