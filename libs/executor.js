@@ -4,39 +4,39 @@ let signalStop = false;
 let androidPattern = {};
 let eventNodes = [];
 let events = {
-	"send":[],
-	"task.progress":[],
+	"send": [],
+	"task.progress": [],
 };
 let nodeActions = null;
 
-function genPlant(action){
+function genPlant(action) {
 	let text = [];
 	let nodeActionsTest = JSON.parse(JSON.stringify(nodeActions));
-	if (nodeActionsTest[action.start]==undefined) return "";
+	if (nodeActionsTest[action.start] == undefined) return "";
 	//text.push(`[*]->${action.start}`);
-	
-	text.push({id:action.start});	//text.push({id:action.start,action:nodeActions[action.start]});
-	let rc= (c,i)=>{let s ="";for(let ii=0;ii<i && ii<3;ii++)s+=c;return s;};
-	let readNodes = (node,indexId)=> {
+
+	text.push({ id: action.start });	//text.push({id:action.start,action:nodeActions[action.start]});
+	let rc = (c, i) => { let s = ""; for (let ii = 0; ii < i && ii < 3; ii++)s += c; return s; };
+	let readNodes = (node, indexId) => {
 		let currentNode = nodeActionsTest[node];
-		if(currentNode==undefined) return;
-		if(currentNode.try>0) return;
+		if (currentNode == undefined) return;
+		if (currentNode.try > 0) return;
 		/*text.push(`${node}:${currentNode.desc}`);
 		text.push(`${node}:pre:${Math.round(currentNode.preDelay/10)/100}s`);
 		text.push(`${node}:post:${Math.round(currentNode.postDelay/10)/100}s`);*/
 		currentNode.try++;
-		currentNode.next.forEach((nameNode,i)=>{
+		currentNode.next.forEach((nameNode, i) => {
 			let nextNode = nodeActionsTest[nameNode];
 			//console.log("nextNode,nameNode",nextNode,nameNode);
 			//let dataNode = `${node}${rc("-",currentNode.next.length)}>${nameNode}`;
-			if (text.find(t=>t.id==nameNode)==undefined)
-				text.push({id:nameNode});//				text.push({id:nameNode,action:nextNode});
+			if (text.find(t => t.id == nameNode) == undefined)
+				text.push({ id: nameNode });//				text.push({id:nameNode,action:nextNode});
 			//	text.push(dataNode);
-			readNodes(nameNode,0);
+			readNodes(nameNode, 0);
 			nextNode.try++;
 		});
 	};
-	readNodes(action.start,0);
+	readNodes(action.start, 0);
 	//text.push(`${nodeActionsTest[action.end].name}->[*]`);
 	//text.push({id:action.end,action:nodeActions[action.end]});
 	//text.push(`@enduml`);		
@@ -198,10 +198,10 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 
 	console.log("currentAction.preDelay", nodeAction, currentAction.preDelay);
 	setTimeout(() => {
-		
+
 		devicesActions[deviceId]['progress']['completed'].push(nodeAction);
 		devicesActions[deviceId]['progress']['current'] = nodeAction;
-		events['task.progress'].forEach(fn=>fn(deviceId, devicesActions[deviceId]['progress']));
+		events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
 		//$(".act-" + deviceId).html(currentAction.name + "<br> " + currentAction.desc);
 		if (currentAction.type == "static") {
 			console.log("executeNode static loop", currentAction.loop,);
@@ -229,7 +229,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 
 			console.log("executeNode.command", command);
 			//myWebSocket.send(JSON.stringify(command));
-			events['send'].forEach(fn=>fn(command));
+			events['send'].forEach(fn => fn(command));
 			currentAction.loop++;
 			console.log("currentAction.postDelay", currentAction.postDelay);
 			setTimeout(() => {
@@ -265,9 +265,9 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 						currentAction.trigger.forEach(trigger => {
 							const pattern = androidPattern[trigger.pattern];
 							//console.log(pattern);
-							let outputcanvas = createCanvas(750,1612);
-							let outputcanvasP = createCanvas(750,1612);
-							let outputcanvasF = createCanvas(750,1612);
+							let outputcanvas = createCanvas(750, 1612);
+							let outputcanvasP = createCanvas(750, 1612);
+							let outputcanvasF = createCanvas(750, 1612);
 							outputcanvas.width = 720;
 							outputcanvas.height = 1606;
 							outputcanvasP.width = 720;
@@ -301,8 +301,8 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 										command.data[k] = replaceParams(tempParams, command.data[k]);
 									})
 									console.log("executeNode.command", command);
-//									myWebSocket.send(JSON.stringify(command));
-									events['send'].forEach(fn=>fn(command));
+									//									myWebSocket.send(JSON.stringify(command));
+									events['send'].forEach(fn => fn(command));
 								}
 								currentAction.loop++;
 								setTimeout(() => {
@@ -337,7 +337,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 							"savePath": "{screen_path}"
 						}
 					};
-					events['send'].forEach(fn=>fn(command));
+					events['send'].forEach(fn => fn(command));
 					//myWebSocket.send(JSON.stringify(data));
 				},
 			});
@@ -351,7 +351,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 							"savePath": "{screen_path}"
 						}
 					};
-					events['send'].forEach(fn=>fn(data));
+					events['send'].forEach(fn => fn(data));
 					//myWebSocket.send(JSON.stringify(data));
 				}
 			}, currentAction.timeout);
@@ -363,7 +363,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 					"savePath": "{screen_path}"
 				}
 			};
-			events['send'].forEach(fn=>fn(data));
+			events['send'].forEach(fn => fn(data));
 			//myWebSocket.send(JSON.stringify(data));
 		}
 	}, currentAction.preDelay);
@@ -379,7 +379,7 @@ function executeGraph(actionId, deviceId, ii, params, cbSuccess, cbFail) {
 			//$(".act-" + deviceId).html(action.name + "<br> " + action.desc);
 			devicesActions[deviceId]['progress']['completed'].push(actionId);
 			devicesActions[deviceId]['progress']['current'] = actionId;
-			events['task.progress'].forEach(fn=>fn(deviceId, devicesActions[deviceId]['progress']));
+			events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
 			let command = JSON.parse(JSON.stringify(action.command));
 			let tempParams = {
 				deviceId: deviceId
@@ -391,9 +391,9 @@ function executeGraph(actionId, deviceId, ii, params, cbSuccess, cbFail) {
 			});
 			console.log("executeGraph.command", command);
 			//myWebSocket.send(JSON.stringify(command));
-			events['send'].forEach(fn=>fn(command));
-		} else if (action.type == "pattern"){
-			console.log("executeGraph.pattern test", JSON.stringify(action.command));			
+			events['send'].forEach(fn => fn(command));
+		} else if (action.type == "pattern") {
+			console.log("executeGraph.pattern test", JSON.stringify(action.command));
 		}
 		console.log("executeGraph.action.postDelay", action.postDelay);
 		setTimeout(() => {
@@ -414,9 +414,9 @@ function executeTask(devices, task) {
 
 	task.paramsArray.forEach(param => {
 		const paramLines = param.value.split('\n');
-		if (paramLines.length<2){
+		if (paramLines.length < 2) {
 			params[param.id] = param.value;
-		}else
+		} else
 			params[param.id] = { random: false, index: 0, data: paramLines };
 	});
 	devicesActions = {};
@@ -424,15 +424,54 @@ function executeTask(devices, task) {
 	let countEnded = 0;
 	devices.forEach((d, ii) => {
 		devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
-		devicesActions[d.serial]['progress'] = {path:task.progressPath,state:'progress',completed:[],current:[task.start],start:task.start,end:task.end};
-		events['task.progress'].forEach(fn=>fn(d.serial, devicesActions[d.serial]['progress']));
+		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [], current: [task.start], start: task.start, end: task.end };
+		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 		//$(".act-" + d.id).removeClass("d-none");
 		executeGraph(task.start, d.serial, ii, params, () => {
 			countEnded++;
 			console.log("executeTask:executeGraph.ended")
-			
+
 			devicesActions[d.serial]['progress']['state'] = 'ended';
-			events['task.progress'].forEach(fn=>fn(d.serial, devicesActions[d.serial]['progress']));
+			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+			if (countEnded >= devices.length) {
+				//$(".action-title").addClass("d-none");
+				console.log("all ended")
+				countEnded = 0;
+				signalStop = false;
+			}
+		}, () => {
+			console.log("executeTask:executeGraph.incomplete")
+		});
+	});
+}
+function resumeTask(devices, task) {
+	let tasks = [];
+	let params = {};
+
+	task.paramsArray.forEach(param => {
+		const paramLines = param.value.split('\n');
+		if (paramLines.length < 2) {
+			params[param.id] = param.value;
+		} else
+			params[param.id] = { random: false, index: 0, data: paramLines };
+	});
+	//devicesActions = {};
+	console.log("params", params);
+	let countEnded = 0;
+	devices.forEach((d, ii) => {
+		//devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
+		//devicesActions[d.serial]['progress'] = { path: task.progressPath, state: 'progress', completed: [], current: [task.start], start: task.start, end: task.end };
+		//events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+		let tempProgress = devicesActions[d.serial]['progress'];
+		devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
+		devicesActions[d.serial]['progress'] = tempProgress;
+		devicesActions[d.serial]['progress']['state'] = 'progress';
+		executeGraph(task.resume, d.serial, ii, params, () => {
+			countEnded++;
+			console.log("executeTask:executeGraph.ended")
+
+			devicesActions[d.serial]['progress']['state'] = 'ended';
+			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 			if (countEnded >= devices.length) {
 				//$(".action-title").addClass("d-none");
 				console.log("all ended")
@@ -469,24 +508,24 @@ function executeTasks(tasks, callback) {
 	};
 	executor();
 }
-class Executor{
-	constructor(){
-			
+class Executor {
+	constructor() {
+
 	}
-	screen(id,img){
-		
-		if(img.length>0){
-			try{
-			loadImage(img).then((img)=>{
-				eventNodes.forEach((e,i)=>{
-					if ( e.deviceId == id){
-						console.log("event success",e);		
-						e.cbSuccess(img);
-						eventNodes.splice(i,1);
-					}
+	screen(id, img) {
+
+		if (img.length > 0) {
+			try {
+				loadImage(img).then((img) => {
+					eventNodes.forEach((e, i) => {
+						if (e.deviceId == id) {
+							console.log("event success", e);
+							e.cbSuccess(img);
+							eventNodes.splice(i, 1);
+						}
+					});
 				});
-			});
-			}catch(e){
+			} catch (e) {
 				let data = {
 					"action": "Screen",
 					"devices": id,
@@ -494,9 +533,9 @@ class Executor{
 						"savePath": "{screen_path}"
 					}
 				};
-				events['send'].forEach(fn=>fn(data));
+				events['send'].forEach(fn => fn(data));
 			}
-		}else{
+		} else {
 			let data = {
 				"action": "Screen",
 				"devices": id,
@@ -504,26 +543,31 @@ class Executor{
 					"savePath": "{screen_path}"
 				}
 			};
-			events['send'].forEach(fn=>fn(data));
+			events['send'].forEach(fn => fn(data));
 		}
 	}
-	on(ev,fn){
+	on(ev, fn) {
 		events[ev].push(fn);
 	}
-	stop(){
+	stop() {
 		signalStop = true;
 	}
-	setActions(_nodeActions){
+	setActions(_nodeActions) {
 		nodeActions = _nodeActions;
 	}
-	setPatterns(_patterns){
+	setPatterns(_patterns) {
 		androidPattern = _patterns;
 	}
-	startTask(devices,task){
+	startTask(devices, task) {
 		eventNodes = [];
 		signalStop = false;
-		executeTask(devices,task);
+		executeTask(devices, task);
+	}
+	resumeTask(devices, task) {
+		eventNodes = [];
+		signalStop = false;
+		executeTask(devices, task);
 	}
 }
 
-module.exports = {Executor,genPlant,replaceParams, bwImage, pathPattern, findPattern, executeNode, executeGraph, executeTask, executeTasks}
+module.exports = { Executor, genPlant, replaceParams, bwImage, pathPattern, findPattern, executeNode, executeGraph, executeTask, executeTasks }

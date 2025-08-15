@@ -192,6 +192,11 @@ class AdbSocketServer {
 				Log.o(data);
 				this.executor.startTask(data.devices,data.task);
 			});
+			socket.on("tasks.resume", (data) => {
+				Log.i("tasks.resume ");
+				Log.o(data);
+				this.executor.resumeTask(data.devices,data.task);
+			});
 			socket.on("device.adb", (data) => {
 				Log.i("device.adb data");
 				Log.o(data);
