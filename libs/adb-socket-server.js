@@ -75,6 +75,9 @@ class AdbSocketServer {
 			console.log("progressPath",tasks[k]['progressPath']);
 		});
 	}
+	saveDevices(){
+		fs.writeFileSync('./data/devices.json',JSON.stringify(devicesData),'utf8');
+	}
 	startServer(clients, clusters, devices) {
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
 		const httpServer = createServer(fastServer);
@@ -133,9 +136,20 @@ class AdbSocketServer {
 				ddelete(clients, 'uuid', uuid);
 			});
 			socket.on("device.assign", (data) => {
-				Log.i("device.assign ");
+				Log.i("device.assign ");				
 				Log.o(data);
+				devicesData.devicesAssign[data.serial] = {"number": data.number};
+				this.saveDevices();				
 				
+				const deviceTemp = dget(devices, 'serial', data.serial);
+				if (deviceTemp == null){
+					devices.push(device);}
+				if (devicesData.devicesAssign[data.serial] != null)
+					deviceTemp['number'] = devicesData.devicesAssign[data.serial].number;
+				else
+					deviceTemp['number'] = -1;
+				clients.forEach(client => client.socket.emit("device.update", deviceTemp));
+
 			});
 			socket.on("tasks.stop", (data) => {
 				Log.i("tasks.stop ");
@@ -197,9 +211,18 @@ class AdbSocketServer {
 				Log.o(data);
 				this.executor.resumeTask(data.devices,data.task);
 			});
+			socket.on("device.network", (data) => {
+				//Log.i("device.network ");
+				//Log.o(data);				
+				const device = dget(devices, 'serial', data.devices);
+				if (device != null) {
+					const cluster = dget(clusters, 'uuid', device.clusterId);
+					cluster.socket.emit("network", data);
+				}
+			});
 			socket.on("device.adb", (data) => {
-				Log.i("device.adb data");
-				Log.o(data);
+				//Log.i("device.adb data");
+				//Log.o(data);
 				if (data.action == 'adb') {
 					const device = dget(devices, 'serial', data.devices);
 					if (device != null) {
@@ -270,10 +293,13 @@ class AdbSocketServer {
 					const deviceTemp = dget(devices, 'serial', device.serial);
 					if (deviceTemp == null){
 						devices.push(device);changes++;}
-					if (devicesData.devicesAssign[device.serial] != null)
-						device['number'] = devicesData.devicesAssign[device.serial].number;
-					else
+					if (devicesData.devicesAssign[device.serial] != null){
+						device['number'] = devicesData.devicesAssign[device.serial].number;						
+						device['network'] = devicesData.devicesAssign[device.serial].network;
+					}
+					else{
 						device['number'] = -1;
+					}
 					device['clusterId'] = uuid;
 				});
 				if(changes>0){
@@ -288,9 +314,10 @@ class AdbSocketServer {
 
 				if (createdDevice == null)
 					devices.push(device);
-				if (devicesData.devicesAssign[device.serial] != null)
-					device['number'] = devicesData.devicesAssign[device.serial].number;
-				else
+				if (devicesData.devicesAssign[device.serial] != null){
+					device['number'] = devicesData.devicesAssign[device.serial].number;				
+					device['network'] = devicesData.devicesAssign[device.serial].network;
+				}else
 					device['number'] = -1;
 				device['clusterId'] = uuid;
 				const data = {};
@@ -303,9 +330,27 @@ class AdbSocketServer {
 			});
 			socket.on("device.capture", (data) => {
 				//console.log("device.capture",data);
-				console.log("device.capture",data.data.length);
+				//console.log("device.capture",data.data.length);
 				this.executor.screen(data.serial,data.data);
 				clients.forEach(client => client.socket.emit("device.capture", data));
+			});
+			socket.on("device.network", (data) => {				
+				clients.forEach(client => client.socket.emit("device.network", data));				
+				
+				if (devicesData.devicesAssign[data.serial] != null){
+					if (devicesData.devicesAssign[data.serial]['network'] == null){
+						devicesData.devicesAssign[data.serial]['network'] = data.data;						
+						this.saveDevices();
+					}else{
+						if (devicesData.devicesAssign[data.serial]['network']['ip'] != data.data.ip
+							||devicesData.devicesAssign[data.serial]['network']['mac'] != data.data.mac
+							||devicesData.devicesAssign[data.serial]['network']['ssid'] != data.data.ssid){
+							devicesData.devicesAssign[data.serial]['network'] = data.data;						
+							this.saveDevices();
+						}
+					}					
+				}				
+				
 			});
 		});
 		ioCluster.listen(9000, () => {
