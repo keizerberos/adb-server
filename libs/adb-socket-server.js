@@ -126,7 +126,7 @@ class AdbSocketServer {
 			clients.push({ socket: socket, uuid: uuid });
 			Log.i("Socket connected " + uuid);
 
-			socket.emit("clusters", clusters.map(c => c.uuid));
+			socket.emit("clusters", clusters.map(cluster => { return {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address};}));
 			socket.emit("tasks", tasks);
 			socket.emit("actions", actions);
 			socket.emit("devices", devices);
@@ -273,9 +273,11 @@ class AdbSocketServer {
 		ioCluster.on("connection", (socket) => {
 			let uuid = short.generate();
 			Log.i("Cluster Socket connected " + uuid);
-			const cluster = { socket: socket, devices: [], uuid, uuid };
+  			//var address = socket.handshake.address;
+  			var address = socket.request.connection._peername;
+			const cluster = { socket: socket, devices: [], uuid, uuid,address:address };
 			clusters.push(cluster);
-			clients.forEach(client => client.socket.emit("cluster.connect", uuid));
+			clients.forEach(client => client.socket.emit("cluster.connect", {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address}));
 			socket.on("disconnect", () => {
 				Log.i("Cluster Socket disconnected " + uuid);
 				let clusterDevices = devices.filter(d => d.clusterId == uuid);
@@ -353,7 +355,7 @@ class AdbSocketServer {
 				
 			});
 		});
-		ioCluster.listen(9000, () => {
+		httpCluster.listen(9000,'0.0.0.0', () => {
 			Log.i("Cluster Server connected");
 		});
 	}
