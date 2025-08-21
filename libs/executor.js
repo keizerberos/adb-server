@@ -516,6 +516,9 @@ class Executor {
 	}
 	screen(id, img) {
 
+		if ( eventNodes.find(e=>e.deviceId == id )==undefined ) {
+			return;
+		}
 		if (img.length > 0) {
 			try {
 				loadImage(img).then((img) => {
