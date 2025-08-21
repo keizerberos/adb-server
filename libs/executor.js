@@ -572,7 +572,7 @@ class Executor {
 	resumeTask(devices, task) {
 		eventNodes = [];
 		signalStop = false;
-		executeTask(devices, task);
+		resumeTask(devices, task);
 	}
 }
 
