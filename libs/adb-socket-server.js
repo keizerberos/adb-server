@@ -103,17 +103,16 @@ class AdbSocketServer {
 				methods: ["GET", "POST"],
 			}
 		});
-		this.executor.on('send',(data)=>{
-			console.log(data);
+		this.executor.on('send', (data)=>{
+			console.log('send', data);
 			const device = dget(devices, 'serial', data.devices);
 			if (device != null) {
-				const cluster = dget(clusters, 'uuid', device.clusterId);
-				
+				const cluster = dget(clusters, 'uuid', device.clusterId);				
 				cluster.socket.emit(data.action, data);
 			}
 		});
 		this.executor.on('task.progress',(deviceId,progress)=>{
-			//Log.i("task.progress");
+			Log.i("task.progress");
 			//Log.o(progress);
 			const device = dget(devices, 'serial', deviceId);
 			if (device != null) {							
@@ -156,7 +155,7 @@ class AdbSocketServer {
 				Log.o(data);				
 				this.executor.stop();
 			});
-			socket.on("adb.install.keyboard", (data) => {
+			socket.on("adb|.install.keyboard", (data) => {
 				Log.i("adb.install.keyboard ");
 				Log.o(data);				
 				const device = dget(devices, 'serial', data.devices);

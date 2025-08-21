@@ -1,4 +1,6 @@
-const { createCanvas, loadImage } = require('canvas')
+const { Logger } = require('atx-logger');
+const { createCanvas, loadImage } = require('canvas');
+const e = require('cors');
 let devicesActions = {};
 let signalStop = false;
 let androidPattern = {};
@@ -526,6 +528,7 @@ class Executor {
 					});
 				});
 			} catch (e) {
+				console.log("executor.screen ERROR",e);
 				let data = {
 					"action": "Screen",
 					"devices": id,
@@ -536,6 +539,7 @@ class Executor {
 				events['send'].forEach(fn => fn(data));
 			}
 		} else {
+			console.log("executor.screen img.length = 0");
 			let data = {
 				"action": "Screen",
 				"devices": id,
@@ -543,7 +547,9 @@ class Executor {
 					"savePath": "{screen_path}"
 				}
 			};
-			events['send'].forEach(fn => fn(data));
+			if ( eventNodes.find(e=>e.deviceId == id )!=undefined ) {
+				events['send'].forEach(fn => fn(data));
+			}
 		}
 	}
 	on(ev, fn) {
