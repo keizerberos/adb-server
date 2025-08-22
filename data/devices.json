@@ -1,10 +1,12 @@
 {
 	"devicesAssign": {
 		"NBA34BOAC5047046": {
-			"number": "01",
-			"resolution": {
-				"size": "720x1612",
-				"density": "Physical density: 320"
+			"number": "09",
+			"network": {
+				"ip": "172.20.51.25/16",
+				"mac": "54:1f:8d:c2:1f:42",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5047063": {
@@ -12,6 +14,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.27/16",
+				"mac": "54:1f:8d:c2:1f:53",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5038914": {
@@ -19,14 +27,20 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.26/16",
+				"mac": "54:1f:8d:c1:fe:fd",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042623": {
 			"number": "04",
 			"network": {
-				"ip": "192.168.100.49/24",
-				"mac": "aa:27:53:b9:91:2e",
-				"ssid": "Entel Wife",
+				"ip": "172.20.51.29/16",
+				"mac": "54:1f:8d:c2:0d:7a",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -37,9 +51,9 @@
 		"NBA34BOAC5042652": {
 			"number": "05",
 			"network": {
-				"ip": "192.168.100.43/24",
-				"mac": "7a:0d:7b:17:d8:48",
-				"ssid": "Entel Wife",
+				"ip": "172.20.51.32/16",
+				"mac": "54:1f:8d:c2:0d:97",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -52,6 +66,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.28/16",
+				"mac": "54:1f:8d:c2:0d:72",
+				"ssid": "WIFICORP\"wpa2-psk, metered=false, defaultNetwork=false, oemManaged=OEM_NONE, subId=-1}, {type=1, ratType=COMBINED, wifiNetworkKey=\"WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042174": {
@@ -59,6 +79,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.31/16",
+				"mac": "54:1f:8d:c2:0b:b9",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOPC5001919": {
@@ -66,13 +92,25 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.30/16",
+				"mac": "54:1f:8d:bd:bd:d2",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOPC5000854": {
-			"number": "09",
+			"number": "01",
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.34/16",
+				"mac": "54:1f:8d:bd:b7:b1",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042212": {
@@ -80,6 +118,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.33/16",
+				"mac": "54:1f:8d:c2:0b:df",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOPC5000889": {
@@ -87,6 +131,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.35/16",
+				"mac": "54:1f:8d:bd:b7:f5",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042176": {
@@ -94,6 +144,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.36/16",
+				"mac": "54:1f:8d:c2:0b:bb",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042619": {
@@ -101,6 +157,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.37/16",
+				"mac": "54:1f:8d:c2:0d:76",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042654": {
@@ -108,6 +170,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.38/16",
+				"mac": "54:1f:8d:c2:0d:99",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5044724": {
@@ -115,6 +183,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.18/16",
+				"mac": "ea:a4:e4:f5:ae:1a",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5044953": {
@@ -122,6 +196,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.47/16",
+				"mac": "54:1f:8d:c2:17:15",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5043102": {
@@ -129,6 +209,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.44/16",
+				"mac": "54:1f:8d:c2:0f:59",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5044961": {
@@ -136,6 +222,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "",
+				"mac": "fe:07:5d:bd:d9:5a",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5044715": {
@@ -143,6 +235,12 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.46/16",
+				"mac": "54:1f:8d:c2:16:27",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042655": {
@@ -150,14 +248,20 @@
 			"resolution": {
 				"size": "720x1612",
 				"density": "Physical density: 320"
+			},
+			"network": {
+				"ip": "172.20.51.45/16",
+				"mac": "54:1f:8d:c2:0d:9a",
+				"ssid": "WIFICORP\"wpa2-psk, metered=false, defaultNetwork=false, oemManaged=OEM_NONE, subId=-1}, {type=1, ratType=COMBINED, wifiNetworkKey=\"WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042616": {
 			"number": "35",
 			"network": {
-				"ip": "",
-				"mac": "72:82:00:3f:d3:9c",
-				"ssid": "Redmi Note 9S",
+				"ip": "172.20.51.68/16",
+				"mac": "54:1f:8d:c2:0d:73",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -186,8 +290,8 @@
 		"NBA34BOAC4006802": {
 			"number": "39",
 			"network": {
-				"ip": "172.20.3.196/16",
-				"mac": "3e:20:c8:39:55:25",
+				"ip": "172.20.51.71/16",
+				"mac": "54:1f:8d:b7:4e:1d",
 				"ssid": "WIFICORP",
 				"wifiOn": true
 			},
@@ -201,7 +305,7 @@
 			"network": {
 				"ip": "172.20.51.72/16",
 				"mac": "54:1f:8d:c2:0b:f4",
-				"ssid": "WIFICORP",
+				"ssid": "WIFICORP\"wpa2-psk, metered=false, defaultNetwork=false, oemManaged=OEM_NONE, subId=-1}, {type=1, ratType=COMBINED, wifiNetworkKey=\"WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -226,7 +330,7 @@
 		"NBA34BOAC5042685": {
 			"number": "22",
 			"network": {
-				"ip": "172.20.48.12/24",
+				"ip": "172.20.51.75/16",
 				"mac": "54:1f:8d:c2:0d:b8",
 				"ssid": "WIFICORP",
 				"wifiOn": true
@@ -305,6 +409,10 @@
 				"mac": "54:1f:8d:c2:0d:37",
 				"ssid": "WIFICORP",
 				"wifiOn": true
+			},
+			"resolution": {
+				"size": "720x1612",
+				"density": "Physical density: 320"
 			}
 		},
 		"NBA34BOAC5042568": {
@@ -337,7 +445,7 @@
 		"NBA34BOAC5042192": {
 			"number": "27",
 			"network": {
-				"ip": "172.20.51.86/16",
+				"ip": "",
 				"mac": "54:1f:8d:c2:0b:cb",
 				"ssid": "WIFICORP",
 				"wifiOn": true
@@ -346,9 +454,211 @@
 		"NBA34BOAC5042188": {
 			"number": "29",
 			"network": {
-				"ip": "172.20.51.87/16",
-				"mac": "54:1f:8d:c2:0b:c7",
-				"ssid": "WIFICORP",
+				"ip": "",
+				"mac": "",
+				"ssid": null,
+				"wifiOn": false
+			}
+		},
+		"R3CN509DWMP": {
+			"number": "48",
+			"resolution": {
+				"size": "1080x1920\r\n1080x2400",
+				"density": "Physical density: 480"
+			},
+			"network": {
+				"ip": "172.20.51.50/16",
+				"mac": "48:eb:62:37:ef:c0",
+				"ssid": "pruebaPR",
+				"wifiOn": true
+			}
+		},
+		"R3CN60H18VF": {
+			"number": "47",
+			"resolution": {
+				"size": "1080x1920\r\n1080x2400",
+				"density": "Physical density: 480"
+			},
+			"network": {
+				"ip": "172.20.51.56/16",
+				"mac": "48:eb:62:54:45:de",
+				"ssid": "pruebaPR",
+				"wifiOn": true
+			}
+		},
+		"R3CN80R0YAR": {
+			"number": "45",
+			"resolution": {
+				"size": "1080x1920\r\n1080x2400",
+				"density": "Physical density: 480"
+			},
+			"network": {
+				"ip": "",
+				"mac": "66:85:03:da:0c:65",
+				"ssid": null,
+				"wifiOn": true
+			}
+		},
+		"R3CN7024J2A": {
+			"number": "44",
+			"resolution": {
+				"size": "1080x1920\r\n1080x2400",
+				"density": "Physical density: 480"
+			},
+			"network": {
+				"ip": "172.20.51.54/16",
+				"mac": "48:eb:62:65:5c:4c",
+				"ssid": "pruebaPR",
+				"wifiOn": true
+			}
+		},
+		"R3CN50L53TJ": {
+			"number": "54",
+			"resolution": {
+				"size": "1080x1920\r\n1080x2400",
+				"density": "Physical density: 480"
+			},
+			"network": {
+				"ip": "",
+				"mac": "2a:c0:70:71:78:84",
+				"ssid": null,
+				"wifiOn": true
+			}
+		},
+		"R3CN50HR21V": {
+			"number": "43",
+			"resolution": {
+				"size": "1080x1920\r\n1080x2400",
+				"density": "Physical density: 480"
+			},
+			"network": {
+				"ip": "172.20.51.63/16",
+				"mac": "48:eb:62:55:16:64",
+				"ssid": "pruebaPR",
+				"wifiOn": true
+			}
+		},
+		"R3CN50BZXCV": {
+			"number": "46",
+			"resolution": {
+				"size": "1080x1920\r\n1080x2400",
+				"density": "Physical density: 480"
+			},
+			"network": {
+				"ip": "",
+				"mac": "22:55:38:48:ac:aa",
+				"ssid": null,
+				"wifiOn": true
+			}
+		},
+		"R3CN50BT5YT": {
+			"number": "60",
+			"resolution": {
+				"size": "1080x1920\r\n1080x2400",
+				"density": "Physical density: 480"
+			},
+			"network": {
+				"ip": "",
+				"mac": "76:64:e7:1c:23:37",
+				"ssid": "pruebaPR",
+				"wifiOn": true
+			}
+		},
+		"R3CN508C0EK": {
+			"number": "41",
+			"resolution": {
+				"size": "1080x1920\r\n1080x2400",
+				"density": "Physical density: 480"
+			},
+			"network": {
+				"ip": "172.20.51.49/16",
+				"mac": "48:eb:62:37:c8:7b",
+				"ssid": "pruebaPR",
+				"wifiOn": true
+			}
+		},
+		"R3CN50DAKVT": {
+			"number": "56",
+			"resolution": {
+				"size": "1080x1920\r\n720x1612",
+				"density": "Physical density: 480"
+			},
+			"network": {
+				"ip": "172.20.51.48/16",
+				"mac": "58:d5:0a:f3:3f:a4",
+				"ssid": "pruebaPR",
+				"wifiOn": true
+			}
+		},
+		"R3CN50B1MAY": {
+			"number": "53",
+			"network": {
+				"ip": "",
+				"mac": "32:97:ad:b1:14:61",
+				"ssid": null,
+				"wifiOn": true
+			}
+		},
+		"R3CN50EE05T": {
+			"number": "57",
+			"network": {
+				"ip": "172.20.51.64/16",
+				"mac": "48:eb:62:55:24:4f",
+				"ssid": "pruebaPR",
+				"wifiOn": true
+			}
+		},
+		"R3CN50JGLYV": {
+			"number": "51",
+			"network": {
+				"ip": "",
+				"mac": "8a:b0:e7:aa:76:0e",
+				"ssid": null,
+				"wifiOn": true
+			}
+		},
+		"R3CN50JH6DB": {
+			"number": "52",
+			"network": {
+				"ip": "",
+				"mac": "46:29:f3:11:ed:49",
+				"ssid": "pruebaPR",
+				"wifiOn": true
+			}
+		},
+		"R3CN606ESXH": {
+			"number": "50",
+			"network": {
+				"ip": "",
+				"mac": "da:c9:4b:3b:92:5c",
+				"ssid": null,
+				"wifiOn": true
+			}
+		},
+		"R3CN704SY4P": {
+			"number": "49",
+			"network": {
+				"ip": "172.20.51.58/16",
+				"mac": "58:d5:0a:ed:2b:f2",
+				"ssid": "pruebaPR",
+				"wifiOn": true
+			}
+		},
+		"R3CN705VM8F": {
+			"number": "55",
+			"network": {
+				"ip": "",
+				"mac": "f6:0f:8a:a6:e1:09",
+				"ssid": null,
+				"wifiOn": true
+			}
+		},
+		"R3CN80PG2DV": {
+			"number": "58",
+			"network": {
+				"ip": "",
+				"mac": "7e:e7:39:df:42:01",
+				"ssid": "pruebaPR",
 				"wifiOn": true
 			}
 		}

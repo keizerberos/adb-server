@@ -183,7 +183,7 @@ class AdbSocketServer {
 				Log.o(data);				
 				this.executor.stopTask(data.devices);
 			});
-			socket.on("adb|.install.keyboard", (data) => {
+			socket.on("adb.install.keyboard", (data) => {
 				Log.i("adb.install.keyboard ");
 				Log.o(data);				
 				const device = dget(devices, 'serial', data.devices);
