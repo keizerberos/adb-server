@@ -296,13 +296,6 @@
          "fb_xlike_a_3a",
          "fb_xlike_a_3a",
          "fb_xlike_a_3a",
-         "fb_xlike_a_3a",
-         "fb_xlike_a_3a",
-         "fb_xlike_a_3a",
-         "fb_xlike_a_3a",
-         "fb_xlike_a_3a",
-         "fb_xlike_a_3a",
-         "fb_xlike_a_3a",
          "fb_xlike_a_4"
       ]
    },
@@ -348,7 +341,7 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_c_2"
+         "fb_xlike_a_4"
       ]
    },
    "fb_xlike_a_4":{
@@ -648,13 +641,6 @@
          "fb_xlike_a_3a_x3",
          "fb_xlike_a_3a_x3",
          "fb_xlike_a_3a_x3",
-         "fb_xlike_a_3a_x3",
-         "fb_xlike_a_3a_x3",
-         "fb_xlike_a_3a_x3",
-         "fb_xlike_a_3a_x3",
-         "fb_xlike_a_3a_x3",
-         "fb_xlike_a_3a",
-         "fb_xlike_a_3a_x3",
          "fb_xlike_a_4_x3"
       ]
    },
@@ -700,7 +686,7 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_c_2_x3"
+         "fb_xlike_a_4_x3"
       ]
    },
    "fb_xlike_a_4_x3":{

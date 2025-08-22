@@ -13,6 +13,7 @@ let tasks = {};
 let actions = {};
 const taskPath = "./data/tasks";
 const actionsPath = "./data/actions";
+let saveProgrammed = false;
 
 let Log = null;
 
@@ -76,7 +77,19 @@ class AdbSocketServer {
 		});
 	}
 	saveDevices(){
-		fs.writeFileSync('./data/devices.json',JSON.stringify(devicesData),'utf8');
+		if(saveProgrammed) return;
+		setTimeout(()=>{
+			fs.writeFile('./data/devices.json',JSON.stringify(devicesData, null, '\t'),'utf8', (err)=>{
+				if (err) {
+					console.error('Error writing file:', err);
+					return;
+				}
+				saveProgrammed = false;
+				console.log('File written successfully!');
+			});
+		},5000);
+		saveProgrammed=true;
+		
 	}
 	startServer(clients, clusters, devices) {
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
@@ -122,7 +135,8 @@ class AdbSocketServer {
 		});
 		io.on("connection", (socket) => {
 			let uuid = short.generate();
-			clients.push({ socket: socket, uuid: uuid });
+			const client = { socket: socket, uuid: uuid, features:{'capture':true,'adb':true} };
+			clients.push(client);
 			Log.i("Socket connected " + uuid);
 
 			socket.emit("clusters", clusters.map(cluster => { return {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address};}));
@@ -148,12 +162,26 @@ class AdbSocketServer {
 				else
 					deviceTemp['number'] = -1;
 				clients.forEach(client => client.socket.emit("device.update", deviceTemp));
-
+			});
+			socket.on("feature.capture.on", (data) => {
+				Log.i("feature.capture");
+				Log.o(data);
+				client.features.capture = true;
+			});
+			socket.on("feature.capture.off", (data) => {
+				Log.i("feature.capture");
+				Log.o(data);
+				client.features.capture = false;
 			});
 			socket.on("tasks.stop", (data) => {
 				Log.i("tasks.stop ");
 				Log.o(data);				
-				this.executor.stop();
+				this.executor.stopAll();
+			});
+			socket.on("tasks.stop.device", (data) => {
+				Log.i("tasks.stop.device ");
+				Log.o(data);				
+				this.executor.stopTask(data.devices);
 			});
 			socket.on("adb|.install.keyboard", (data) => {
 				Log.i("adb.install.keyboard ");
@@ -211,12 +239,17 @@ class AdbSocketServer {
 				this.executor.resumeTask(data.devices,data.task);
 			});
 			socket.on("device.network", (data) => {
-				//Log.i("device.network ");
-				//Log.o(data);				
 				const device = dget(devices, 'serial', data.devices);
 				if (device != null) {
 					const cluster = dget(clusters, 'uuid', device.clusterId);
 					cluster.socket.emit("network", data);
+				}
+			});
+			socket.on("device.resolution", (data) => {
+				const device = dget(devices, 'serial', data.devices);
+				if (device != null) {
+					const cluster = dget(clusters, 'uuid', device.clusterId);
+					cluster.socket.emit("resolution", data);
 				}
 			});
 			socket.on("device.adb", (data) => {
@@ -330,10 +363,9 @@ class AdbSocketServer {
 				clients.forEach(client => client.socket.emit("device.disconnect", device));
 			});
 			socket.on("device.capture", (data) => {
-				//console.log("device.capture",data);
 				//console.log("device.capture",data.data.length);
-				this.executor.screen(data.serial,data.data);
-				clients.forEach(client => client.socket.emit("device.capture", data));
+				this.executor.screen(data.serial,data.data);				
+				clients.filter(client=>client.features.capture).forEach(client => client.socket.emit("device.capture", data));				
 			});
 			socket.on("device.network", (data) => {				
 				clients.forEach(client => client.socket.emit("device.network", data));				
@@ -350,8 +382,21 @@ class AdbSocketServer {
 							this.saveDevices();
 						}
 					}					
-				}				
+				}							
+			});
+			socket.on("device.resolution", (data) => {				
+				clients.forEach(client => client.socket.emit("device.resolution", data));				
 				
+				if (devicesData.devicesAssign[data.serial] != null){
+					if (devicesData.devicesAssign[data.serial]['resolution'] == undefined){
+						devicesData.devicesAssign[data.serial]['resolution'] = data.data;						
+						this.saveDevices();
+					}else{
+						if (devicesData.devicesAssign[data.serial]['resolution']['size'] != data.data.size){
+							this.saveDevices();
+						}
+					}					
+				}							
 			});
 		});
 		httpCluster.listen(9000,'0.0.0.0', () => {

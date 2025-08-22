@@ -1,8 +1,9 @@
 {
    "open_url":{
-      "name":"Abrir Url",
-      "description":"<i class=\"bi bi-gear\"></i> Abrir Url",
+      "name":"Abrir Url",      
+      "group":"Configuraciones",
       "type":"config",
+      "description":"<i class=\"bi bi-gear\"></i> Abrir Url",
       "params":{
          "link":""
       },

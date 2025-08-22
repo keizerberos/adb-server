@@ -9,6 +9,7 @@ let events = {
 	"send": [],
 	"task.progress": [],
 };
+
 let nodeActions = null;
 
 function genPlant(action) {
@@ -190,13 +191,21 @@ function findPattern(ctx, ctx1, canvas, pattern, first, crop) {
 	}
 }
 function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
-	if (signalStop) return;
+	
 	if (action == null) { cbSuccess(); return; }
 	if (action.next == null) { cbSuccess(); return; }
 	let nodeAction = action.next[actionIndex];
 	if (nodeAction == null) { cbSuccess(); return; }
 	let currentAction = devicesActions[deviceId][nodeAction];
 	if (currentAction == null) { cbFail(); return; }
+
+	if (signalStop || devicesActions[deviceId]['progress']['signalStop']) {		
+		//devicesActions[deviceId]['progress']['completed'].push(nodeAction);
+		devicesActions[deviceId]['progress']['current'] = nodeAction;	
+		devicesActions[deviceId]['progress']['state'] = 'ended';
+		events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
+		return;
+	}
 
 	console.log("currentAction.preDelay", nodeAction, currentAction.preDelay);
 	setTimeout(() => {
@@ -370,7 +379,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 		}
 	}, currentAction.preDelay);
 }
-function executeGraph(actionId, deviceId, ii, params, cbSuccess, cbFail) {
+function executeGraph(actionId, deviceId, ii, params, offsetDelay=null, cbSuccess, cbFail) {
 	//console.log("androidActions[actionId]",androidActions[actionId]);
 	let action = devicesActions[deviceId][actionId];
 	if (actionId == null) { cbSuccess(); return; }
@@ -400,15 +409,20 @@ function executeGraph(actionId, deviceId, ii, params, cbSuccess, cbFail) {
 		console.log("executeGraph.action.postDelay", action.postDelay);
 		setTimeout(() => {
 			executeNode(action, 0, deviceId, params,
-				() => {
+				() => {					
+					devicesActions[deviceId]['progress']['state'] = 'ended';
+					events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
 					cbSuccess();
 				},
-				() => {
+				() => {					
+					devicesActions[deviceId]['progress']['state'] = 'ended';
+					devicesActions[deviceId]['progress']['fail'] = true;
+					events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
 					cbFail();
 				}
 			)
 		}, action.postDelay);
-	}, action.preDelay + 2500 * ii + Math.random() * 5000);
+	}, offsetDelay==null?action.preDelay + 2500 * ii + Math.random() * 5000:action.preDelay+offsetDelay);
 }
 function executeTask(devices, task) {
 	let tasks = [];
@@ -426,10 +440,11 @@ function executeTask(devices, task) {
 	let countEnded = 0;
 	devices.forEach((d, ii) => {
 		devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
-		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [], current: [task.start], start: task.start, end: task.end };
+		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [], current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false };
+		devicesActions[d.serial]['params'] = params;
 		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 		//$(".act-" + d.id).removeClass("d-none");
-		executeGraph(task.start, d.serial, ii, params, () => {
+		executeGraph(task.start, d.serial, ii, params, null, () => {
 			countEnded++;
 			console.log("executeTask:executeGraph.ended")
 
@@ -461,14 +476,18 @@ function resumeTask(devices, task) {
 	console.log("params", params);
 	let countEnded = 0;
 	devices.forEach((d, ii) => {
+		console.log("resumeTask:executeGraph.resuming")
 		//devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
 		//devicesActions[d.serial]['progress'] = { path: task.progressPath, state: 'progress', completed: [], current: [task.start], start: task.start, end: task.end };
 		//events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 		let tempProgress = devicesActions[d.serial]['progress'];
+		let tempParams = devicesActions[d.serial]['params'];
 		devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
 		devicesActions[d.serial]['progress'] = tempProgress;
+		devicesActions[d.serial]['params'] = tempParams;
+		params = tempParams;
 		devicesActions[d.serial]['progress']['state'] = 'progress';
-		executeGraph(task.resume, d.serial, ii, params, () => {
+		executeGraph(task.resume, d.serial, ii, params, 0, () => {
 			countEnded++;
 			console.log("executeTask:executeGraph.ended")
 
@@ -558,8 +577,15 @@ class Executor {
 	on(ev, fn) {
 		events[ev].push(fn);
 	}
-	stop() {
+	stopAll() {
 		signalStop = true;
+	}
+	stopTask(devices) {		
+		devices.forEach(d=>{
+			if (devicesActions[d.serial]!=null){			
+				devicesActions[d.serial]['progress']['signalStop'] = true;
+			}
+		});
 	}
 	setActions(_nodeActions) {
 		nodeActions = _nodeActions;
@@ -574,7 +600,9 @@ class Executor {
 	}
 	resumeTask(devices, task) {
 		eventNodes = [];
-		signalStop = false;
+		devices.forEach(d=>{
+			devicesActions[d.serial]['progress']['signalStop'] = false;
+		});
 		resumeTask(devices, task);
 	}
 }
