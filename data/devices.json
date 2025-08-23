@@ -1,11 +1,11 @@
 {
 	"devicesAssign": {
 		"NBA34BOAC5047046": {
-			"number": "09",
+			"number": "01",
 			"network": {
-				"ip": "172.20.51.25/16",
-				"mac": "54:1f:8d:c2:1f:42",
-				"ssid": "WIFICORP",
+				"ip": "172.20.3.120/16",
+				"mac": "2a:3f:4c:aa:db:f1",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -70,7 +70,7 @@
 			"network": {
 				"ip": "172.20.51.28/16",
 				"mac": "54:1f:8d:c2:0d:72",
-				"ssid": "WIFICORP\"wpa2-psk, metered=false, defaultNetwork=false, oemManaged=OEM_NONE, subId=-1}, {type=1, ratType=COMBINED, wifiNetworkKey=\"WIFICORP",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -101,11 +101,7 @@
 			}
 		},
 		"NBA34BOPC5000854": {
-			"number": "01",
-			"resolution": {
-				"size": "720x1612",
-				"density": "Physical density: 320"
-			},
+			"number": "09",
 			"network": {
 				"ip": "172.20.51.34/16",
 				"mac": "54:1f:8d:bd:b7:b1",
@@ -185,9 +181,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "172.20.51.18/16",
-				"mac": "ea:a4:e4:f5:ae:1a",
-				"ssid": "WIFICORP",
+				"ip": "172.20.3.157/16",
+				"mac": "26:0d:d9:8c:bf:1b",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -211,9 +207,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "172.20.51.44/16",
-				"mac": "54:1f:8d:c2:0f:59",
-				"ssid": "WIFICORP",
+				"ip": "172.20.3.138/16",
+				"mac": "0e:fb:6f:84:f2:98",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -224,8 +220,8 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "",
-				"mac": "fe:07:5d:bd:d9:5a",
+				"ip": "172.20.51.43/16",
+				"mac": "54:1f:8d:c2:17:1d",
 				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
@@ -237,9 +233,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "172.20.51.46/16",
-				"mac": "54:1f:8d:c2:16:27",
-				"ssid": "WIFICORP",
+				"ip": "172.20.4.221/16",
+				"mac": "6e:9e:a3:87:ea:16",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -252,7 +248,7 @@
 			"network": {
 				"ip": "172.20.51.45/16",
 				"mac": "54:1f:8d:c2:0d:9a",
-				"ssid": "WIFICORP\"wpa2-psk, metered=false, defaultNetwork=false, oemManaged=OEM_NONE, subId=-1}, {type=1, ratType=COMBINED, wifiNetworkKey=\"WIFICORP",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -281,9 +277,9 @@
 		"NBA34BOAC5042260": {
 			"number": "40",
 			"network": {
-				"ip": "192.168.220.221/24",
+				"ip": "172.20.51.70/16",
 				"mac": "54:1f:8d:c2:0c:0f",
-				"ssid": "Redmi Note 9S",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -305,7 +301,7 @@
 			"network": {
 				"ip": "172.20.51.72/16",
 				"mac": "54:1f:8d:c2:0b:f4",
-				"ssid": "WIFICORP\"wpa2-psk, metered=false, defaultNetwork=false, oemManaged=OEM_NONE, subId=-1}, {type=1, ratType=COMBINED, wifiNetworkKey=\"WIFICORP",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -445,7 +441,7 @@
 		"NBA34BOAC5042192": {
 			"number": "27",
 			"network": {
-				"ip": "",
+				"ip": "172.20.51.86/16",
 				"mac": "54:1f:8d:c2:0b:cb",
 				"ssid": "WIFICORP",
 				"wifiOn": true
@@ -454,10 +450,10 @@
 		"NBA34BOAC5042188": {
 			"number": "29",
 			"network": {
-				"ip": "",
-				"mac": "",
-				"ssid": null,
-				"wifiOn": false
+				"ip": "172.20.51.87/16",
+				"mac": "54:1f:8d:c2:0b:c7",
+				"ssid": "WIFICORP",
+				"wifiOn": true
 			}
 		},
 		"R3CN509DWMP": {
@@ -494,7 +490,7 @@
 			},
 			"network": {
 				"ip": "",
-				"mac": "66:85:03:da:0c:65",
+				"mac": "1e:82:ad:84:19:60",
 				"ssid": null,
 				"wifiOn": true
 			}
@@ -520,7 +516,7 @@
 			},
 			"network": {
 				"ip": "",
-				"mac": "2a:c0:70:71:78:84",
+				"mac": "0e:26:44:ec:cd:e8",
 				"ssid": null,
 				"wifiOn": true
 			}
@@ -546,8 +542,8 @@
 			},
 			"network": {
 				"ip": "",
-				"mac": "22:55:38:48:ac:aa",
-				"ssid": null,
+				"mac": "4a:8b:dd:66:b9:43",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -593,9 +589,9 @@
 		"R3CN50B1MAY": {
 			"number": "53",
 			"network": {
-				"ip": "",
-				"mac": "32:97:ad:b1:14:61",
-				"ssid": null,
+				"ip": "172.20.51.52/16",
+				"mac": "48:eb:62:3a:88:b7",
+				"ssid": "pruebaPR",
 				"wifiOn": true
 			}
 		},
@@ -621,7 +617,7 @@
 			"number": "52",
 			"network": {
 				"ip": "",
-				"mac": "46:29:f3:11:ed:49",
+				"mac": "48:eb:62:51:26:17",
 				"ssid": "pruebaPR",
 				"wifiOn": true
 			}
@@ -630,7 +626,7 @@
 			"number": "50",
 			"network": {
 				"ip": "",
-				"mac": "da:c9:4b:3b:92:5c",
+				"mac": "52:16:5c:83:d8:86",
 				"ssid": null,
 				"wifiOn": true
 			}
@@ -648,7 +644,7 @@
 			"number": "55",
 			"network": {
 				"ip": "",
-				"mac": "f6:0f:8a:a6:e1:09",
+				"mac": "ae:67:11:12:d9:d5",
 				"ssid": null,
 				"wifiOn": true
 			}
@@ -656,11 +652,14 @@
 		"R3CN80PG2DV": {
 			"number": "58",
 			"network": {
-				"ip": "",
-				"mac": "7e:e7:39:df:42:01",
+				"ip": "172.20.51.67/16",
+				"mac": "48:eb:62:8b:0d:b3",
 				"ssid": "pruebaPR",
 				"wifiOn": true
 			}
+		},
+		"R3CN806Z5GP": {
+			"number": "59"
 		}
 	}
 }

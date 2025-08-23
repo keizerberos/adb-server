@@ -351,6 +351,7 @@ class AdbSocketServer {
 				if (devicesData.devicesAssign[device.serial] != null){
 					device['number'] = devicesData.devicesAssign[device.serial].number;				
 					device['network'] = devicesData.devicesAssign[device.serial].network;
+					device['resolution'] = devicesData.devicesAssign[device.serial].resolution;
 				}else
 					device['number'] = -1;
 				device['clusterId'] = uuid;
@@ -373,12 +374,16 @@ class AdbSocketServer {
 				if (devicesData.devicesAssign[data.serial] != null){
 					if (devicesData.devicesAssign[data.serial]['network'] == null){
 						devicesData.devicesAssign[data.serial]['network'] = data.data;						
+						const device = devices.find(d=>d.serial==data.serial);
+						device['network'] = data.data;
 						this.saveDevices();
 					}else{
 						if (devicesData.devicesAssign[data.serial]['network']['ip'] != data.data.ip
 							||devicesData.devicesAssign[data.serial]['network']['mac'] != data.data.mac
 							||devicesData.devicesAssign[data.serial]['network']['ssid'] != data.data.ssid){
-							devicesData.devicesAssign[data.serial]['network'] = data.data;						
+							devicesData.devicesAssign[data.serial]['network'] = data.data;
+							const device = devices.find(d=>d.serial==data.serial);
+							device['network'] = data.data;
 							this.saveDevices();
 						}
 					}					
@@ -389,10 +394,14 @@ class AdbSocketServer {
 				
 				if (devicesData.devicesAssign[data.serial] != null){
 					if (devicesData.devicesAssign[data.serial]['resolution'] == undefined){
-						devicesData.devicesAssign[data.serial]['resolution'] = data.data;						
+						devicesData.devicesAssign[data.serial]['resolution'] = data.data;		
+						const device = devices.find(d=>d.serial==data.serial);
+						device['resolution'] = data.data;						
 						this.saveDevices();
 					}else{
 						if (devicesData.devicesAssign[data.serial]['resolution']['size'] != data.data.size){
+							const device = devices.find(d=>d.serial==data.serial);
+							device['resolution'] = data.data;						
 							this.saveDevices();
 						}
 					}					
