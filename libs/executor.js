@@ -195,7 +195,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 	if (action == null) { cbSuccess(); return; }
 	if (action.next == null) { cbSuccess(); return; }
 	let nodeAction = action.next[actionIndex];
-	if (nodeAction == null) { cbSuccess(); return; }
+	if (nodeAction == null || nodeAction == undefined) { cbSuccess(); return; }
 	let currentAction = devicesActions[deviceId][nodeAction];
 	if (currentAction == null) { cbFail(); return; }
 
@@ -219,8 +219,12 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 			if (currentAction.loop >= currentAction.maxLoop) {
 				let beforeLoop = devicesActions[deviceId][currentAction.beforeLoop];
 				console.log("executeNode is max loop", true);
-				executeNode(beforeLoop, 0, deviceId, params, cbSuccess, cbFail);
-				//executeNode(action,actionIndex+1,deviceId,params,cbSuccess,cbFail);
+				if ( beforeLoop == undefined){
+					cbFail();
+				}else{
+					executeNode(beforeLoop, 0, deviceId, params, cbSuccess, cbFail);
+					//executeNode(action,actionIndex+1,deviceId,params,cbSuccess,cbFail);
+				}
 				return;
 			}
 
@@ -267,6 +271,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 				return;
 			}*/
 
+			console.log(deviceId +" new eventNodes");
 			eventNodes.push({
 				deviceId: deviceId,
 				action: nodeAction,
@@ -297,7 +302,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 							//if ((ox>0 && currentAction.condition)||(!currentAction.condition&&ox<0)){
 							if (ox > 0) {
 
-								console.log("executeNode.pattern true");
+								console.log(deviceId +" executeNode.pattern true");
 								let command = JSON.parse(JSON.stringify(currentAction.command));
 								if (command != null) {
 									let tempParams = {
@@ -328,10 +333,15 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 								}, currentAction.postDelay);
 
 							} else {
-								console.log("executeNode.pattern false");
+								console.log(deviceId +" executeNode.pattern false");
 								currentAction.try++;
 								setTimeout(() => {
-									executeNode(action, actionIndex + 1, deviceId, params, cbSuccess, cbFail);
+									executeNode(action, actionIndex + 1, deviceId, params, () => {
+											cbSuccess();
+										},
+										() => {
+											cbFail();
+										});
 								}, currentAction.postDelay);
 							}
 						});
@@ -340,7 +350,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 					}, cbFail);
 				},
 				cbFail: () => {
-
+					//BAD SCREEN
 					let data = {
 						"action": "Screen",
 						"devices": deviceId,

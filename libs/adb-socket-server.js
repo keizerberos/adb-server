@@ -293,8 +293,8 @@ class AdbSocketServer {
 	startServerCluster(clients, clusters, devices) {
 		const httpCluster = createServer();
 		const ioCluster = new Server(httpCluster, {
-			pingInterval: 3800, 
-			pingTimeout: 3500,
+			pingInterval: 4800, 
+			pingTimeout: 8500,
 			maxHttpBufferSize: 1e8 ,
 			forceNew: true,
 			cors: {

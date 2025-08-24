@@ -3,9 +3,9 @@
 		"NBA34BOAC5047046": {
 			"number": "01",
 			"network": {
-				"ip": "172.20.3.120/16",
-				"mac": "2a:3f:4c:aa:db:f1",
-				"ssid": "KERNOTEC2",
+				"ip": "172.20.51.25/16",
+				"mac": "54:1f:8d:c2:1f:42",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -40,7 +40,7 @@
 			"network": {
 				"ip": "172.20.51.29/16",
 				"mac": "54:1f:8d:c2:0d:7a",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -53,7 +53,7 @@
 			"network": {
 				"ip": "172.20.51.32/16",
 				"mac": "54:1f:8d:c2:0d:97",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -83,7 +83,7 @@
 			"network": {
 				"ip": "172.20.51.31/16",
 				"mac": "54:1f:8d:c2:0b:b9",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -96,7 +96,7 @@
 			"network": {
 				"ip": "172.20.51.30/16",
 				"mac": "54:1f:8d:bd:bd:d2",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -118,7 +118,7 @@
 			"network": {
 				"ip": "172.20.51.33/16",
 				"mac": "54:1f:8d:c2:0b:df",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -131,7 +131,7 @@
 			"network": {
 				"ip": "172.20.51.35/16",
 				"mac": "54:1f:8d:bd:b7:f5",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -181,9 +181,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "172.20.3.157/16",
-				"mac": "26:0d:d9:8c:bf:1b",
-				"ssid": "KERNOTEC2",
+				"ip": "172.20.51.18/16",
+				"mac": "ea:a4:e4:f5:ae:1a",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -207,9 +207,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "172.20.3.138/16",
-				"mac": "0e:fb:6f:84:f2:98",
-				"ssid": "KERNOTEC2",
+				"ip": "172.20.51.44/16",
+				"mac": "54:1f:8d:c2:0f:59",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -233,8 +233,8 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "172.20.4.221/16",
-				"mac": "6e:9e:a3:87:ea:16",
+				"ip": "172.20.51.46/16",
+				"mac": "54:1f:8d:c2:16:27",
 				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
@@ -257,7 +257,7 @@
 			"network": {
 				"ip": "172.20.51.68/16",
 				"mac": "54:1f:8d:c2:0d:73",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -266,7 +266,7 @@
 			"network": {
 				"ip": "172.20.51.69/16",
 				"mac": "54:1f:8d:bd:b7:71",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -279,7 +279,7 @@
 			"network": {
 				"ip": "172.20.51.70/16",
 				"mac": "54:1f:8d:c2:0c:0f",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -288,7 +288,7 @@
 			"network": {
 				"ip": "172.20.51.71/16",
 				"mac": "54:1f:8d:b7:4e:1d",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -310,7 +310,7 @@
 			"network": {
 				"ip": "172.20.51.73/16",
 				"mac": "54:1f:8d:c2:0d:74",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -319,7 +319,7 @@
 			"network": {
 				"ip": "172.20.51.74/16",
 				"mac": "54:1f:8d:bd:b7:86",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -328,7 +328,7 @@
 			"network": {
 				"ip": "172.20.51.75/16",
 				"mac": "54:1f:8d:c2:0d:b8",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -341,7 +341,7 @@
 			"network": {
 				"ip": "172.20.51.76/16",
 				"mac": "54:1f:8d:c2:17:30",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -350,7 +350,7 @@
 			"network": {
 				"ip": "172.20.51.77/16",
 				"mac": "54:1f:8d:bd:b7:7e",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -359,7 +359,7 @@
 			"network": {
 				"ip": "172.20.51.78/16",
 				"mac": "54:1f:8d:c2:1b:74",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -372,7 +372,7 @@
 			"network": {
 				"ip": "172.20.51.79/16",
 				"mac": "54:1f:8d:c2:1b:71",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -385,7 +385,7 @@
 			"network": {
 				"ip": "172.20.51.80/16",
 				"mac": "54:1f:8d:c2:0f:5b",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -403,7 +403,7 @@
 			"network": {
 				"ip": "172.20.51.82/16",
 				"mac": "54:1f:8d:c2:0d:37",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -425,7 +425,7 @@
 			"network": {
 				"ip": "172.20.51.84/16",
 				"mac": "54:1f:8d:c2:0d:7b",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -434,7 +434,7 @@
 			"network": {
 				"ip": "172.20.51.85/16",
 				"mac": "54:1f:8d:c2:0b:eb",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -443,7 +443,7 @@
 			"network": {
 				"ip": "172.20.51.86/16",
 				"mac": "54:1f:8d:c2:0b:cb",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -465,7 +465,7 @@
 			"network": {
 				"ip": "172.20.51.50/16",
 				"mac": "48:eb:62:37:ef:c0",
-				"ssid": "pruebaPR",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -478,7 +478,7 @@
 			"network": {
 				"ip": "172.20.51.56/16",
 				"mac": "48:eb:62:54:45:de",
-				"ssid": "pruebaPR",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -489,9 +489,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "",
-				"mac": "1e:82:ad:84:19:60",
-				"ssid": null,
+				"ip": "172.20.51.65/16",
+				"mac": "48:eb:62:9c:9d:8c",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -504,7 +504,7 @@
 			"network": {
 				"ip": "172.20.51.54/16",
 				"mac": "48:eb:62:65:5c:4c",
-				"ssid": "pruebaPR",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -515,9 +515,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "",
-				"mac": "0e:26:44:ec:cd:e8",
-				"ssid": null,
+				"ip": "172.20.51.57/16",
+				"mac": "48:eb:62:51:de:26",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -530,7 +530,7 @@
 			"network": {
 				"ip": "172.20.51.63/16",
 				"mac": "48:eb:62:55:16:64",
-				"ssid": "pruebaPR",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -541,9 +541,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "",
-				"mac": "4a:8b:dd:66:b9:43",
-				"ssid": "WIFICORP",
+				"ip": "172.20.51.66/16",
+				"mac": "48:eb:62:3b:7f:f5",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -554,9 +554,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "",
-				"mac": "76:64:e7:1c:23:37",
-				"ssid": "pruebaPR",
+				"ip": "172.20.51.53/16",
+				"mac": "48:eb:62:7b:82:cd",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -569,7 +569,7 @@
 			"network": {
 				"ip": "172.20.51.49/16",
 				"mac": "48:eb:62:37:c8:7b",
-				"ssid": "pruebaPR",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -582,7 +582,7 @@
 			"network": {
 				"ip": "172.20.51.48/16",
 				"mac": "58:d5:0a:f3:3f:a4",
-				"ssid": "pruebaPR",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -591,7 +591,7 @@
 			"network": {
 				"ip": "172.20.51.52/16",
 				"mac": "48:eb:62:3a:88:b7",
-				"ssid": "pruebaPR",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -600,34 +600,34 @@
 			"network": {
 				"ip": "172.20.51.64/16",
 				"mac": "48:eb:62:55:24:4f",
-				"ssid": "pruebaPR",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
 		"R3CN50JGLYV": {
 			"number": "51",
 			"network": {
-				"ip": "",
-				"mac": "8a:b0:e7:aa:76:0e",
-				"ssid": null,
+				"ip": "172.20.51.55/16",
+				"mac": "48:eb:62:54:fc:8d",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
 		"R3CN50JH6DB": {
 			"number": "52",
 			"network": {
-				"ip": "",
+				"ip": "172.20.51.62/16",
 				"mac": "48:eb:62:51:26:17",
-				"ssid": "pruebaPR",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
 		"R3CN606ESXH": {
 			"number": "50",
 			"network": {
-				"ip": "",
-				"mac": "52:16:5c:83:d8:86",
-				"ssid": null,
+				"ip": "172.20.51.59/16",
+				"mac": "48:eb:62:5f:20:1a",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -636,16 +636,16 @@
 			"network": {
 				"ip": "172.20.51.58/16",
 				"mac": "58:d5:0a:ed:2b:f2",
-				"ssid": "pruebaPR",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
 		"R3CN705VM8F": {
 			"number": "55",
 			"network": {
-				"ip": "",
-				"mac": "ae:67:11:12:d9:d5",
-				"ssid": null,
+				"ip": "172.20.51.61/16",
+				"mac": "48:eb:62:3f:bc:7e",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -654,12 +654,18 @@
 			"network": {
 				"ip": "172.20.51.67/16",
 				"mac": "48:eb:62:8b:0d:b3",
-				"ssid": "pruebaPR",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
 		"R3CN806Z5GP": {
-			"number": "59"
+			"number": "59",
+			"network": {
+				"ip": "172.20.51.60/16",
+				"mac": "18:48:ca:1a:0a:5d",
+				"ssid": "KERNOTEC2",
+				"wifiOn": true
+			}
 		}
 	}
 }

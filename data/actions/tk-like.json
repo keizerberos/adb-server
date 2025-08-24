@@ -15,7 +15,7 @@
       "order":0,
       "type":"static",
       "preDelay":2000,
-      "postDelay":16000,
+      "postDelay":24000,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,
@@ -282,7 +282,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 333 1143"
+            "command":"input tap 333 1294"
          }
       },
       "order":0,
@@ -360,7 +360,7 @@
       "order":0,
       "type":"static",
       "preDelay":2000,
-      "postDelay":16000,
+      "postDelay":24000,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,
@@ -627,7 +627,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 333 1143"
+            "command":"input tap 333 1294"
          }
       },
       "order":0,
@@ -705,7 +705,7 @@
       "order":0,
       "type":"static",
       "preDelay":2000,
-      "postDelay":16000,
+      "postDelay":24000,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,
