@@ -311,7 +311,7 @@ class AdbSocketServer {
 			clusters.push(cluster);
 			clients.forEach(client => client.socket.emit("cluster.connect", {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address}));
 			socket.on("disconnect", () => {
-				Log.i("Cluster Socket disconnected " + uuid);
+				Log.i("Cluster Socket disconnected " + uuid + " " +address.address);
 				let clusterDevices = devices.filter(d => d.clusterId == uuid);
 				console.log("delete devices", clusterDevices);
 				clusterDevices.forEach(device => clients.forEach(client => client.socket.emit("device.disconnect", device)));
