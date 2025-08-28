@@ -306,7 +306,7 @@ class AdbSocketServer {
 			let uuid = short.generate();
   			//var address = socket.handshake.address;
   			var address = socket.request.connection._peername;
-			Log.i("Cluster Socket connected " + uuid + " " +address );
+			Log.i("Cluster Socket connected " + uuid + " " +address.address );
 			const cluster = { socket: socket, devices: [], uuid, uuid,address:address };
 			clusters.push(cluster);
 			clients.forEach(client => client.socket.emit("cluster.connect", {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address}));
