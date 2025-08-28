@@ -41,13 +41,39 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":17000,
+      "postDelay":30000,
       "maxLoop":3,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
+         "fbv1_like_pre_3"
+      ]
+   },
+   "fbv1_like_pre_3":{
+      "name":"tap like",
+      "desc":"tap like",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 358 689"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[		
          "fbv1_like_3_blue",
          "fbv1_like_3",
          "fbv1_like_5"
@@ -192,7 +218,7 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":10000,
+      "postDelay":30000,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,
@@ -272,52 +298,6 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fbv1_xlike_a_3a",
-         "fbv1_xlike_a_4"
-      ]
-   },
-   "fbv1_xlike_a_3a":{
-      "name":"PATTERN",
-      "desc":"Find start session icon",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_fbv1_inisesion",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{deviceId}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap {wm} {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":400,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
          "fbv1_xlike_a_4"
       ]
    },
@@ -332,6 +312,32 @@
          "devices":"{deviceId}",
          "data":{
             "command":"input tap 447 1418"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":5000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "fbv1_like_c_2x"
+      ]
+   },
+   "fbv1_like_c_2x":{
+      "name":"STOP_APK",
+      "desc":"Stop APK",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"stopApk",
+         "devices":"{deviceId}",
+         "data":{
+            "apk":"com.facebook.lite"
          }
       },
       "order":0,
@@ -363,13 +369,39 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":15000,
+      "postDelay":30000,
       "maxLoop":3,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
+         "fbv1_like_c_3_pre_3"
+      ]
+   },
+   "fbv1_like_c_3_pre_3":{
+      "name":"tap like",
+      "desc":"tap like",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 358 689"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[		
          "fbv1_like_c_3_blue",
          "fbv1_like_c_3",
          "fbv1_like_c_5"
@@ -514,7 +546,7 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":10000,
+      "postDelay":30000,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,
@@ -596,52 +628,6 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fbv1_xlike_a_3a_x3",
-         "fbv1_xlike_a_4_x3"
-      ]
-   },
-   "fbv1_xlike_a_3a_x3":{
-      "name":"PATTERN",
-      "desc":"Find start session icon",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_fbv1_inisesion",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{deviceId}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap {wm} {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":400,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
          "fbv1_xlike_a_4_x3"
       ]
    },
@@ -687,10 +673,36 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":15000,
+      "postDelay":30000,
       "maxLoop":3,
       "loop":0,
       "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "fbv1_like_c_3_pre_x3"
+      ]
+   },
+   "fbv1_like_c_3_pre_x3":{
+      "name":"tap like",
+      "desc":"tap like",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 358 689"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
       "try":0,
       "timeout":5000,
       "next":[

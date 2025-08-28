@@ -221,8 +221,10 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 				console.log("executeNode is max loop", true);
 				if ( beforeLoop == undefined){
 					cbFail();
-				}else{
-					executeNode(beforeLoop, 0, deviceId, params, cbSuccess, cbFail);
+				}else{							
+					setTimeout(() => {
+						executeNode(beforeLoop, 0, deviceId, params, cbSuccess, cbFail);
+					}, currentAction.postDelay);					
 					//executeNode(action,actionIndex+1,deviceId,params,cbSuccess,cbFail);
 				}
 				return;
@@ -394,6 +396,7 @@ function executeGraph(actionId, deviceId, ii, params, offsetDelay=null, cbSucces
 	let action = devicesActions[deviceId][actionId];
 	if (actionId == null) { cbSuccess(); return; }
 	console.log("pre ejecutando comando ");
+	console.log("executeGraph.action.actionId", actionId);
 	console.log("executeGraph.action.preDelay", action.preDelay);
 	setTimeout(() => {
 		if (action.type == "static") {
