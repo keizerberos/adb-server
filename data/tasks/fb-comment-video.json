@@ -1,9 +1,9 @@
 {
    "facebook_video_comment":{
-      "name":"Comentarios en 3 cuentas (Video)",
+      "name":"Comentarios en 3 cuentas (Reel)",
 		"group": "Facebook",
 		"type": "task",
-      "description":"<i class=\"bi bi-facebook\"></i> Facebook - \"Me gusta\" - 3 comentarios(videos)",
+      "description":"<i class=\"bi bi-facebook\"></i> Facebook - \"Me gusta\" - 3 comentarios(Reel)",
       "functions":{
          "link":"fburl"
       },
