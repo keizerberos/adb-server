@@ -87,7 +87,7 @@
       },
       "order":0,
       "type":"pattern",
-      "preDelay":400,
+      "preDelay":1400,
       "postDelay":3000,
       "maxLoop":10,
       "loop":0,
