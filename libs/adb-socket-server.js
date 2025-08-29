@@ -80,11 +80,11 @@ class AdbSocketServer {
 		if(saveProgrammed) return;
 		setTimeout(()=>{
 			fs.writeFile('./data/devices.json',JSON.stringify(devicesData, null, '\t'),'utf8', (err)=>{
+				saveProgrammed = false;
 				if (err) {
 					console.error('Error writing file:', err);
 					return;
 				}
-				saveProgrammed = false;
 				console.log('File written successfully!');
 			});
 		},5000);
