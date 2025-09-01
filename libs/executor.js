@@ -650,15 +650,15 @@ class Executor {
 		signalStop = false;
 		executeTask(devices, task);
 	}
-	startTaskBatch(devices, task) {
+	startTaskBatch(_devices, task) {
 		eventNodes = [];
 		signalStop = false;
 		let batchs = [];
 		console.log("building batch");
-		task.config.batch.groups.forEach(devices=>{
+		task.config.batch.groups.forEach(groupDevices=>{
 			let batch = (cb)=>{
 				setTimeout(()=>{
-					executeTaskBatch(task.device, task, ()=>{
+					executeTaskBatch(groupDevices, task, ()=>{
 						cb();
 					});
 				},task.config.batch.offset*1000);
