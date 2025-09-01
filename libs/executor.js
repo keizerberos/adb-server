@@ -398,6 +398,12 @@ function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, 
 	console.log("pre ejecutando comando ");
 	console.log("executeGraph.action.actionId", actionId);
 	console.log("executeGraph.action.preDelay", action.preDelay);
+
+	let timeExecute = offsetDelay==null?action.preDelay + 2500 * ii + Math.random() * 5000:action.preDelay+offsetDelay)
+	if (config != null){
+		timeExecute = action.preDelay + (config.offset * 1000*ii);
+	}	
+	
 	setTimeout(() => {
 		if (action.type == "static") {
 			//$(".act-" + deviceId).html(action.name + "<br> " + action.desc);
@@ -435,7 +441,7 @@ function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, 
 				}
 			)
 		}, action.postDelay);
-	}, offsetDelay==null?action.preDelay + 2500 * ii + Math.random() * 5000:action.preDelay+offsetDelay);
+	}, timeExecute);
 }
 function executeTask(devices, task) {
 	let tasks = [];
@@ -649,7 +655,7 @@ class Executor {
 		signalStop = false;
 		let batchs = [];
 		console.log("building batch");
-		task.config.groups.forEach(devices=>{
+		task.config.batch.groups.forEach(devices=>{
 			let batch = (cb)=>{
 				setTimeout(()=>{
 					executeTaskBatch(task.device, task, ()=>{

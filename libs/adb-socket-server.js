@@ -236,7 +236,7 @@ class AdbSocketServer {
 			socket.on("tasks.execute.batch", (data) => {
 				Log.i("tasks.execute.batch");
 				Log.o(data);
-				this.executor.startTaskBatch(devices, data.task);
+				this.executor.startTaskBatch(null, data.task);
 			});
 			socket.on("tasks.resume", (data) => {
 				Log.i("tasks.resume ");
