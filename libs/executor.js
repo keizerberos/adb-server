@@ -391,7 +391,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 		}
 	}, currentAction.preDelay);
 }
-function executeGraph(actionId, deviceId, ii, params, offsetDelay=null, cbSuccess, cbFail) {
+function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, cbSuccess, cbFail) {
 	//console.log("androidActions[actionId]",androidActions[actionId]);
 	let action = devicesActions[deviceId][actionId];
 	if (actionId == null) { cbSuccess(); return; }
@@ -456,18 +456,52 @@ function executeTask(devices, task) {
 		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [], current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false };
 		devicesActions[d.serial]['params'] = params;
 		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-		//$(".act-" + d.id).removeClass("d-none");
-		executeGraph(task.start, d.serial, ii, params, null, () => {
+		executeGraph(task.config, task.start, d.serial, ii, params, null, () => {
 			countEnded++;
 			console.log("executeTask:executeGraph.ended")
 
 			devicesActions[d.serial]['progress']['state'] = 'ended';
 			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 			if (countEnded >= devices.length) {
-				//$(".action-title").addClass("d-none");
 				console.log("all ended")
 				countEnded = 0;
 				signalStop = false;
+			}
+		}, () => {
+			console.log("executeTask:executeGraph.incomplete")
+		});
+	});
+}
+function executeTaskBatch(devices, task, cbEnd) {
+	let tasks = [];
+	let params = {};
+
+	task.paramsArray.forEach(param => {
+		const paramLines = param.value.split('\n');
+		if (paramLines.length < 2) {
+			params[param.id] = param.value;
+		} else
+			params[param.id] = { random: false, index: 0, data: paramLines };
+	});
+	devicesActions = {};
+	console.log("params", params);
+	let countEnded = 0;
+	devices.forEach((d, ii) => {
+		devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
+		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [], current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false };
+		devicesActions[d.serial]['params'] = params;
+		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+		executeGraph(task.config, task.start, d.serial, ii, params, null, () => {
+			countEnded++;
+			console.log("executeTask:executeGraph.ended")
+
+			devicesActions[d.serial]['progress']['state'] = 'ended';
+			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+			if (countEnded >= devices.length) {				
+				console.log("all ended")
+				countEnded = 0;
+				signalStop = false;
+				cbEnd();
 			}
 		}, () => {
 			console.log("executeTask:executeGraph.incomplete")
@@ -500,14 +534,13 @@ function resumeTask(devices, task) {
 		devicesActions[d.serial]['params'] = tempParams;
 		params = tempParams;
 		devicesActions[d.serial]['progress']['state'] = 'progress';
-		executeGraph(task.resume, d.serial, ii, params, 0, () => {
+		executeGraph(task.config, task.resume, d.serial, ii, params, 0, () => {
 			countEnded++;
 			console.log("executeTask:executeGraph.ended")
 
 			devicesActions[d.serial]['progress']['state'] = 'ended';
 			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 			if (countEnded >= devices.length) {
-				//$(".action-title").addClass("d-none");
 				console.log("all ended")
 				countEnded = 0;
 				signalStop = false;
@@ -610,6 +643,32 @@ class Executor {
 		eventNodes = [];
 		signalStop = false;
 		executeTask(devices, task);
+	}
+	startTaskBatch(devices, task) {
+		eventNodes = [];
+		signalStop = false;
+		let batchs = [];
+		console.log("building batch");
+		task.config.groups.forEach(devices=>{
+			let batch = (cb)=>{
+				setTimeout(()=>{
+					executeTaskBatch(task.device, task, ()=>{
+						cb();
+					});
+				},task.config.batch.offset*1000);
+			};
+			batchs.push(batch);
+		});
+		console.log("starting batch executor");
+		let batchExecutor = (index)=>{
+			if (batchs[index]==undefined) {console.log("ending batch");return};
+			console.log("start batch " + index + " of " +batchs.length);
+			batchs[index](()=>{
+				console.log("ended batch " + index);
+				batchExecutor(index+1);
+			});
+		};
+		batchExecutor(0);
 	}
 	resumeTask(devices, task) {
 		eventNodes = [];
