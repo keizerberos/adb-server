@@ -512,7 +512,7 @@ function executeTaskBatch(devices, task, cbEnd) {
 		}, () => {
 			countEnded++;
 			console.log("executeTask:executeGraph.incomplete")
-			
+
 			devicesActions[d.serial]['progress']['state'] = 'ended';
 			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 			if (countEnded >= devices.length) {				
@@ -665,6 +665,12 @@ class Executor {
 		signalStop = false;
 		let batchs = [];
 		console.log("building batch");
+
+		if (!task.config.isBatch){
+			executeTask(_devices, task);
+			return;
+		}
+
 		task.config.batch.groups.forEach(groupDevices=>{
 			let batch = (cb)=>{
 				setTimeout(()=>{
