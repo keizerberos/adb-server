@@ -399,7 +399,7 @@ function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, 
 	console.log("executeGraph.action.actionId", actionId);
 	console.log("executeGraph.action.preDelay", action.preDelay);
 
-	let timeExecute = offsetDelay==null?action.preDelay + 2500 * ii + Math.random() * 5000:action.preDelay+offsetDelay)
+	let timeExecute = offsetDelay==null?action.preDelay + 2500 * ii + Math.random() * 5000:action.preDelay+offsetDelay;
 	if (config != null){
 		timeExecute = action.preDelay + (config.offset * 1000*ii);
 	}	
