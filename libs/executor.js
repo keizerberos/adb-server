@@ -499,7 +499,7 @@ function executeTaskBatch(devices, task, cbEnd) {
 		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 		executeGraph(task.config, task.start, d.serial, ii, params, null, () => {
 			countEnded++;
-			console.log("executeTask:executeGraph.ended")
+			console.log("executeTaskBatch:executeGraph.ended countEnded",countEnded + "/" + devices.length)
 
 			devicesActions[d.serial]['progress']['state'] = 'ended';
 			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
@@ -510,7 +510,17 @@ function executeTaskBatch(devices, task, cbEnd) {
 				cbEnd();
 			}
 		}, () => {
+			countEnded++;
 			console.log("executeTask:executeGraph.incomplete")
+			
+			devicesActions[d.serial]['progress']['state'] = 'ended';
+			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+			if (countEnded >= devices.length) {				
+				console.log("all ended with fails")
+				countEnded = 0;
+				signalStop = false;
+				cbEnd();
+			}
 		});
 	});
 }
