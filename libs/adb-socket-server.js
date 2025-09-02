@@ -5,6 +5,7 @@ const { Server } = require("socket.io");
 const {Executor,genPlant} = require("./executor.js");
 const short = require('short-uuid');
 const fs = require('fs');
+const path = require('path')
 let devicesData = JSON.parse(fs.readFileSync('./data/devices.json', 'utf8'));
 let actionsData = JSON.parse(fs.readFileSync('./data/actions.json', 'utf8'));
 let patternsData = JSON.parse(fs.readFileSync('./data/patterns.json', 'utf8'));
@@ -109,6 +110,21 @@ class AdbSocketServer {
 			res.setHeader('Content-Type', 'application/json');
 			res.send(JSON.stringify(actionsData));
 		});
+		fastServer.get("/screens",(req,res)=>{
+			console.log("req.query.screenId",req.query.screenId);
+			const screenId = req.query.screenId;
+			console.log("path",__dirname + '/../screens/'+screenId+'.png');
+			const imagePath = path.join(__dirname, '/../screens/'+screenId+'.png');
+			res.sendFile(imagePath);
+		});
+		fastServer.get("/devices",(req,res)=>{
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify(devices));
+		});
+		fastServer.get("/clusters",(req,res)=>{
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify(clusters));
+		});
 		
 		const io = new Server(httpServer, {
 			cors: {
@@ -162,6 +178,10 @@ class AdbSocketServer {
 				else
 					deviceTemp['number'] = -1;
 				clients.forEach(client => client.socket.emit("device.update", deviceTemp));
+			});
+			socket.on("patterns", (data) => {
+				Log.i("sending.patterns");
+				socket.emit("patterns", patternsData);
 			});
 			socket.on("feature.capture.on", (data) => {
 				Log.i("feature.capture");
@@ -340,6 +360,7 @@ class AdbSocketServer {
 						device['number'] = -1;
 					}
 					device['clusterId'] = uuid;
+					device['clusterAddress'] = cluster.address?.address;
 				});
 				if(changes>0){
 					console.log("changes",changes);

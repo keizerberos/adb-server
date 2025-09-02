@@ -1,10 +1,13 @@
 const { Logger } = require('atx-logger');
 const { createCanvas, loadImage } = require('canvas');
+const fs = require('fs');
 const e = require('cors');
 let devicesActions = {};
+let screensCache = {};
 let signalStop = false;
 let androidPattern = {};
 let eventNodes = [];
+
 let events = {
 	"send": [],
 	"task.progress": [],
@@ -283,15 +286,15 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 						currentAction.trigger.forEach(trigger => {
 							const pattern = androidPattern[trigger.pattern];
 							//console.log(pattern);
-							let outputcanvas = createCanvas(750, 1612);
-							let outputcanvasP = createCanvas(750, 1612);
-							let outputcanvasF = createCanvas(750, 1612);
+							let outputcanvas = createCanvas(720, 1612);
+							let outputcanvasP = createCanvas(720, 1612);
+							let outputcanvasF = createCanvas(720, 1612);
 							outputcanvas.width = 720;
-							outputcanvas.height = 1606;
+							outputcanvas.height = 1612;
 							outputcanvasP.width = 720;
-							outputcanvasP.height = 1606;
+							outputcanvasP.height = 1612;
 							outputcanvasF.width = 720;
-							outputcanvasF.height = 1606;
+							outputcanvasF.height = 1612;
 							let canvasctx = outputcanvas.getContext("2d");
 							let canvasctxP = outputcanvasP.getContext("2d");
 							let canvasctxF = outputcanvasF.getContext("2d");
@@ -423,6 +426,7 @@ function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, 
 			//myWebSocket.send(JSON.stringify(command));
 			events['send'].forEach(fn => fn(command));
 		} else if (action.type == "pattern") {
+			//neeer start with a pattern, but...
 			console.log("executeGraph.pattern test", JSON.stringify(action.command));
 		}
 		console.log("executeGraph.action.postDelay", action.postDelay);
@@ -458,8 +462,15 @@ function executeTask(devices, task) {
 	console.log("params", params);
 	let countEnded = 0;
 	devices.forEach((d, ii) => {
+		let batchIndex = -1;
+		if (task.config!=null)
+			if (task.config.isBatch)
+				task.config.batch.groups.forEach((gd,gi)=>batchIndex=gd.find(gdd=>gdd.serial==d.serial)?gi:batchIndex);
+		//if (devicesActions[d.serial] != undefined){			
+			clearScreens(d.serial);
+		//}
 		devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
-		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [], current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false };
+		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [], screens:{}, current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false,batchIndex:batchIndex };
 		devicesActions[d.serial]['params'] = params;
 		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 		executeGraph(task.config, task.start, d.serial, ii, params, null, () => {
@@ -493,8 +504,15 @@ function executeTaskBatch(devices, task, cbEnd) {
 	console.log("params", params);
 	let countEnded = 0;
 	devices.forEach((d, ii) => {
+		let batchIndex = -1;
+		if (task.config!=null)
+			if (task.config.isBatch)
+				task.config.batch.groups.forEach((gd,gi)=>batchIndex=gd.find(gdd=>gdd.serial==d.serial)?gi:batchIndex);
+		//if (devicesActions[d.serial] != undefined){			
+			clearScreens(d.serial);
+		//}
 		devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
-		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [], current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false };
+		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [],screens:{}, current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false,batchIndex:batchIndex };
 		devicesActions[d.serial]['params'] = params;
 		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 		executeGraph(task.config, task.start, d.serial, ii, params, null, () => {
@@ -591,12 +609,43 @@ function executeTasks(tasks, callback) {
 	};
 	executor();
 }
+function clearScreens(serial){
+    var files = [];
+	const pathScreens = __dirname+"/../screens/";
+	//console.log("clearScreens",__dirname+"/"+pathScreens);
+    fs.readdir(pathScreens, function(err,list){
+        if(err) throw err;
+        for(var i=0; i<list.length; i++){
+			console.log("test",list[i]); 
+            if(list[i].includes(serial)){
+                console.log("deleting",list[i]); 
+                //files.push(list[i]);
+				fs.unlinkSync(pathScreens+list[i]);
+            }
+        }
+    });
+}
 class Executor {
 	constructor() {
 
 	}
+	/** Register Screen for progress */
+	regScreen(id,img){		
+		const pathScreens = "screens/";
+		if (devicesActions[id]==undefined) return;
+		if (devicesActions[id]['progress']==undefined) return;
+		
+		const timestamp = Date.now();
+		const screenUid = timestamp;
+		const actionIdCurrent = devicesActions[id]['progress']['current'];		
+		if (devicesActions[id]['progress']['screens'][actionIdCurrent]==undefined)
+			devicesActions[id]['progress']['screens'][actionIdCurrent] = [];
+		devicesActions[id]['progress']['screens'][actionIdCurrent].push(screenUid);
+		//screensCache[screenUid] = img;
+		fs.writeFileSync(pathScreens+id+'-'+timestamp+'.png', img)
+	}
 	screen(id, img) {
-
+		this.regScreen(id,img);
 		if ( eventNodes.find(e=>e.deviceId == id )==undefined ) {
 			return;
 		}
