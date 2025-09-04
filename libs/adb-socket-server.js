@@ -56,6 +56,12 @@ function scanTasksFolfer() {
 	//console.log("tasks",tasks)
 	//console.log("actions",actions)
 }
+const ClientType = Object.freeze({
+  PROGRESS: 0,
+  DASHBOARD: 1,
+  REMOTE: 2,
+  EXECUTOR: 3,
+});
 class AdbSocketServer {
 	constructor(Logger) {
 		Log = Logger;
@@ -146,12 +152,12 @@ class AdbSocketServer {
 			const device = dget(devices, 'serial', deviceId);
 			if (device != null) {							
 				device['progress'] = progress;
-				clients.forEach(client => client.socket.emit("task.progress", {serial:deviceId,data:progress}));
+				clients.filter(client=>client.features.capture).forEach(client => client.socket.emit("task.progress", {serial:deviceId,data:progress}));
 			}
 		});
 		io.on("connection", (socket) => {
 			let uuid = short.generate();
-			const client = { socket: socket, uuid: uuid, features:{'capture':true,'adb':true} };
+			const client = { socket: socket, type:ClientType.DASHBOARD,devices:[], uuid: uuid, features:{'capture':true,'progress':true,'adb':true} };
 			clients.push(client);
 			Log.i("Socket connected " + uuid);
 
@@ -183,6 +189,26 @@ class AdbSocketServer {
 				Log.i("sending.patterns");
 				socket.emit("patterns", patternsData);
 			});
+			socket.on("client.type.progress", (data) => {
+				Log.i("client.type.progress");
+				Log.o(data);
+				client.type = ClientType.PROGRESS;
+			});
+			socket.on("client.type.dashboard", (data) => {
+				Log.i("client.type.dashboard");
+				Log.o(data);
+				client.type = ClientType.DASHBOARD;
+			});
+			socket.on("client.type.remote", (data) => {
+				Log.i("client.type.remote");
+				Log.o(data);
+				client.type = ClientType.REMOTE;
+			});
+			socket.on("client.type.executor", (data) => {
+				Log.i("client.type.executor");
+				Log.o(data);
+				client.type = ClientType.EXECUTOR;
+			});
 			socket.on("feature.capture.on", (data) => {
 				Log.i("feature.capture");
 				Log.o(data);
@@ -193,6 +219,22 @@ class AdbSocketServer {
 				Log.o(data);
 				client.features.capture = false;
 			});
+			socket.on("feature.progress.off", (data) => {
+				Log.i("feature.progress");
+				Log.o(data);
+				client.features.progress = true;
+			});
+			socket.on("feature.progress.off", (data) => {
+				Log.i("feature.progress");
+				Log.o(data);
+				client.features.progress = false;
+			});
+			socket.on("client.subscribe.devices", (data) => {
+				Log.i("client.subscribe.devices");
+				Log.o(data);
+				data.forEach(d=>client.devices.push(d));				
+			});
+			
 			socket.on("tasks.stop", (data) => {
 				Log.i("tasks.stop ");
 				Log.o(data);				
