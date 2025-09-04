@@ -5,7 +5,7 @@
 		"type": "config",
 		"description": "<i class='bi bi-gear'></i> Cambiar Wifi",
 		"params": {
-			"ssid": "",
+			"ssid": "WIFICORP",
 			"password_type": "WPA",
 			"password": ""
 		},

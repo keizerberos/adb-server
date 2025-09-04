@@ -381,6 +381,7 @@ class AdbSocketServer {
 				}else
 					device['number'] = -1;
 				device['clusterId'] = uuid;
+				device['clusterAddress'] = cluster.address?.address;
 				const data = {};
 				clients.forEach(client => client.socket.emit("device.connect", device));
 			});
