@@ -99,6 +99,7 @@ class AdbSocketServer {
 		
 	}
 	startServer(clients, clusters, devices) {
+		const self = this;
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
 		const httpServer = createServer(fastServer);
 		fastServer.get("/tasks",(req,res)=>{ 
@@ -131,6 +132,10 @@ class AdbSocketServer {
 			res.setHeader('Content-Type', 'application/json');
 			res.send(JSON.stringify(clusters));
 		});
+		fastServer.get("/clients",(req,res)=>{
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify(clients.map(c=>{ return {type:c.type,devices:c.devices,uuid:c.uuid,features:c.features}; } )));
+		});
 		
 		const io = new Server(httpServer, {
 			cors: {
@@ -155,6 +160,34 @@ class AdbSocketServer {
 				clients.filter(client=>client.features.capture).forEach(client => client.socket.emit("task.progress", {serial:deviceId,data:progress}));
 			}
 		});
+		let getDeviceRemoteList = ()=>{
+			let devicesList = {};
+			let clientRemotes = clients.filter(c=>c.type==ClientType.REMOTE);
+			clientRemotes.forEach(client=>{
+				client.devices.forEach(deviceSerial => {
+					if (devicesList[deviceSerial] == null){
+						devicesList[deviceSerial] = {serial: deviceSerial,count: 1};
+					}
+					devicesList[deviceSerial].count ++;
+				});
+			});
+			return devicesList;
+		}
+		let disconnectRemote = (clientDisconnected)=>{
+			let devicesList = getDeviceRemoteList();
+			let devicesRemoteUnique = [];
+			clientDisconnected.devices.forEach(deviceSerial => {
+				if (devicesList[deviceSerial] !=undefined) {
+					devicesList.count = devicesList.count - 1;
+					if (devicesList.count == 0)
+						devicesRemoteUnique.push(devicesList[deviceSerial]);
+				}
+			});
+			console.log("devicesRemoteUnique", devicesRemoteUnique);
+			devicesRemoteUnique.forEach(device=>{
+				clients.forEach(client => client.socket.emit("device.noremote", {serial:device.serial}));
+			});
+		}
 		io.on("connection", (socket) => {
 			let uuid = short.generate();
 			const client = { socket: socket, type:ClientType.DASHBOARD,devices:[], uuid: uuid, features:{'capture':true,'progress':true,'adb':true} };
@@ -168,10 +201,11 @@ class AdbSocketServer {
 
 			socket.on("disconnect", () => {
 				Log.i("socket disconnected " + uuid);
-				ddelete(clients, 'uuid', uuid);
+				disconnectRemote(client);
+				ddelete(clients, 'uuid', uuid);				
 			});
 			socket.on("device.assign", (data) => {
-				Log.i("device.assign ");				
+				Log.i("device.assign");				
 				Log.o(data);
 				devicesData.devicesAssign[data.serial] = {"number": data.number};
 				this.saveDevices();				
@@ -232,9 +266,11 @@ class AdbSocketServer {
 			socket.on("client.subscribe.devices", (data) => {
 				Log.i("client.subscribe.devices");
 				Log.o(data);
-				data.forEach(d=>client.devices.push(d));				
+				if (Array.isArray(data))
+					data.forEach(d=>client.devices.push(d));
+				else
+					client.devices.push(data)
 			});
-			
 			socket.on("tasks.stop", (data) => {
 				Log.i("tasks.stop ");
 				Log.o(data);				
