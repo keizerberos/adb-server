@@ -15,7 +15,7 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":13000,
+      "postDelay":9500,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,

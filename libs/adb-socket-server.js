@@ -134,7 +134,7 @@ class AdbSocketServer {
 		});
 		fastServer.get("/clients",(req,res)=>{
 			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify(clients.map(c=>{ return {type:c.type,devices:c.devices,uuid:c.uuid,features:c.features}; } )));
+			res.send(JSON.stringify(clients.map(c=>{ return {type:c.type,devices:c.devices,uuid:c.uuid,features:c.features,address:c.address}; } )));
 		});
 		
 		const io = new Server(httpServer, {
@@ -166,31 +166,51 @@ class AdbSocketServer {
 			clientRemotes.forEach(client=>{
 				client.devices.forEach(deviceSerial => {
 					if (devicesList[deviceSerial] == null){
-						devicesList[deviceSerial] = {serial: deviceSerial,count: 1};
+						devicesList[deviceSerial] = {serial: deviceSerial,count: 0, clients:[]};
 					}
-					devicesList[deviceSerial].count ++;
+					const c = client;
+					devicesList[deviceSerial].count++;
+					devicesList[deviceSerial].clients.push({type:c.type,uuid:c.uuid,features:c.features,address:c.address});
 				});
-			});
+			});		
 			return devicesList;
-		}
+		};
+		let updateDevicesRemote = (devicesList)=>{
+			devices.forEach(device=>{
+				if (devicesList[device.serial]!=null)
+					device['countRemotes'] = devicesList[device.serial].count;
+				else
+					device['countRemotes'] = 0;
+			});
+		};
 		let disconnectRemote = (clientDisconnected)=>{
 			let devicesList = getDeviceRemoteList();
+			updateDevicesRemote(devicesList);
 			let devicesRemoteUnique = [];
+			let devicesRemote = [];
+			console.log("devicesList.after", devicesList);
 			clientDisconnected.devices.forEach(deviceSerial => {
 				if (devicesList[deviceSerial] !=undefined) {
-					devicesList.count = devicesList.count - 1;
-					if (devicesList.count == 0)
+					devicesList[deviceSerial].count = devicesList[deviceSerial].count - 1;
+					if (devicesList[deviceSerial].count == 0)
 						devicesRemoteUnique.push(devicesList[deviceSerial]);
+					//else	// ONLY IF EXIST 1
+					devicesRemote.push(devicesList[deviceSerial]);
 				}
 			});
+			console.log("devicesList.before", devicesList);
 			console.log("devicesRemoteUnique", devicesRemoteUnique);
 			devicesRemoteUnique.forEach(device=>{
 				clients.forEach(client => client.socket.emit("device.noremote", {serial:device.serial}));
 			});
+			devicesRemote.forEach(device=>{
+				clients.forEach(client => client.socket.emit("device.remote.leave", {serial:device.serial}));
+			});
 		}
 		io.on("connection", (socket) => {
 			let uuid = short.generate();
-			const client = { socket: socket, type:ClientType.DASHBOARD,devices:[], uuid: uuid, features:{'capture':true,'progress':true,'adb':true} };
+  			var address = socket.request.connection._peername;
+			const client = { socket: socket,address:address.addresss, type:ClientType.DASHBOARD,devices:[], uuid: uuid, features:{'capture':true,'progress':true,'adb':true} };
 			clients.push(client);
 			Log.i("Socket connected " + uuid);
 
@@ -270,6 +290,14 @@ class AdbSocketServer {
 					data.forEach(d=>client.devices.push(d));
 				else
 					client.devices.push(data)
+				
+				let devicesList = getDeviceRemoteList();
+				updateDevicesRemote(devicesList);
+				
+				client.devices.forEach(deviceSerial=>{
+					if (devicesList[deviceSerial] !=undefined)
+						clients.forEach(client => client.socket.emit("device.remote.add", devicesList[deviceSerial]));
+				});
 			});
 			socket.on("tasks.stop", (data) => {
 				Log.i("tasks.stop ");
