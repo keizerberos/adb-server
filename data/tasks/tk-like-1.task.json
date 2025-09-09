@@ -1,0 +1,16 @@
+{
+	"tiktok_like_x1": {
+		"name": "Me gusta",
+		"group":"TikTok",
+      	"type":"task",
+		"description": "<i class=\"bi bi-tiktok\"></i> Tiktok - \"Me gusta\"",
+		"params": {
+			"link": "https://www.tiktok.com/@alisonquispelaura/video/7502860649257569591"
+		},
+		"functions": {
+			"link": "tkurl"
+		},
+		"start": "tk01_start",
+		"end": "tk01_home"
+	}
+}

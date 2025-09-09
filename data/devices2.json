@@ -3,9 +3,9 @@
 		"NBA34BOAC5047046": {
 			"number": "01",
 			"network": {
-				"ip": "192.168.101.251/24",
-				"mac": "2a:f4:9d:dd:47:a0",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.25/16",
+				"mac": "54:1f:8d:c2:1f:42",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -16,9 +16,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.102.11/24",
-				"mac": "fe:f2:c2:5b:e2:63",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.27/16",
+				"mac": "54:1f:8d:c2:1f:53",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -29,18 +29,18 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.103.30/24",
-				"mac": "b6:b4:a6:76:95:d7",
-				"ssid": "G03-ACH",
+				"ip": "172.20.51.26/16",
+				"mac": "54:1f:8d:c1:fe:fd",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042623": {
 			"number": "04",
 			"network": {
-				"ip": "192.168.104.253/24",
-				"mac": "b6:b3:0a:d5:88:3a",
-				"ssid": "G04-ACH",
+				"ip": "172.20.51.29/16",
+				"mac": "54:1f:8d:c2:0d:7a",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -51,9 +51,9 @@
 		"NBA34BOAC5042652": {
 			"number": "05",
 			"network": {
-				"ip": "192.168.101.203/24",
-				"mac": "4a:e8:e8:71:53:eb",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.32/16",
+				"mac": "54:1f:8d:c2:0d:97",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -68,9 +68,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.102.25/24",
-				"mac": "b6:15:1b:1c:27:94",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.28/16",
+				"mac": "54:1f:8d:c2:0d:72",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -81,9 +81,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.103.34/24",
-				"mac": "0e:f0:89:59:d1:3f",
-				"ssid": "G03-ACH",
+				"ip": "172.20.51.31/16",
+				"mac": "54:1f:8d:c2:0b:b9",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -94,18 +94,18 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.104.252/24",
-				"mac": "96:e4:55:05:5c:d0",
-				"ssid": "G04-ACH",
+				"ip": "172.20.51.30/16",
+				"mac": "54:1f:8d:bd:bd:d2",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOPC5000854": {
 			"number": "09",
 			"network": {
-				"ip": "192.168.101.202/24",
-				"mac": "9e:ba:88:9a:86:a4",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.34/16",
+				"mac": "54:1f:8d:bd:b7:b1",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -116,9 +116,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.102.31/24",
-				"mac": "1a:8b:4a:29:c5:09",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.33/16",
+				"mac": "54:1f:8d:c2:0b:df",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -129,9 +129,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.103.35/24",
-				"mac": "c2:b1:a1:7e:c1:88",
-				"ssid": "G03-ACH",
+				"ip": "172.20.51.35/16",
+				"mac": "54:1f:8d:bd:b7:f5",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -142,9 +142,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.104.251/24",
-				"mac": "1a:8a:b6:4c:56:9e",
-				"ssid": "G04-ACH",
+				"ip": "172.20.51.36/16",
+				"mac": "54:1f:8d:c2:0b:bb",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -155,9 +155,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.102.13/24",
-				"mac": "ba:1e:5b:2f:ed:50",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.37/16",
+				"mac": "54:1f:8d:c2:0d:76",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -168,9 +168,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.101.209/24",
-				"mac": "2e:e2:e2:85:da:f8",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.38/16",
+				"mac": "54:1f:8d:c2:0d:99",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -181,9 +181,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.104.248/24",
-				"mac": "d2:96:22:ff:3d:21",
-				"ssid": "G04-ACH",
+				"ip": "172.20.51.18/16",
+				"mac": "ea:a4:e4:f5:ae:1a",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -194,9 +194,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.103.36/24",
-				"mac": "f6:d3:cb:39:22:51",
-				"ssid": "G03-ACH",
+				"ip": "172.20.51.47/16",
+				"mac": "54:1f:8d:c2:17:15",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -207,9 +207,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.102.32/24",
-				"mac": "46:b3:31:fd:51:9b",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.44/16",
+				"mac": "54:1f:8d:c2:0f:59",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -220,9 +220,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.101.201/24",
-				"mac": "ea:ee:2d:c9:c2:a3",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.43/16",
+				"mac": "54:1f:8d:c2:17:1d",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -233,9 +233,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.104.250/24",
-				"mac": "46:e8:11:de:60:73",
-				"ssid": "G04-ACH",
+				"ip": "172.20.51.46/16",
+				"mac": "54:1f:8d:c2:16:27",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -246,18 +246,18 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.103.12/24",
-				"mac": "ae:b8:2b:72:e4:44",
-				"ssid": "G03-ACH",
+				"ip": "172.20.51.45/16",
+				"mac": "54:1f:8d:c2:0d:9a",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042616": {
 			"number": "35",
 			"network": {
-				"ip": "192.168.103.39/24",
-				"mac": "ee:82:d2:b0:ff:d3",
-				"ssid": "G03-ACH",
+				"ip": "172.20.51.68/16",
+				"mac": "54:1f:8d:c2:0d:73",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -277,18 +277,18 @@
 		"NBA34BOAC5042260": {
 			"number": "40",
 			"network": {
-				"ip": "192.168.104.245/24",
-				"mac": "82:90:69:1b:68:23",
-				"ssid": "G04-ACH",
+				"ip": "172.20.51.70/16",
+				"mac": "54:1f:8d:c2:0c:0f",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOAC4006802": {
 			"number": "39",
 			"network": {
-				"ip": "192.168.103.17/24",
-				"mac": "22:01:11:5f:bc:46",
-				"ssid": "G03-ACH",
+				"ip": "172.20.51.71/16",
+				"mac": "54:1f:8d:b7:4e:1d",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -317,9 +317,9 @@
 		"NBA34BOPC5000831": {
 			"number": "38",
 			"network": {
-				"ip": "192.168.102.10/24",
-				"mac": "0a:9d:5b:22:2d:f9",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.74/16",
+				"mac": "54:1f:8d:bd:b7:86",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -357,9 +357,9 @@
 		"NBA34BOAC5046072": {
 			"number": "37",
 			"network": {
-				"ip": "192.168.101.233/24",
-				"mac": "d6:ff:ad:2e:79:bd",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.78/16",
+				"mac": "54:1f:8d:c2:1b:74",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -370,9 +370,9 @@
 		"NBA34BOAC5046069": {
 			"number": "36",
 			"network": {
-				"ip": "192.168.104.244/24",
-				"mac": "32:76:d2:f9:18:93",
-				"ssid": "G04-ACH",
+				"ip": "172.20.51.79/16",
+				"mac": "54:1f:8d:c2:1b:71",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -383,27 +383,27 @@
 		"NBA34BOAC5043104": {
 			"number": "34",
 			"network": {
-				"ip": "192.168.102.34/24",
-				"mac": "d2:9e:0b:79:6d:6a",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.80/16",
+				"mac": "54:1f:8d:c2:0f:5b",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042644": {
 			"number": "32",
 			"network": {
-				"ip": "192.168.104.246/24",
-				"mac": "42:5d:37:b1:4a:3f",
-				"ssid": "G04-ACH",
+				"ip": "172.20.51.81/16",
+				"mac": "54:1f:8d:c2:0d:8f",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042556": {
 			"number": "30",
 			"network": {
-				"ip": "192.168.102.35/24",
-				"mac": "36:20:65:20:30:8d",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.82/16",
+				"mac": "54:1f:8d:c2:0d:37",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -414,18 +414,18 @@
 		"NBA34BOAC5042568": {
 			"number": "33",
 			"network": {
-				"ip": "192.168.101.237/24",
-				"mac": "72:cb:aa:a9:bb:9e",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.83/16",
+				"mac": "54:1f:8d:c2:0d:43",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042624": {
 			"number": "31",
 			"network": {
-				"ip": "192.168.103.38/24",
-				"mac": "2a:07:6e:d5:17:4b",
-				"ssid": "G03-ACH",
+				"ip": "172.20.51.84/16",
+				"mac": "54:1f:8d:c2:0d:7b",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -450,9 +450,9 @@
 		"NBA34BOAC5042188": {
 			"number": "29",
 			"network": {
-				"ip": "192.168.101.241/24",
-				"mac": "9e:44:99:6b:21:72",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.87/16",
+				"mac": "54:1f:8d:c2:0b:c7",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -463,9 +463,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.103.41/24",
-				"mac": "0e:b9:da:0c:0e:b3",
-				"ssid": "G03-ACH",
+				"ip": "172.20.51.50/16",
+				"mac": "48:eb:62:37:ef:c0",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -476,9 +476,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.102.37/24",
-				"mac": "6e:78:55:ce:85:c1",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.56/16",
+				"mac": "48:eb:62:54:45:de",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -489,9 +489,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.104.243/24",
-				"mac": "8a:93:61:8c:3f:dc",
-				"ssid": "G04-ACH",
+				"ip": "172.20.51.65/16",
+				"mac": "48:eb:62:9c:9d:8c",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -502,9 +502,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.103.40/24",
-				"mac": "2a:d1:2a:fc:51:8a",
-				"ssid": "G03-ACH",
+				"ip": "172.20.51.54/16",
+				"mac": "48:eb:62:65:5c:4c",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -515,9 +515,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.101.217/24",
-				"mac": "a6:92:58:3b:01:47",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.57/16",
+				"mac": "48:eb:62:51:de:26",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -528,9 +528,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.102.36/24",
-				"mac": "46:4a:df:5d:f3:44",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.63/16",
+				"mac": "48:eb:62:55:16:64",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -541,9 +541,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.101.225/24",
-				"mac": "02:90:74:dd:ab:ae",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.66/16",
+				"mac": "48:eb:62:3b:7f:f5",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -554,9 +554,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.102.39/24",
-				"mac": "e2:56:d0:5a:0e:d4",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.53/16",
+				"mac": "48:eb:62:7b:82:cd",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -567,9 +567,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.101.229/24",
-				"mac": "b2:d3:19:de:54:12",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.49/16",
+				"mac": "48:eb:62:37:c8:7b",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -580,81 +580,81 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.103.22/24",
-				"mac": "6a:63:89:ea:03:f4",
-				"ssid": "G03-ACH",
+				"ip": "172.20.51.48/16",
+				"mac": "58:d5:0a:f3:3f:a4",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
 		"R3CN50B1MAY": {
 			"number": "53",
 			"network": {
-				"ip": "192.168.104.241/24",
-				"mac": "7e:01:a0:b1:62:9b",
-				"ssid": "G04-ACH",
+				"ip": "172.20.51.52/16",
+				"mac": "48:eb:62:3a:88:b7",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
 		"R3CN50EE05T": {
 			"number": "57",
 			"network": {
-				"ip": "192.168.104.240/24",
-				"mac": "fe:9f:0c:06:d5:36",
-				"ssid": "G04-ACH",
+				"ip": "172.20.51.64/16",
+				"mac": "48:eb:62:55:24:4f",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
 		"R3CN50JGLYV": {
 			"number": "51",
 			"network": {
-				"ip": "192.168.102.21/24",
-				"mac": "c2:c6:d5:92:50:0c",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.55/16",
+				"mac": "48:eb:62:54:fc:8d",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
 		"R3CN50JH6DB": {
 			"number": "52",
 			"network": {
-				"ip": "192.168.103.27/24",
-				"mac": "72:8f:3f:83:d6:fd",
-				"ssid": "G03-ACH",
+				"ip": "172.20.51.62/16",
+				"mac": "48:eb:62:51:26:17",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
 		"R3CN606ESXH": {
 			"number": "50",
 			"network": {
-				"ip": "192.168.101.221/24",
-				"mac": "9a:a2:35:66:13:17",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.59/16",
+				"mac": "48:eb:62:5f:20:1a",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
 		"R3CN704SY4P": {
 			"number": "49",
 			"network": {
-				"ip": "192.168.104.242/24",
-				"mac": "5e:df:44:a6:d3:f6",
-				"ssid": "G04-ACH",
+				"ip": "172.20.51.58/16",
+				"mac": "58:d5:0a:ed:2b:f2",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
 		"R3CN705VM8F": {
 			"number": "55",
 			"network": {
-				"ip": "192.168.102.38/24",
-				"mac": "66:02:21:9c:ce:7d",
-				"ssid": "G02-ACH",
+				"ip": "172.20.51.61/16",
+				"mac": "48:eb:62:3f:bc:7e",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
 		"R3CN80PG2DV": {
 			"number": "58",
 			"network": {
-				"ip": "192.168.101.213/24",
-				"mac": "06:49:14:75:21:9d",
-				"ssid": "G01-ACH",
+				"ip": "172.20.51.67/16",
+				"mac": "48:eb:62:8b:0d:b3",
+				"ssid": "KERNOTEC2",
 				"wifiOn": true
 			}
 		},
@@ -664,130 +664,6 @@
 				"ip": "172.20.51.60/16",
 				"mac": "18:48:ca:1a:0a:5d",
 				"ssid": "KERNOTEC2",
-				"wifiOn": true
-			}
-		},
-		"YBZ2466LMCC3003259": {
-			"model": "ZTE",
-			"onlySerial": "YBZ2466LMCC3003259",
-			"serial": "YBZ2466LMCC3003259",
-			"number": "22",
-			"network": {
-				"ip": "192.168.102.33/24",
-				"mac": "9e:ae:b9:8b:59:3e",
-				"ssid": "G02-ACH",
-				"wifiOn": true
-			},
-			"clusterId": "qzoYDxWtYQi9iGkVAZP7NW",
-			"checked": true,
-			"selected": 1
-		},
-		"YBZ2466LMCC3003798": {
-			"model": "ZTE",
-			"onlySerial": "YBZ2466LMCC3003798",
-			"serial": "YBZ2466LMCC3003798",
-			"number": "24",
-			"clusterId": "qzoYDxWtYQi9iGkVAZP7NW",
-			"checked": true,
-			"selected": 1,
-			"network": {
-				"ip": "192.168.104.249/24",
-				"mac": "92:71:be:19:a3:47",
-				"ssid": "G04-ACH",
-				"wifiOn": true
-			}
-		},
-		"YBZ2466LMCC3003861": {
-			"model": "ZTE",
-			"onlySerial": "YBZ2466LMCC3003861",
-			"serial": "YBZ2466LMCC3003861",
-			"number": "21",
-			"network": {
-				"ip": "192.168.101.249/24",
-				"mac": "4a:99:7e:14:5f:91",
-				"ssid": "G01-ACH",
-				"wifiOn": true
-			},
-			"clusterId": "qzoYDxWtYQi9iGkVAZP7NW",
-			"checked": true,
-			"selected": 1
-		},
-		"YBZ2466LMCC3008273": {
-			"model": "ZTE",
-			"onlySerial": "YBZ2466LMCC3008273",
-			"serial": "YBZ2466LMCC3008273",
-			"number": "26",
-			"clusterId": "qzoYDxWtYQi9iGkVAZP7NW",
-			"checked": true,
-			"selected": 1,
-			"network": {
-				"ip": "192.168.102.27/24",
-				"mac": "ce:aa:25:97:6c:8a",
-				"ssid": "G02-ACH",
-				"wifiOn": true
-			}
-		},
-		"YBZ2466LMGC3006458": {
-			"model": "ZTE",
-			"onlySerial": "YBZ2466LMGC3006458",
-			"serial": "YBZ2466LMGC3006458",
-			"number": "25",
-			"clusterId": "qzoYDxWtYQi9iGkVAZP7NW",
-			"checked": true,
-			"selected": 1,
-			"network": {
-				"ip": "192.168.101.245/24",
-				"mac": "22:ef:dc:86:de:f3",
-				"ssid": "G01-ACH",
-				"wifiOn": true
-			},
-			"resolution": {
-				"size": "576x1280\n720x1612",
-				"density": "Physical density: 240\nOverride density: 320"
-			}
-		},
-		"YBZ2466LMGC3007827": {
-			"model": "ZTE",
-			"onlySerial": "YBZ2466LMGC3007827",
-			"serial": "YBZ2466LMGC3007827",
-			"number": "28",
-			"clusterId": "qzoYDxWtYQi9iGkVAZP7NW",
-			"checked": true,
-			"selected": 1,
-			"network": {
-				"ip": "192.168.104.247/24",
-				"mac": "d6:a7:c1:f5:12:1a",
-				"ssid": "G04-ACH",
-				"wifiOn": true
-			}
-		},
-		"YBZ2466LMGC3008410": {
-			"model": "ZTE",
-			"onlySerial": "YBZ2466LMGC3008410",
-			"serial": "YBZ2466LMGC3008410",
-			"number": "23",
-			"clusterId": "qzoYDxWtYQi9iGkVAZP7NW",
-			"checked": true,
-			"selected": 1,
-			"network": {
-				"ip": "192.168.103.37/24",
-				"mac": "06:4f:89:1c:48:46",
-				"ssid": "G03-ACH",
-				"wifiOn": true
-			}
-		},
-		"YBZ2466LMGC3008831": {
-			"model": "ZTE",
-			"onlySerial": "YBZ2466LMGC3008831",
-			"serial": "YBZ2466LMGC3008831",
-			"number": "27",
-			"clusterId": "qzoYDxWtYQi9iGkVAZP7NW",
-			"checked": true,
-			"selected": 1,
-			"network": {
-				"ip": "192.168.103.26/24",
-				"mac": "0a:5a:c6:8f:21:b5",
-				"ssid": "G03-ACH",
 				"wifiOn": true
 			}
 		}

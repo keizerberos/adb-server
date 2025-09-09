@@ -41,7 +41,7 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":15000,
+      "postDelay":9500,
       "maxLoop":3,
       "loop":0,
       "maxTry":1,
@@ -94,7 +94,7 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action_4aa"
+         "fbc2_action_4aa_pre"
       ]
    },
    "fbc2_action_3_c":{
@@ -124,6 +124,32 @@
          "fbc2_action_3_c"
       ],
       "beforeLoop":"fbc2_action_5"
+   },
+   "fbc2_action_4aa_pre":{
+      "name":"tap comment box",
+      "desc":"tap comment box",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 330 1450"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[		
+         "fbc2_action_4aa"
+      ]
    },
    "fbc2_action_4aa":{
       "name":"CLEAR_TEXT",
@@ -246,7 +272,7 @@
       },
       "order":0,
       "type":"pattern",
-      "preDelay":200,
+      "preDelay":400,
       "postDelay":2000,
       "maxLoop":10,
       "loop":0,
@@ -291,7 +317,7 @@
       },
       "order":0,
       "type":"pattern",
-      "preDelay":200,
+      "preDelay":400,
       "postDelay":2000,
       "maxLoop":10,
       "loop":0,
@@ -415,7 +441,7 @@
       },
       "order":0,
       "type":"pattern",
-      "preDelay":200,
+      "preDelay":400,
       "postDelay":2000,
       "maxLoop":10,
       "loop":0,
@@ -423,12 +449,6 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_a_3a",
-         "fb_like_a_3a",
-         "fb_like_a_3a",
-         "fb_like_a_3a",
-         "fb_like_a_3a",
-         "fb_like_a_3a",
          "fb_like_a_3a",
          "fb_like_a_4"
       ]
@@ -546,7 +566,7 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":15000,
+      "postDelay":9500,
       "maxLoop":3,
       "loop":0,
       "maxTry":1,
@@ -599,7 +619,7 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_4aa"
+         "fbc2_action2_4aa_pre"
       ]
    },
    "fbc2_action2_3_c":{
@@ -629,6 +649,32 @@
          "fbc2_action2_3_c"
       ],
       "beforeLoop":"fbc2_action2_5"
+   },   
+   "fbc2_action2_4aa_pre":{
+      "name":"tap comment box",
+      "desc":"tap comment box",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 330 1450"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[		
+         "fbc2_action2_4aa"
+      ]
    },
    "fbc2_action2_4aa":{
       "name":"CLEAR_TEXT",
@@ -751,7 +797,7 @@
       },
       "order":0,
       "type":"pattern",
-      "preDelay":200,
+      "preDelay":400,
       "postDelay":2000,
       "maxLoop":10,
       "loop":0,
@@ -796,7 +842,7 @@
       },
       "order":0,
       "type":"pattern",
-      "preDelay":200,
+      "preDelay":400,
       "postDelay":2000,
       "maxLoop":10,
       "loop":0,
@@ -921,7 +967,7 @@
       },
       "order":0,
       "type":"pattern",
-      "preDelay":200,
+      "preDelay":400,
       "postDelay":2000,
       "maxLoop":10,
       "loop":0,
@@ -929,12 +975,6 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_a_3a_x3",
-         "fb_like_a_3a_x3",
-         "fb_like_a_3a_x3",
-         "fb_like_a_3a_x3",
-         "fb_like_a_3a_x3",
-         "fb_like_a_3a_x3",
          "fb_like_a_3a_x3",
          "fb_like_a_4_x3"
       ]
@@ -1028,7 +1068,7 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":15000,
+      "postDelay":9500,
       "maxLoop":3,
       "loop":0,
       "maxTry":1,
@@ -1081,7 +1121,7 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_4aa_x3"
+         "fbc2_action2_4aa_x3_pre"
       ]
    },
    "fbc2_action2_3_c_x3":{
@@ -1111,6 +1151,32 @@
          "fbc2_action2_3_c"
       ],
       "beforeLoop":"fbc2_action2_5_x3"
+   },
+   "fbc2_action2_4aa_x3_pre":{
+      "name":"tap comment box",
+      "desc":"tap comment box",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 330 1450"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[		
+         "fbc2_action2_4aa_x3"
+      ]
    },
    "fbc2_action2_4aa_x3":{
       "name":"CLEAR_TEXT",
@@ -1233,7 +1299,7 @@
       },
       "order":0,
       "type":"pattern",
-      "preDelay":200,
+      "preDelay":400,
       "postDelay":2000,
       "maxLoop":10,
       "loop":0,
@@ -1278,7 +1344,7 @@
       },
       "order":0,
       "type":"pattern",
-      "preDelay":200,
+      "preDelay":400,
       "postDelay":2000,
       "maxLoop":10,
       "loop":0,

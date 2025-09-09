@@ -1,42 +1,48 @@
-const { createCanvas, loadImage } = require('canvas')
+const { Logger } = require('atx-logger');
+const { createCanvas, loadImage } = require('canvas');
+const fs = require('fs');
+const e = require('cors');
 let devicesActions = {};
+let screensCache = {};
 let signalStop = false;
 let androidPattern = {};
 let eventNodes = [];
+
 let events = {
-	"send":[],
-	"task.progress":[],
+	"send": [],
+	"task.progress": [],
 };
+
 let nodeActions = null;
 
-function genPlant(action){
+function genPlant(action) {
 	let text = [];
 	let nodeActionsTest = JSON.parse(JSON.stringify(nodeActions));
-	if (nodeActionsTest[action.start]==undefined) return "";
+	if (nodeActionsTest[action.start] == undefined) return "";
 	//text.push(`[*]->${action.start}`);
-	
-	text.push({id:action.start});	//text.push({id:action.start,action:nodeActions[action.start]});
-	let rc= (c,i)=>{let s ="";for(let ii=0;ii<i && ii<3;ii++)s+=c;return s;};
-	let readNodes = (node,indexId)=> {
+
+	text.push({ id: action.start });	//text.push({id:action.start,action:nodeActions[action.start]});
+	let rc = (c, i) => { let s = ""; for (let ii = 0; ii < i && ii < 3; ii++)s += c; return s; };
+	let readNodes = (node, indexId) => {
 		let currentNode = nodeActionsTest[node];
-		if(currentNode==undefined) return;
-		if(currentNode.try>0) return;
+		if (currentNode == undefined) return;
+		if (currentNode.try > 0) return;
 		/*text.push(`${node}:${currentNode.desc}`);
 		text.push(`${node}:pre:${Math.round(currentNode.preDelay/10)/100}s`);
 		text.push(`${node}:post:${Math.round(currentNode.postDelay/10)/100}s`);*/
 		currentNode.try++;
-		currentNode.next.forEach((nameNode,i)=>{
+		currentNode.next.forEach((nameNode, i) => {
 			let nextNode = nodeActionsTest[nameNode];
 			//console.log("nextNode,nameNode",nextNode,nameNode);
 			//let dataNode = `${node}${rc("-",currentNode.next.length)}>${nameNode}`;
-			if (text.find(t=>t.id==nameNode)==undefined)
-				text.push({id:nameNode});//				text.push({id:nameNode,action:nextNode});
+			if (text.find(t => t.id == nameNode) == undefined)
+				text.push({ id: nameNode });//				text.push({id:nameNode,action:nextNode});
 			//	text.push(dataNode);
-			readNodes(nameNode,0);
+			readNodes(nameNode, 0);
 			nextNode.try++;
 		});
 	};
-	readNodes(action.start,0);
+	readNodes(action.start, 0);
 	//text.push(`${nodeActionsTest[action.end].name}->[*]`);
 	//text.push({id:action.end,action:nodeActions[action.end]});
 	//text.push(`@enduml`);		
@@ -188,28 +194,42 @@ function findPattern(ctx, ctx1, canvas, pattern, first, crop) {
 	}
 }
 function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
-	if (signalStop) return;
+	
 	if (action == null) { cbSuccess(); return; }
 	if (action.next == null) { cbSuccess(); return; }
 	let nodeAction = action.next[actionIndex];
-	if (nodeAction == null) { cbSuccess(); return; }
+	if (nodeAction == null || nodeAction == undefined) { cbSuccess(); return; }
 	let currentAction = devicesActions[deviceId][nodeAction];
 	if (currentAction == null) { cbFail(); return; }
 
+	if (signalStop || devicesActions[deviceId]['progress']['signalStop']) {		
+		//devicesActions[deviceId]['progress']['completed'].push(nodeAction);
+		devicesActions[deviceId]['progress']['current'] = nodeAction;	
+		devicesActions[deviceId]['progress']['state'] = 'ended';
+		events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
+		return;
+	}
+
 	console.log("currentAction.preDelay", nodeAction, currentAction.preDelay);
 	setTimeout(() => {
-		
+
 		devicesActions[deviceId]['progress']['completed'].push(nodeAction);
 		devicesActions[deviceId]['progress']['current'] = nodeAction;
-		events['task.progress'].forEach(fn=>fn(deviceId, devicesActions[deviceId]['progress']));
+		events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
 		//$(".act-" + deviceId).html(currentAction.name + "<br> " + currentAction.desc);
 		if (currentAction.type == "static") {
 			console.log("executeNode static loop", currentAction.loop,);
 			if (currentAction.loop >= currentAction.maxLoop) {
 				let beforeLoop = devicesActions[deviceId][currentAction.beforeLoop];
 				console.log("executeNode is max loop", true);
-				executeNode(beforeLoop, 0, deviceId, params, cbSuccess, cbFail);
-				//executeNode(action,actionIndex+1,deviceId,params,cbSuccess,cbFail);
+				if ( beforeLoop == undefined){
+					cbFail();
+				}else{							
+					setTimeout(() => {
+						executeNode(beforeLoop, 0, deviceId, params, cbSuccess, cbFail);
+					}, currentAction.postDelay);					
+					//executeNode(action,actionIndex+1,deviceId,params,cbSuccess,cbFail);
+				}
 				return;
 			}
 
@@ -229,7 +249,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 
 			console.log("executeNode.command", command);
 			//myWebSocket.send(JSON.stringify(command));
-			events['send'].forEach(fn=>fn(command));
+			events['send'].forEach(fn => fn(command));
 			currentAction.loop++;
 			console.log("currentAction.postDelay", currentAction.postDelay);
 			setTimeout(() => {
@@ -256,6 +276,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 				return;
 			}*/
 
+			console.log(deviceId +" new eventNodes");
 			eventNodes.push({
 				deviceId: deviceId,
 				action: nodeAction,
@@ -265,15 +286,15 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 						currentAction.trigger.forEach(trigger => {
 							const pattern = androidPattern[trigger.pattern];
 							//console.log(pattern);
-							let outputcanvas = createCanvas(750,1612);
-							let outputcanvasP = createCanvas(750,1612);
-							let outputcanvasF = createCanvas(750,1612);
+							let outputcanvas = createCanvas(720, 1612);
+							let outputcanvasP = createCanvas(720, 1612);
+							let outputcanvasF = createCanvas(720, 1612);
 							outputcanvas.width = 720;
-							outputcanvas.height = 1606;
+							outputcanvas.height = 1612;
 							outputcanvasP.width = 720;
-							outputcanvasP.height = 1606;
+							outputcanvasP.height = 1612;
 							outputcanvasF.width = 720;
-							outputcanvasF.height = 1606;
+							outputcanvasF.height = 1612;
 							let canvasctx = outputcanvas.getContext("2d");
 							let canvasctxP = outputcanvasP.getContext("2d");
 							let canvasctxF = outputcanvasF.getContext("2d");
@@ -286,7 +307,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 							//if ((ox>0 && currentAction.condition)||(!currentAction.condition&&ox<0)){
 							if (ox > 0) {
 
-								console.log("executeNode.pattern true");
+								console.log(deviceId +" executeNode.pattern true");
 								let command = JSON.parse(JSON.stringify(currentAction.command));
 								if (command != null) {
 									let tempParams = {
@@ -301,8 +322,8 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 										command.data[k] = replaceParams(tempParams, command.data[k]);
 									})
 									console.log("executeNode.command", command);
-//									myWebSocket.send(JSON.stringify(command));
-									events['send'].forEach(fn=>fn(command));
+									//									myWebSocket.send(JSON.stringify(command));
+									events['send'].forEach(fn => fn(command));
 								}
 								currentAction.loop++;
 								setTimeout(() => {
@@ -317,10 +338,15 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 								}, currentAction.postDelay);
 
 							} else {
-								console.log("executeNode.pattern false");
+								console.log(deviceId +" executeNode.pattern false");
 								currentAction.try++;
 								setTimeout(() => {
-									executeNode(action, actionIndex + 1, deviceId, params, cbSuccess, cbFail);
+									executeNode(action, actionIndex + 1, deviceId, params, () => {
+											cbSuccess();
+										},
+										() => {
+											cbFail();
+										});
 								}, currentAction.postDelay);
 							}
 						});
@@ -329,7 +355,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 					}, cbFail);
 				},
 				cbFail: () => {
-
+					//BAD SCREEN
 					let data = {
 						"action": "Screen",
 						"devices": deviceId,
@@ -337,7 +363,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 							"savePath": "{screen_path}"
 						}
 					};
-					events['send'].forEach(fn=>fn(command));
+					events['send'].forEach(fn => fn(command));
 					//myWebSocket.send(JSON.stringify(data));
 				},
 			});
@@ -351,7 +377,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 							"savePath": "{screen_path}"
 						}
 					};
-					events['send'].forEach(fn=>fn(data));
+					events['send'].forEach(fn => fn(data));
 					//myWebSocket.send(JSON.stringify(data));
 				}
 			}, currentAction.timeout);
@@ -363,23 +389,30 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 					"savePath": "{screen_path}"
 				}
 			};
-			events['send'].forEach(fn=>fn(data));
+			events['send'].forEach(fn => fn(data));
 			//myWebSocket.send(JSON.stringify(data));
 		}
 	}, currentAction.preDelay);
 }
-function executeGraph(actionId, deviceId, ii, params, cbSuccess, cbFail) {
+function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, cbSuccess, cbFail) {
 	//console.log("androidActions[actionId]",androidActions[actionId]);
 	let action = devicesActions[deviceId][actionId];
 	if (actionId == null) { cbSuccess(); return; }
 	console.log("pre ejecutando comando ");
+	console.log("executeGraph.action.actionId", actionId);
 	console.log("executeGraph.action.preDelay", action.preDelay);
+
+	let timeExecute = offsetDelay==null?action.preDelay + 2500 * ii + Math.random() * 5000:action.preDelay+offsetDelay;
+	if (config != null){
+		timeExecute = action.preDelay + (config.offset * 1000 * ii);
+	}	
+	
 	setTimeout(() => {
 		if (action.type == "static") {
 			//$(".act-" + deviceId).html(action.name + "<br> " + action.desc);
 			devicesActions[deviceId]['progress']['completed'].push(actionId);
 			devicesActions[deviceId]['progress']['current'] = actionId;
-			events['task.progress'].forEach(fn=>fn(deviceId, devicesActions[deviceId]['progress']));
+			events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
 			let command = JSON.parse(JSON.stringify(action.command));
 			let tempParams = {
 				deviceId: deviceId
@@ -391,22 +424,28 @@ function executeGraph(actionId, deviceId, ii, params, cbSuccess, cbFail) {
 			});
 			console.log("executeGraph.command", command);
 			//myWebSocket.send(JSON.stringify(command));
-			events['send'].forEach(fn=>fn(command));
-		} else if (action.type == "pattern"){
-			console.log("executeGraph.pattern test", JSON.stringify(action.command));			
+			events['send'].forEach(fn => fn(command));
+		} else if (action.type == "pattern") {
+			//neeer start with a pattern, but...
+			console.log("executeGraph.pattern test", JSON.stringify(action.command));
 		}
 		console.log("executeGraph.action.postDelay", action.postDelay);
 		setTimeout(() => {
 			executeNode(action, 0, deviceId, params,
-				() => {
+				() => {					
+					devicesActions[deviceId]['progress']['state'] = 'ended';
+					events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
 					cbSuccess();
 				},
-				() => {
+				() => {					
+					devicesActions[deviceId]['progress']['state'] = 'ended';
+					devicesActions[deviceId]['progress']['fail'] = true;
+					events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
 					cbFail();
 				}
 			)
 		}, action.postDelay);
-	}, action.preDelay + 2500 * ii + Math.random() * 5000);
+	}, timeExecute);
 }
 function executeTask(devices, task) {
 	let tasks = [];
@@ -414,27 +453,128 @@ function executeTask(devices, task) {
 
 	task.paramsArray.forEach(param => {
 		const paramLines = param.value.split('\n');
-		if (paramLines.length<2){
+		if (paramLines.length < 2) {
 			params[param.id] = param.value;
-		}else
+		} else
 			params[param.id] = { random: false, index: 0, data: paramLines };
 	});
 	devicesActions = {};
 	console.log("params", params);
 	let countEnded = 0;
 	devices.forEach((d, ii) => {
+		let batchIndex = -1;
+		if (task.config!=null)
+			if (task.config.isBatch)
+				task.config.batch.groups.forEach((gd,gi)=>batchIndex=gd.find(gdd=>gdd.serial==d.serial)?gi:batchIndex);
+		//if (devicesActions[d.serial] != undefined){			
+			clearScreens(d.serial);
+		//}
 		devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
-		devicesActions[d.serial]['progress'] = {path:task.progressPath,state:'progress',completed:[],current:[tasks.start]};
-		events['task.progress'].forEach(fn=>fn(d.serial, devicesActions[d.serial]['progress']));
-		//$(".act-" + d.id).removeClass("d-none");
-		executeGraph(task.start, d.serial, ii, params, () => {
+		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [], screens:{}, current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false,batchIndex:batchIndex };
+		devicesActions[d.serial]['params'] = params;
+		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+		executeGraph(task.config, task.start, d.serial, ii, params, null, () => {
 			countEnded++;
 			console.log("executeTask:executeGraph.ended")
-			
+
 			devicesActions[d.serial]['progress']['state'] = 'ended';
-			events['task.progress'].forEach(fn=>fn(d.serial, devicesActions[d.serial]['progress']));
+			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 			if (countEnded >= devices.length) {
-				//$(".action-title").addClass("d-none");
+				console.log("all ended")
+				countEnded = 0;
+				signalStop = false;
+			}
+		}, () => {
+			console.log("executeTask:executeGraph.incomplete")
+		});
+	});
+}
+function executeTaskBatch(devices, task, cbEnd) {
+	let tasks = [];
+	let params = {};
+
+	task.paramsArray.forEach(param => {
+		const paramLines = param.value.split('\n');
+		if (paramLines.length < 2) {
+			params[param.id] = param.value;
+		} else
+			params[param.id] = { random: false, index: 0, data: paramLines };
+	});
+	devicesActions = {};
+	console.log("params", params);
+	let countEnded = 0;
+	devices.forEach((d, ii) => {
+		let batchIndex = -1;
+		if (task.config!=null)
+			if (task.config.isBatch)
+				task.config.batch.groups.forEach((gd,gi)=>batchIndex=gd.find(gdd=>gdd.serial==d.serial)?gi:batchIndex);
+		//if (devicesActions[d.serial] != undefined){			
+			clearScreens(d.serial);
+		//}
+		devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
+		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [],screens:{}, current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false,batchIndex:batchIndex };
+		devicesActions[d.serial]['params'] = params;
+		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+		executeGraph(task.config, task.start, d.serial, ii, params, null, () => {
+			countEnded++;
+			console.log("executeTaskBatch:executeGraph.ended countEnded",countEnded + "/" + devices.length)
+
+			devicesActions[d.serial]['progress']['state'] = 'ended';
+			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+			if (countEnded >= devices.length) {				
+				console.log("all ended")
+				countEnded = 0;
+				signalStop = false;
+				cbEnd();
+			}
+		}, () => {
+			countEnded++;
+			console.log("executeTask:executeGraph.incomplete")
+
+			devicesActions[d.serial]['progress']['state'] = 'ended';
+			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+			if (countEnded >= devices.length) {				
+				console.log("all ended with fails")
+				countEnded = 0;
+				signalStop = false;
+				cbEnd();
+			}
+		});
+	});
+}
+function resumeTask(devices, task) {
+	let tasks = [];
+	let params = {};
+
+	task.paramsArray.forEach(param => {
+		const paramLines = param.value.split('\n');
+		if (paramLines.length < 2) {
+			params[param.id] = param.value;
+		} else
+			params[param.id] = { random: false, index: 0, data: paramLines };
+	});
+	//devicesActions = {};
+	console.log("params", params);
+	let countEnded = 0;
+	devices.forEach((d, ii) => {
+		console.log("resumeTask:executeGraph.resuming")
+		//devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
+		//devicesActions[d.serial]['progress'] = { path: task.progressPath, state: 'progress', completed: [], current: [task.start], start: task.start, end: task.end };
+		//events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+		let tempProgress = devicesActions[d.serial]['progress'];
+		let tempParams = devicesActions[d.serial]['params'];
+		devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
+		devicesActions[d.serial]['progress'] = tempProgress;
+		devicesActions[d.serial]['params'] = tempParams;
+		params = tempParams;
+		devicesActions[d.serial]['progress']['state'] = 'progress';
+		executeGraph(task.config, task.resume, d.serial, ii, params, 0, () => {
+			countEnded++;
+			console.log("executeTask:executeGraph.ended")
+
+			devicesActions[d.serial]['progress']['state'] = 'ended';
+			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+			if (countEnded >= devices.length) {
 				console.log("all ended")
 				countEnded = 0;
 				signalStop = false;
@@ -469,23 +609,70 @@ function executeTasks(tasks, callback) {
 	};
 	executor();
 }
-class Executor{
-	constructor(){
-			
+function clearScreens(serial){
+    var files = [];
+	const pathScreens = __dirname+"/../screens/";
+	//console.log("clearScreens",__dirname+"/"+pathScreens);
+    fs.readdir(pathScreens, function(err,list){
+        if(err) throw err;
+        for(var i=0; i<list.length; i++){
+			console.log("test",list[i]); 
+            if(list[i].includes(serial)){
+                console.log("deleting",list[i]); 
+                //files.push(list[i]);
+				fs.unlinkSync(pathScreens+list[i]);
+            }
+        }
+    });
+}
+class Executor {
+	constructor() {
+
 	}
-	screen(id,img){
+	/** Register Screen for progress */
+	regScreen(id,img){		
+		const pathScreens = "screens/";
+		if (devicesActions[id]==undefined) return;
+		if (devicesActions[id]['progress']==undefined) return;
 		
-		if(img.length>0){
-			loadImage(img).then((img)=>{
-				eventNodes.forEach((e,i)=>{
-					if ( e.deviceId == id){
-						console.log("event success",e);		
-						e.cbSuccess(img);
-						eventNodes.splice(i,1);
-					}
+		const timestamp = Date.now();
+		const screenUid = timestamp;
+		const actionIdCurrent = devicesActions[id]['progress']['current'];		
+		if (devicesActions[id]['progress']['screens'][actionIdCurrent]==undefined)
+			devicesActions[id]['progress']['screens'][actionIdCurrent] = [];
+		devicesActions[id]['progress']['screens'][actionIdCurrent].push(screenUid);
+		//screensCache[screenUid] = img;
+		fs.writeFileSync(pathScreens+id+'-'+timestamp+'.png', img)
+	}
+	screen(id, img) {
+		this.regScreen(id,img);
+		if ( eventNodes.find(e=>e.deviceId == id )==undefined ) {
+			return;
+		}
+		if (img.length > 0) {
+			try {
+				loadImage(img).then((img) => {
+					eventNodes.forEach((e, i) => {
+						if (e.deviceId == id) {
+							console.log("event success", e);
+							e.cbSuccess(img);
+							eventNodes.splice(i, 1);
+						}
+					});
 				});
-			});
-		}else{
+			} catch (e) {
+				console.log("executor.screen ERROR",e);
+				let data = {
+					"action": "Screen",
+					"devices": id,
+					"data": {
+						"savePath": "{screen_path}"
+					}
+				};
+				events['send'].forEach(fn => fn(data));
+			}
+		} else {
+			console.log("executor.screen img.length = 0");
 			let data = {
 				"action": "Screen",
 				"devices": id,
@@ -493,26 +680,74 @@ class Executor{
 					"savePath": "{screen_path}"
 				}
 			};
-			events['send'].forEach(fn=>fn(data));
+			if ( eventNodes.find(e=>e.deviceId == id )!=undefined ) {
+				events['send'].forEach(fn => fn(data));
+			}
 		}
 	}
-	on(ev,fn){
+	on(ev, fn) {
 		events[ev].push(fn);
 	}
-	stop(){
+	stopAll() {
 		signalStop = true;
 	}
-	setActions(_nodeActions){
+	stopTask(devices) {		
+		devices.forEach(d=>{
+			if (devicesActions[d.serial]!=null){			
+				devicesActions[d.serial]['progress']['signalStop'] = true;
+			}
+		});
+	}
+	setActions(_nodeActions) {
 		nodeActions = _nodeActions;
 	}
-	setPatterns(_patterns){
+	setPatterns(_patterns) {
 		androidPattern = _patterns;
 	}
-	startTask(devices,task){
+	startTask(devices, task) {
 		eventNodes = [];
 		signalStop = false;
-		executeTask(devices,task);
+		executeTask(devices, task);
+	}
+	startTaskBatch(_devices, task) {
+		eventNodes = [];
+		signalStop = false;
+		let batchs = [];
+		console.log("building batch");
+
+		if (!task.config.isBatch){
+			executeTask(_devices, task);
+			return;
+		}
+
+		task.config.batch.groups.forEach(groupDevices=>{
+			let batch = (cb)=>{
+				setTimeout(()=>{
+					executeTaskBatch(groupDevices, task, ()=>{
+						cb();
+					});
+				},task.config.batch.offset*1000);
+			};
+			batchs.push(batch);
+		});
+		console.log("starting batch executor");
+		let batchExecutor = (index)=>{
+			if (batchs[index]==undefined) {console.log("ending batch");return};
+			console.log("start batch " + index + " of " +batchs.length);
+			batchs[index](()=>{
+				console.log("ended batch " + index);
+				batchExecutor(index+1);
+			});
+		};
+		batchExecutor(0);
+	}
+	resumeTask(devices, task) {
+		eventNodes = [];
+		devices.forEach(d=>{
+			devicesActions[d.serial]['progress']['signalStop'] = false;
+		});
+		resumeTask(devices, task);
 	}
 }
 
-module.exports = {Executor,genPlant,replaceParams, bwImage, pathPattern, findPattern, executeNode, executeGraph, executeTask, executeTasks}
+module.exports = { Executor, genPlant, replaceParams, bwImage, pathPattern, findPattern, executeNode, executeGraph, executeTask, executeTasks }

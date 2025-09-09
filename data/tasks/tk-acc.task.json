@@ -1,0 +1,15 @@
+{
+	"tiktok_change_account": {
+		"name": "Cambiar de cuenta",
+		"group":"TikTok",
+      	"type":"task",
+		"description": "<i class=\"bi bi-tiktok\"></i> Tiktok - \"Cambiar de cuenta\"",
+		"params": {
+		},
+		"functions": {
+			"link": "tkurl"
+		},
+		"start": "tk02_start",
+		"end": "tk02_home"
+	}
+}

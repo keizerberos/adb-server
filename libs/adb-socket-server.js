@@ -1,10 +1,12 @@
 const { FastServer } = require('./fast-server');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const WebSocket	= require('ws');
 
 const {Executor,genPlant} = require("./executor.js");
 const short = require('short-uuid');
 const fs = require('fs');
+const path = require('path')
 let devicesData = JSON.parse(fs.readFileSync('./data/devices.json', 'utf8'));
 let actionsData = JSON.parse(fs.readFileSync('./data/actions.json', 'utf8'));
 let patternsData = JSON.parse(fs.readFileSync('./data/patterns.json', 'utf8'));
@@ -13,6 +15,7 @@ let tasks = {};
 let actions = {};
 const taskPath = "./data/tasks";
 const actionsPath = "./data/actions";
+let saveProgrammed = false;
 
 let Log = null;
 
@@ -30,7 +33,7 @@ function ddelete(array, id, val) {
 	if (el != null)
 		array.splice(array.indexOf(el), 1);
 }
-function scanTasksFolfer() {
+function scanTasksFolder() {
 	fs.readdirSync(taskPath).forEach((file) => {
    		let base = taskPath + '/' + file;
 		if (!fs.statSync(base).isDirectory()) {
@@ -54,6 +57,12 @@ function scanTasksFolfer() {
 	//console.log("tasks",tasks)
 	//console.log("actions",actions)
 }
+const ClientType = Object.freeze({
+  PROGRESS: 0,
+  DASHBOARD: 1,
+  REMOTE: 2,
+  EXECUTOR: 3,
+});
 class AdbSocketServer {
 	constructor(Logger) {
 		Log = Logger;
@@ -63,7 +72,7 @@ class AdbSocketServer {
 		const clusters = [];
 		this.startServer(clients, clusters, devices);
 		this.startServerCluster(clients, clusters, devices);
-		scanTasksFolfer();
+		scanTasksFolder();
 		this.executor.setActions(actions);
 		this.executor.setPatterns(patternsData);
 		this.drawProgressForm();		
@@ -75,56 +84,265 @@ class AdbSocketServer {
 			console.log("progressPath",tasks[k]['progressPath']);
 		});
 	}
+	saveDevices(){
+		if(saveProgrammed) return;
+		setTimeout(()=>{
+			fs.writeFile('./data/devices.json',JSON.stringify(devicesData, null, '\t'),'utf8', (err)=>{
+				saveProgrammed = false;
+				if (err) {
+					console.error('Error writing file:', err);
+					return;
+				}
+				console.log('File written successfully!');
+			});
+		},5000);
+		saveProgrammed=true;
+		
+	}
 	startServer(clients, clusters, devices) {
+		const self = this;
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
 		const httpServer = createServer(fastServer);
+		fastServer.get("/tasks",(req,res)=>{ 
+			const task = tasks[req.query.id];
+			res.setHeader('Content-Type', 'application/json');
+			if (task==null){
+				res.send(JSON.stringify(tasks));  
+			}else
+				res.send(JSON.stringify(task));
+		});
+		fastServer.get("/actions",(req,res)=>{
+			const task = tasks[req.query.taskId];
+			const actionsData = {};
+			task.progressPath.forEach(p=> actionsData[p.id] = actions[p.id]);
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify(actionsData));
+		});
+		fastServer.get("/screens",(req,res)=>{
+			console.log("req.query.screenId",req.query.screenId);
+			const screenId = req.query.screenId;
+			console.log("path",__dirname + '/../screens/'+screenId+'.png');
+			const imagePath = path.join(__dirname, '/../screens/'+screenId+'.png');
+			res.sendFile(imagePath);
+		});
+		fastServer.get("/devices",(req,res)=>{
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify(devices));
+		});
+		fastServer.get("/clusters",(req,res)=>{
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify(clusters));
+		});
+		fastServer.get("/clients",(req,res)=>{
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify(clients.map(c=>{ return {type:c.type,devices:c.devices,uuid:c.uuid,features:c.features,address:c.address}; } )));
+		});
+		fastServer.post("/adb",(req,res)=>{			
+    		const data = req.body.data;
+			Log.i("fastServer.post " );
+			Log.o(data);
+			if (data.action == 'adb') {
+				const device = dget(devices, 'serial', data.devices);
+				if (device != null) {
+					const cluster = dget(clusters, 'uuid', device.clusterId);
+					cluster.socket.emit("adb", data);
+				}				
+			}
+			res.send(JSON.stringify('{"response":"ok}'));
+		});
+		
 		const io = new Server(httpServer, {
 			cors: {
 				origin: "*",
 				methods: ["GET", "POST"],
 			}
 		});
-		this.executor.on('send',(data)=>{
-			console.log(data);
+		this.executor.on('send', (data)=>{
+			console.log('send', data);
 			const device = dget(devices, 'serial', data.devices);
 			if (device != null) {
-				const cluster = dget(clusters, 'uuid', device.clusterId);
-				
+				const cluster = dget(clusters, 'uuid', device.clusterId);				
 				cluster.socket.emit(data.action, data);
 			}
 		});
 		this.executor.on('task.progress',(deviceId,progress)=>{
-			//Log.i("task.progress");
+			Log.i("task.progress");
 			//Log.o(progress);
 			const device = dget(devices, 'serial', deviceId);
 			if (device != null) {							
 				device['progress'] = progress;
-				clients.forEach(client => client.socket.emit("task.progress", {serial:deviceId,data:progress}));
+				clients.filter(client=>client.features.capture).forEach(client => client.socket.emit("task.progress", {serial:deviceId,data:progress}));
 			}
 		});
+		let getDeviceRemoteList = ()=>{
+			let devicesList = {};
+			let clientRemotes = clients.filter(c=>c.type==ClientType.REMOTE);
+			clientRemotes.forEach(client=>{
+				client.devices.forEach(deviceSerial => {
+					if (devicesList[deviceSerial] == null){
+						devicesList[deviceSerial] = {serial: deviceSerial,count: 0, clients:[]};
+					}
+					const c = client;
+					devicesList[deviceSerial].count++;
+					devicesList[deviceSerial].clients.push({type:c.type,uuid:c.uuid,features:c.features,address:c.address});
+				});
+			});		
+			return devicesList;
+		};
+		let updateDevicesRemote = (devicesList)=>{
+			devices.forEach(device=>{
+				if (devicesList[device.serial]!=null)
+					device['countRemotes'] = devicesList[device.serial].count;
+				else
+					device['countRemotes'] = 0;
+			});
+		};
+					
+		let hexStringToUint8Array = (hexString)  =>{
+				return Uint8Array.from(Array.from(hexString).map(letter => letter.charCodeAt(0)));
+			}
+		let wsLowQuality = (serial)=>{
+			const device = devices.find(d=>d.serial == serial);
+			if (device == null) return;
+			const socket = new WebSocket('ws://' + device.clusterAddress + ':8000/?action=proxy-adb&remote=tcp%3A8886&udid=' + device.serial + '');
+			console.log("ws trying connect to ", 'ws://' + device.clusterAddress + ':8000/?action=proxy-adb&remote=tcp%3A8886&udid=' + device.serial );
+			
+			socket.on('error', (er)=>console.log(er));
+			socket.on('open',() => {				
+				console.log("socket reducing quality");
+				//socket.send(hexStringToUint8Array("6500020000000000050503840193000000000000000000ff000000000000000000000000"));
+				socket.send(Buffer.from("6500020000000000050503840193000000000000000000ff000000000000000000000000", "hex"));
+				//setTimeout(() => socket.send(self.hexStringToUint8Array("0A00")), 200);
+				setTimeout(() => { socket.close();  }, 600);
+			});
+			
+		}
+		let disconnectRemote = (clientDisconnected)=>{
+			let devicesList = getDeviceRemoteList();
+			updateDevicesRemote(devicesList);
+			let devicesRemoteUnique = [];
+			let devicesRemote = [];
+			console.log("devicesList.after", devicesList);
+			clientDisconnected.devices.forEach(deviceSerial => {
+				if (devicesList[deviceSerial] !=undefined) {
+					devicesList[deviceSerial].count = devicesList[deviceSerial].count - 1;
+					if (devicesList[deviceSerial].count == 0)
+						devicesRemoteUnique.push(devicesList[deviceSerial]);
+					//else	// ONLY IF EXIST 1
+					devicesRemote.push(devicesList[deviceSerial]);
+				}
+			});
+			console.log("devicesList.before", devicesList);
+			console.log("devicesRemoteUnique", devicesRemoteUnique);
+			devicesRemoteUnique.forEach(device=>{
+				clients.forEach(client => client.socket.emit("device.noremote", {serial:device.serial}));
+				wsLowQuality(device.serial);
+			});
+			devicesRemote.forEach(device=>{
+				clients.forEach(client => client.socket.emit("device.remote.leave", {serial:device.serial}));
+			});
+		}
 		io.on("connection", (socket) => {
 			let uuid = short.generate();
-			clients.push({ socket: socket, uuid: uuid });
+  			var address = socket.request.connection._peername;
+			const client = { socket: socket,address:address.addresss, type:ClientType.DASHBOARD,devices:[], uuid: uuid, features:{'capture':true,'progress':true,'adb':true} };
+			clients.push(client);
 			Log.i("Socket connected " + uuid);
 
-			socket.emit("clusters", clusters.map(c => c.uuid));
+			socket.emit("clusters", clusters.map(cluster => { return {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address};}));
 			socket.emit("tasks", tasks);
 			socket.emit("actions", actions);
 			socket.emit("devices", devices);
 
 			socket.on("disconnect", () => {
 				Log.i("socket disconnected " + uuid);
-				ddelete(clients, 'uuid', uuid);
+				disconnectRemote(client);
+				ddelete(clients, 'uuid', uuid);				
 			});
 			socket.on("device.assign", (data) => {
-				Log.i("device.assign ");
+				Log.i("device.assign");				
 				Log.o(data);
+				devicesData.devicesAssign[data.serial] = {"number": data.number};
+				this.saveDevices();				
 				
+				const deviceTemp = dget(devices, 'serial', data.serial);
+				if (deviceTemp == null){
+					devices.push(device);}
+				if (devicesData.devicesAssign[data.serial] != null)
+					deviceTemp['number'] = devicesData.devicesAssign[data.serial].number;
+				else
+					deviceTemp['number'] = -1;
+				clients.forEach(client => client.socket.emit("device.update", deviceTemp));
+			});
+			socket.on("patterns", (data) => {
+				Log.i("sending.patterns");
+				socket.emit("patterns", patternsData);
+			});
+			socket.on("client.type.progress", (data) => {
+				Log.i("client.type.progress");
+				Log.o(data);
+				client.type = ClientType.PROGRESS;
+			});
+			socket.on("client.type.dashboard", (data) => {
+				Log.i("client.type.dashboard");
+				Log.o(data);
+				client.type = ClientType.DASHBOARD;
+			});
+			socket.on("client.type.remote", (data) => {
+				Log.i("client.type.remote");
+				Log.o(data);
+				client.type = ClientType.REMOTE;
+			});
+			socket.on("client.type.executor", (data) => {
+				Log.i("client.type.executor");
+				Log.o(data);
+				client.type = ClientType.EXECUTOR;
+			});
+			socket.on("feature.capture.on", (data) => {
+				Log.i("feature.capture");
+				Log.o(data);
+				client.features.capture = true;
+			});
+			socket.on("feature.capture.off", (data) => {
+				Log.i("feature.capture");
+				Log.o(data);
+				client.features.capture = false;
+			});
+			socket.on("feature.progress.off", (data) => {
+				Log.i("feature.progress");
+				Log.o(data);
+				client.features.progress = true;
+			});
+			socket.on("feature.progress.off", (data) => {
+				Log.i("feature.progress");
+				Log.o(data);
+				client.features.progress = false;
+			});
+			socket.on("client.subscribe.devices", (data) => {
+				Log.i("client.subscribe.devices");
+				Log.o(data);
+				if (Array.isArray(data))
+					data.forEach(d=>client.devices.push(d));
+				else
+					client.devices.push(data)
+				
+				let devicesList = getDeviceRemoteList();
+				updateDevicesRemote(devicesList);
+				
+				client.devices.forEach(deviceSerial=>{
+					if (devicesList[deviceSerial] !=undefined)
+						clients.forEach(client => client.socket.emit("device.remote.add", devicesList[deviceSerial]));
+				});
 			});
 			socket.on("tasks.stop", (data) => {
 				Log.i("tasks.stop ");
 				Log.o(data);				
-				this.executor.stop();
+				this.executor.stopAll();
+			});
+			socket.on("tasks.stop.device", (data) => {
+				Log.i("tasks.stop.device ");
+				Log.o(data);				
+				this.executor.stopTask(data.devices);
 			});
 			socket.on("adb.install.keyboard", (data) => {
 				Log.i("adb.install.keyboard ");
@@ -176,9 +394,33 @@ class AdbSocketServer {
 				Log.o(data);
 				this.executor.startTask(data.devices,data.task);
 			});
-			socket.on("device.adb", (data) => {
-				Log.i("device.adb data");
+			socket.on("tasks.execute.batch", (data) => {
+				Log.i("tasks.execute.batch");
 				Log.o(data);
+				this.executor.startTaskBatch(data.devices, data.task);
+			});
+			socket.on("tasks.resume", (data) => {
+				Log.i("tasks.resume ");
+				Log.o(data);
+				this.executor.resumeTask(data.devices,data.task);
+			});
+			socket.on("device.network", (data) => {
+				const device = dget(devices, 'serial', data.devices);
+				if (device != null) {
+					const cluster = dget(clusters, 'uuid', device.clusterId);
+					cluster.socket.emit("network", data);
+				}
+			});
+			socket.on("device.resolution", (data) => {
+				const device = dget(devices, 'serial', data.devices);
+				if (device != null) {
+					const cluster = dget(clusters, 'uuid', device.clusterId);
+					cluster.socket.emit("resolution", data);
+				}
+			});
+			socket.on("device.adb", (data) => {
+				//Log.i("device.adb data");
+				//Log.o(data);
 				if (data.action == 'adb') {
 					const device = dget(devices, 'serial', data.devices);
 					if (device != null) {
@@ -217,8 +459,8 @@ class AdbSocketServer {
 	startServerCluster(clients, clusters, devices) {
 		const httpCluster = createServer();
 		const ioCluster = new Server(httpCluster, {
-			pingInterval: 3800, 
-			pingTimeout: 3500,
+			pingInterval: 4800, 
+			pingTimeout: 8500,
 			maxHttpBufferSize: 1e8 ,
 			forceNew: true,
 			cors: {
@@ -228,14 +470,16 @@ class AdbSocketServer {
 		});
 		ioCluster.on("connection", (socket) => {
 			let uuid = short.generate();
-			Log.i("Cluster Socket connected " + uuid);
-			const cluster = { socket: socket, devices: [], uuid, uuid };
+  			//var address = socket.handshake.address;
+  			var address = socket.request.connection._peername;
+			Log.i("Cluster Socket connected " + uuid + " " +address.address );
+			const cluster = { socket: socket, devices: [], uuid, uuid,address:address };
 			clusters.push(cluster);
-			clients.forEach(client => client.socket.emit("cluster.connect", uuid));
+			clients.forEach(client => client.socket.emit("cluster.connect", {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address}));
 			socket.on("disconnect", () => {
-				Log.i("Cluster Socket disconnected " + uuid);
+				Log.i("Cluster Socket disconnected " + uuid + " " +address.address);
 				let clusterDevices = devices.filter(d => d.clusterId == uuid);
-				console.log("delete devices", clusterDevices);
+				Log.i("delete devices disconnected " + clusterDevices.length);
 				clusterDevices.forEach(device => clients.forEach(client => client.socket.emit("device.disconnect", device)));
 				clusterDevices.forEach(device => { ddelete(devices, 'serial', device.serial) });
 				ddelete(clusters, 'uuid', uuid);
@@ -249,11 +493,15 @@ class AdbSocketServer {
 					const deviceTemp = dget(devices, 'serial', device.serial);
 					if (deviceTemp == null){
 						devices.push(device);changes++;}
-					if (devicesData.devicesAssign[device.serial] != null)
-						device['number'] = devicesData.devicesAssign[device.serial].number;
-					else
+					if (devicesData.devicesAssign[device.serial] != null){
+						device['number'] = devicesData.devicesAssign[device.serial].number;						
+						device['network'] = devicesData.devicesAssign[device.serial].network;
+					}
+					else{
 						device['number'] = -1;
+					}
 					device['clusterId'] = uuid;
+					device['clusterAddress'] = cluster.address?.address;
 				});
 				if(changes>0){
 					console.log("changes",changes);
@@ -267,11 +515,14 @@ class AdbSocketServer {
 
 				if (createdDevice == null)
 					devices.push(device);
-				if (devicesData.devicesAssign[device.serial] != null)
-					device['number'] = devicesData.devicesAssign[device.serial].number;
-				else
+				if (devicesData.devicesAssign[device.serial] != null){
+					device['number'] = devicesData.devicesAssign[device.serial].number;				
+					device['network'] = devicesData.devicesAssign[device.serial].network;
+					device['resolution'] = devicesData.devicesAssign[device.serial].resolution;
+				}else
 					device['number'] = -1;
 				device['clusterId'] = uuid;
+				device['clusterAddress'] = cluster.address?.address;
 				const data = {};
 				clients.forEach(client => client.socket.emit("device.connect", device));
 			});
@@ -281,13 +532,51 @@ class AdbSocketServer {
 				clients.forEach(client => client.socket.emit("device.disconnect", device));
 			});
 			socket.on("device.capture", (data) => {
-				//console.log("device.capture",data);
-				console.log("device.capture",data.data.length);
-				this.executor.screen(data.serial,data.data);
-				clients.forEach(client => client.socket.emit("device.capture", data));
+				//console.log("device.capture",data.data.length);
+				this.executor.screen(data.serial,data.data);				
+				clients.filter(client=>client.features.capture).forEach(client => client.socket.emit("device.capture", data));				
+			});
+			socket.on("device.network", (data) => {				
+				clients.forEach(client => client.socket.emit("device.network", data));				
+				
+				if (devicesData.devicesAssign[data.serial] != null){
+					if (devicesData.devicesAssign[data.serial]['network'] == null){
+						devicesData.devicesAssign[data.serial]['network'] = data.data;						
+						const device = devices.find(d=>d.serial==data.serial);
+						device['network'] = data.data;
+						this.saveDevices();
+					}else{
+						if (devicesData.devicesAssign[data.serial]['network']['ip'] != data.data.ip
+							||devicesData.devicesAssign[data.serial]['network']['mac'] != data.data.mac
+							||devicesData.devicesAssign[data.serial]['network']['ssid'] != data.data.ssid){
+							devicesData.devicesAssign[data.serial]['network'] = data.data;
+							const device = devices.find(d=>d.serial==data.serial);
+							device['network'] = data.data;
+							this.saveDevices();
+						}
+					}					
+				}							
+			});
+			socket.on("device.resolution", (data) => {				
+				clients.forEach(client => client.socket.emit("device.resolution", data));				
+				
+				if (devicesData.devicesAssign[data.serial] != null){
+					if (devicesData.devicesAssign[data.serial]['resolution'] == undefined){
+						devicesData.devicesAssign[data.serial]['resolution'] = data.data;		
+						const device = devices.find(d=>d.serial==data.serial);
+						device['resolution'] = data.data;						
+						this.saveDevices();
+					}else{
+						if (devicesData.devicesAssign[data.serial]['resolution']['size'] != data.data.size){
+							const device = devices.find(d=>d.serial==data.serial);
+							device['resolution'] = data.data;						
+							this.saveDevices();
+						}
+					}					
+				}							
 			});
 		});
-		ioCluster.listen(9000, () => {
+		httpCluster.listen(9000,'0.0.0.0', () => {
 			Log.i("Cluster Server connected");
 		});
 	}

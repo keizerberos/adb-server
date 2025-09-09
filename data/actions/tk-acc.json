@@ -1,0 +1,176 @@
+{
+   "tk02_start":{
+      "name":"START_APK",
+      "desc":"Start apk",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am start -n com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":9500,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk02_config"
+      ]
+   },
+   "tk02_config":{
+      "name":"APK_CLICK",
+      "desc":"click on icon",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 646 1457"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk02_profile","tk02_profile","tk02_profile","tk02_profile"
+      ]
+   },
+   "tk02_profile":{
+      "name":"tap_edit_pattern",
+      "desc":"Tap edit pattern",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"tk3_pattern_editprofile",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{deviceId}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 325 {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":200,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":500,
+      "next":[
+         "tk02_acc"
+      ]
+   },
+   "tk02_acc":{
+      "name":"CLICK ",
+      "desc":"Click second account",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 333 1294"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk02_back"
+      ]
+   },
+   "tk02_back":{
+      "name":"BACK",
+      "desc":"Back page",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input keyevent 4"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":2000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk02_home"
+      ]
+   },
+   "tk02_home":{
+      "name":"HOME",
+      "desc":"Back to home",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input keyevent 3"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":2000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+      ]
+   }
+}

@@ -1,5 +1,5 @@
 {
-   "fb_like_1":{
+   "fbv1_like_1":{
       "name":"STOP_APK",
       "desc":"Stop APK",
       "trigger":[
@@ -22,10 +22,10 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_2"
+         "fbv1_like_2"
       ]
    },
-   "fb_like_2":{
+   "fbv1_like_2":{
       "name":"START_APK",
       "desc":"start APK with link",
       "trigger":[
@@ -41,53 +41,60 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":9500,
+      "postDelay":10000,
       "maxLoop":3,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_3",
-         "fb_like_3_blue",
-         "fb_like_4"
+         "fbv1_like_pre_3"
       ]
    },
-   "fb_like_3":{
-      "name":"PATTERN",
-      "desc":"Detect pattern apk",
+   "fbv1_like_pre_3":{
+      "name":"tap like",
+      "desc":"tap like",
       "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_1_like",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{devices}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
+         
       ],
       "command":{
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap {wm} {hm}"
+            "command":"input tap 358 689"
          }
       },
       "order":0,
-      "type":"pattern",
-      "preDelay":400,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[		
+         "fbv1_like_3_blue",
+         "fbv1_like_3",
+         "fbv1_like_5"
+      ]
+   },
+   "fbv1_like_3":{
+      "name":"tap like",
+      "desc":"tap like",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 650 918"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
       "postDelay":3000,
       "maxLoop":10,
       "loop":0,
@@ -95,16 +102,16 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_5"
+		"fbv1_like_5"
       ]
    },
-   "fb_like_3_blue":{
+   "fbv1_like_3_blue":{
       "name":"PATTERN",
       "desc":"Detect like blue",
       "trigger":[
          {
             "type":"pattern",
-            "pattern":"pattern_1_likeblue",
+            "pattern":"fbv_blue_like",
             "condition":true,
             "cmd":{
                "action":"Screen",
@@ -140,39 +147,36 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_5"
+         "fbv1_like_5"
       ]
    },
-   "fb_like_4":{
-      "name":"SWIPE",
-      "desc":"Swipe Up",
+   "fbv1_like_5":{
+      "name":"STOP_APK",
+      "desc":"Stop APK",
       "trigger":[
          
       ],
       "command":{
-         "action":"adb",
+         "action":"stopApk",
          "devices":"{deviceId}",
          "data":{
-            "command":"input swipe 300 1000 300 500"
+            "apk":"com.facebook.lite"
          }
       },
       "order":0,
       "type":"static",
-      "preDelay":500,
-      "postDelay":3000,
+      "preDelay":1000,
+      "postDelay":5000,
       "maxLoop":10,
       "loop":0,
-      "maxTry":10,
+      "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_3",
-         "fb_like_3_blue",
-         "fb_like_4",
-         "fb_like_5"
+         "fbv1_like_5a"
       ]
    },
-   "fb_like_5":{
+   "fbv1_like_5a":{
       "name":"HOME",
       "desc":"Go Home",
       "trigger":[
@@ -195,10 +199,10 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_acc_1"
+         "fbv1_like_acc_1"
       ]
    },
-   "fb_like_acc_1":{
+   "fbv1_like_acc_1":{
       "name":"OPEN_APK",
       "desc":"Open Facebook APK",
       "trigger":[
@@ -214,17 +218,17 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":9500,
+      "postDelay":10000,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_xlike_a_2"
+         "fbv1_xlike_a_2"
       ]
    },
-   "fb_xlike_a_2":{
+   "fbv1_xlike_a_2":{
       "name":"INPUT_TAP",
       "desc":"Click config icon",
       "trigger":[
@@ -247,14 +251,12 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_xlike_a_3",
-         "fb_xlike_a_3",
-         "fb_xlike_a_3",
-         "fb_xlike_a_3",
-         "fb_xlike_a_3"
+         "fbv1_xlike_a_3",
+         "fbv1_xlike_a_3",
+         "fbv1_xlike_a_3"
       ]
    },
-   "fb_xlike_a_3":{
+   "fbv1_xlike_a_3":{
       "name":"PATTERN",
       "desc":"Click change account",
       "trigger":[
@@ -296,56 +298,10 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_xlike_a_3a",
-         "fb_xlike_a_4"
+         "fbv1_xlike_a_4"
       ]
    },
-   "fb_xlike_a_3a":{
-      "name":"PATTERN",
-      "desc":"Find start session icon",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_fb_inisesion",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{deviceId}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap {wm} {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":400,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fb_xlike_a_4"
-      ]
-   },
-   "fb_xlike_a_4":{
+   "fbv1_xlike_a_4":{
       "name":"INPUT_TAP",
       "desc":"Click on second account",
       "trigger":[
@@ -368,10 +324,36 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_c_2"
+         "fbv1_like_c_2x"
       ]
    },
-   "fb_like_c_2":{
+   "fbv1_like_c_2x":{
+      "name":"STOP_APK",
+      "desc":"Stop APK",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"stopApk",
+         "devices":"{deviceId}",
+         "data":{
+            "apk":"com.facebook.lite"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":5000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "fbv1_like_c_2"
+      ]
+   },
+   "fbv1_like_c_2":{
       "name":"START_APK",
       "desc":"start APK with link",
       "trigger":[
@@ -387,70 +369,51 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":9500,
+      "postDelay":10000,
       "maxLoop":3,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_c_3",
-         "fb_like_c_3_blue",
-         "fb_like_c_4"
+         "fbv1_like_c_3_pre_3"
       ]
    },
-   "fb_like_c_3":{
-      "name":"PATTERN",
-      "desc":"Detect pattern like",
+   "fbv1_like_c_3_pre_3":{
+      "name":"tap like",
+      "desc":"tap like",
       "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_1_like",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{devices}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
+         
       ],
       "command":{
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap {wm} {hm}"
+            "command":"input tap 358 689"
          }
       },
       "order":0,
-      "type":"pattern",
-      "preDelay":1000,
+      "type":"static",
+      "preDelay":500,
       "postDelay":3000,
       "maxLoop":10,
       "loop":0,
       "maxTry":10,
       "try":0,
       "timeout":5000,
-      "next":[
-         "fb_like_c_5"
+      "next":[		
+         "fbv1_like_c_3_blue",
+         "fbv1_like_c_3",
+         "fbv1_like_c_5"
       ]
    },
-   "fb_like_c_3_blue":{
+   "fbv1_like_c_3_blue":{
       "name":"PATTERN",
       "desc":"Detect like blue",
       "trigger":[
          {
             "type":"pattern",
-            "pattern":"pattern_1_likeblue",
+            "pattern":"fbv_blue_like",
             "condition":true,
             "cmd":{
                "action":"Screen",
@@ -486,12 +449,12 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_c_5"
+         "fbv1_like_c_5"
       ]
    },
-   "fb_like_c_4":{
-      "name":"SWIPE",
-      "desc":"Swipe Up",
+   "fbv1_like_c_3":{
+      "name":"tap like",
+      "desc":"tap like",
       "trigger":[
          
       ],
@@ -499,7 +462,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input swipe 300 1000 300 500"
+            "command":"input tap 648 914"
          }
       },
       "order":0,
@@ -512,13 +475,36 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_c_3",
-         "fb_like_c_3_blue",
-         "fb_like_c_4",
-         "fb_like_c_5"
+		"fbv1_like_c_5"
       ]
    },
-   "fb_like_c_5":{
+   "fbv1_like_c_5":{
+      "name":"STOP_APK",
+      "desc":"Stop APK",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"stopApk",
+         "devices":"{deviceId}",
+         "data":{
+            "apk":"com.facebook.lite"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":5000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "fbv1_like_c_5a"
+      ]
+   },
+   "fbv1_like_c_5a":{
       "name":"HOME",
       "desc":"Go Home",
       "trigger":[
@@ -541,10 +527,10 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_acc_1_x3"
+         "fbv1_like_acc_1_x3"
       ]
    },
-   "fb_like_acc_1_x3":{
+   "fbv1_like_acc_1_x3":{
       "name":"OPEN_APK",
       "desc":"Open Facebook APK",
       "trigger":[
@@ -560,17 +546,17 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":9500,
+      "postDelay":10000,
       "maxLoop":10,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_xlike_a_2_x3"
+         "fbv1_xlike_a_2_x3"
       ]
    },
-   "fb_xlike_a_2_x3":{
+   "fbv1_xlike_a_2_x3":{
       "name":"INPUT_TAP",
       "desc":"Click config icon",
       "trigger":[
@@ -593,14 +579,14 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_xlike_a_3_x3",
-         "fb_xlike_a_3_x3",
-         "fb_xlike_a_3_x3",
-         "fb_xlike_a_3_x3",
-         "fb_xlike_a_3_x3"
+         "fbv1_xlike_a_3_x3",
+         "fbv1_xlike_a_3_x3",
+         "fbv1_xlike_a_3_x3",
+         "fbv1_xlike_a_3_x3",
+         "fbv1_xlike_a_3_x3"
       ]
    },
-   "fb_xlike_a_3_x3":{
+   "fbv1_xlike_a_3_x3":{
       "name":"PATTERN",
       "desc":"Click change account",
       "trigger":[
@@ -642,56 +628,10 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_xlike_a_3a_x3",
-         "fb_xlike_a_4_x3"
+         "fbv1_xlike_a_4_x3"
       ]
    },
-   "fb_xlike_a_3a_x3":{
-      "name":"PATTERN",
-      "desc":"Find start session icon",
-      "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_fb_inisesion",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{deviceId}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap {wm} {hm}"
-         }
-      },
-      "order":0,
-      "type":"pattern",
-      "preDelay":400,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fb_xlike_a_4_x3"
-      ]
-   },
-   "fb_xlike_a_4_x3":{
+   "fbv1_xlike_a_4_x3":{
       "name":"INPUT_TAP",
       "desc":"Click on second account",
       "trigger":[
@@ -714,10 +654,10 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_c_2_x3"
+         "fbv1_like_c_2_x3"
       ]
    },
-   "fb_like_c_2_x3":{
+   "fbv1_like_c_2_x3":{
       "name":"START_APK",
       "desc":"start APK with link",
       "trigger":[
@@ -733,53 +673,32 @@
       "order":0,
       "type":"static",
       "preDelay":1000,
-      "postDelay":9500,
+      "postDelay":10000,
       "maxLoop":3,
       "loop":0,
       "maxTry":1,
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_c_3_x3",
-         "fb_like_c_3_blue_x3",
-         "fb_like_c_4_x3"
+         "fbv1_like_c_3_pre_x3"
       ]
    },
-   "fb_like_c_3_x3":{
-      "name":"PATTERN",
-      "desc":"Detect pattern apk",
+   "fbv1_like_c_3_pre_x3":{
+      "name":"tap like",
+      "desc":"tap like",
       "trigger":[
-         {
-            "type":"pattern",
-            "pattern":"pattern_1_like",
-            "condition":true,
-            "cmd":{
-               "action":"Screen",
-               "devices":"{devices}",
-               "data":{
-                  "savePath":"{screen_path}"
-               }
-            },
-            "result":{
-               "x":-1,
-               "y":-1,
-               "w":-1,
-               "h":-1,
-               "wm":-1,
-               "hm":-1
-            }
-         }
+         
       ],
       "command":{
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap {wm} {hm}"
+            "command":"input tap 358 689"
          }
       },
       "order":0,
-      "type":"pattern",
-      "preDelay":1000,
+      "type":"static",
+      "preDelay":500,
       "postDelay":3000,
       "maxLoop":10,
       "loop":0,
@@ -787,16 +706,44 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_c_5_x3"
+         "fbv1_like_c_3_blue_x3",
+         "fbv1_like_c_3_x3",
+         "fbv1_like_c_5_x3"
       ]
    },
-   "fb_like_c_3_blue_x3":{
+   "fbv1_like_c_3_x3":{
+      "name":"tap like",
+      "desc":"tap like",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 648 914"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+		"fbv1_like_c_5_x3"
+      ]
+   },
+   "fbv1_like_c_3_blue_x3":{
       "name":"PATTERN",
       "desc":"Detect like blue",
       "trigger":[
          {
             "type":"pattern",
-            "pattern":"pattern_1_likeblue",
+            "pattern":"fbv_blue_like",
             "condition":true,
             "cmd":{
                "action":"Screen",
@@ -832,39 +779,11 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fb_like_c_5_x3"
+         "fbv1_like_c_5_x3"
       ]
    },
-   "fb_like_c_4_x3":{
-      "name":"SWIPE",
-      "desc":"Swipe Up",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input swipe 300 1000 300 500"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":500,
-      "postDelay":3000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fb_like_c_3_x3",
-         "fb_like_c_3_blue_x3",
-         "fb_like_c_4_x3",
-         "fb_like_c_5_x3"
-      ]
-   },
-   "fb_like_c_5_x3":{
+   
+   "fbv1_like_c_5_x3":{
       "name":"HOME",
       "desc":"Go Home",
       "trigger":[

@@ -1,8 +1,9 @@
 {
    "change_keyboard":{
-      "name":"cambiar Input Media Editor",
+      "name":"Cambiar Input Media Editor(IME)",
+		"group": "Configuraciones",
+		"type": "config",
       "description":"<i class=\"bi bi-gear\"></i> Cambiar Input Media Editor (IME)",
-      "type":"config",
       "params":{
          
       },

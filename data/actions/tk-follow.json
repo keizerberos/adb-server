@@ -1,7 +1,7 @@
 {
-   "tk_x3_open_apk":{
+   "tk_follow_open":{
       "name":"START_APK",
-      "desc":"Open apk",
+      "desc":"Start apk",
       "trigger":[
          
       ],
@@ -14,110 +14,6 @@
       },
       "order":0,
       "type":"static",
-      "preDelay":2000,
-      "postDelay":9500,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "tk_x3_like"
-      ]
-   },
-   "tk_x3_like":{
-      "name":"TK_LIVE_LIKE",
-      "desc":"tiktok Live send like",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"\"input tap 324 521 & sleep 0.1; input tap 324 521\""
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":200,
-      "postDelay":4000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":500,
-      "next":[
-         "tk_x3_pattern_like_next"
-      ]
-   },
-   "tk_x3_pattern_like_next":{
-      "name":"BACK",
-      "desc":"Back page",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input keyevent 4"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":2000,
-      "postDelay":1000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "tk_x3_back"
-      ]
-   },
-   "tk_x3_back":{
-      "name":"HOME",
-      "desc":"Back to home",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input keyevent 3"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":2000,
-      "postDelay":1000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "tk_x3_2_start"
-      ]
-   },
-   "tk_x3_2_start":{
-      "name":"START_APK",
-      "desc":"Start apk",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"am start -n com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity"
-         }
-      },
-      "order":0,
-      "type":"static",
       "preDelay":1000,
       "postDelay":9500,
       "maxLoop":10,
@@ -126,43 +22,21 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3_c_open_profile"
+         "tk_follow_find",
+         "tk_follow_find",
+         "tk_follow_find",
+         "tk_follow_find",
+         "tk_follow_find",
+         "tk_follow_end"
       ]
    },
-   "tk_x3_c_open_profile":{
-      "name":"APK_CLICK",
-      "desc":"click on icon",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap 646 1457"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":1000,
-      "postDelay":1000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "tk_x3_c_close_add_email",
-         "tk_x3_c_click_ch_profile"
-      ]
-   },
-   "tk_x3_c_close_add_email":{
-      "name":"TK_CLOSE_EMAIL",
-      "desc":"Close add email",
+   "tk_follow_find":{
+      "name":"TK_FOLLOW",
+      "desc":"tiktok follow live",
       "trigger":[
          {
             "type":"pattern",
-            "pattern":"pattern_tk1_add_email",
+            "pattern":"tk_pattern_pf_follow",
             "condition":true,
             "cmd":{
                "action":"Screen",
@@ -185,7 +59,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 660 360"
+            "command":"input tap {wm} {hm}"
          }
       },
       "order":0,
@@ -196,15 +70,14 @@
       "loop":0,
       "maxTry":10,
       "try":0,
-      "timeout":5000,
+      "timeout":500,
       "next":[
-         "tk_x3_c_close_add_email",
-         "tk_x3_c_click_ch_profile"
+         "tk_follow_end"
       ]
    },
-   "tk_x3_c_click_ch_profile":{
-      "name":"CLICK",
-      "desc":"Click change icon",
+   "tk_follow_end":{
+      "name":"HOME",
+      "desc":"Go home",
       "trigger":[
          
       ],
@@ -212,7 +85,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 325 368"
+            "command":"\"input keyevent 4 & sleep 1; input keyevent 3\""
          }
       },
       "order":0,
@@ -225,10 +98,107 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3_c_click_seccond_acc"
+         "tk_follow_ch_open_1"
       ]
    },
-   "tk_x3_c_click_seccond_acc":{
+	"tk_follow_ch_open_1":{
+      "name":"START_APK",
+      "desc":"Start apk",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am start -n com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":9500,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_follow_ch_profile_1"
+      ]
+   },
+   "tk_follow_ch_profile_1":{
+      "name":"APK_CLICK",
+      "desc":"click on icon",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 646 1457"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_follow_ch_pattern_1","tk_follow_ch_pattern_1","tk_follow_ch_pattern_1","tk_follow_ch_pattern_1"
+      ]
+   },
+   "tk_follow_ch_pattern_1":{
+      "name":"TK_EDIT_PROFILE",
+      "desc":"Edit profile",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"tk3_pattern_editprofile",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{deviceId}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 325 {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":200,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":500,
+      "next":[
+         "tk_follow_ch_click_1"
+      ]
+   },
+   "tk_follow_ch_click_1":{
       "name":"CLICK ",
       "desc":"Click second account",
       "trigger":[
@@ -251,11 +221,11 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3_c_close_follow_friends",
-         "tk_x3_open_apk_2"
+         "tk_follow_ch_close_1",
+         "tk_follow_ch_start_2"
       ]
    },
-   "tk_x3_c_close_follow_friends":{
+   "tk_follow_ch_close_1":{
       "name":"TK_CLOSE_EMAIL",
       "desc":"Close add email",
       "trigger":[
@@ -297,12 +267,15 @@
       "try":0,
       "timeout":500,
       "next":[
-         "tk_x3_open_apk_2"
+         "tk_follow_ch_start_2"
       ]
    },
-   "tk_x3_open_apk_2":{
+
+
+   
+   "tk_follow_ch_start_2":{
       "name":"START_APK",
-      "desc":"Open apk",
+      "desc":"Start apk",
       "trigger":[
          
       ],
@@ -315,110 +288,6 @@
       },
       "order":0,
       "type":"static",
-      "preDelay":2000,
-      "postDelay":9500,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "tk_x3_like_2"
-      ]
-   },
-   "tk_x3_like_2":{
-      "name":"TK_LIVE_LIKE",
-      "desc":"tiktok Live send like",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"\"input tap 324 521 & sleep 0.1; input tap 324 521\""
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":200,
-      "postDelay":4000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":500,
-      "next":[
-         "tk_x3_pattern_like_next_2"
-      ]
-   },
-   "tk_x3_pattern_like_next_2":{
-      "name":"BACK",
-      "desc":"Back page",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input keyevent 4"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":2000,
-      "postDelay":1000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "tk_x3_back_2"
-      ]
-   },
-   "tk_x3_back_2":{
-      "name":"HOME",
-      "desc":"Back to home",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input keyevent 3"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":2000,
-      "postDelay":1000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "tk_x3_2_start_2"
-      ]
-   },
-   "tk_x3_2_start_2":{
-      "name":"START_APK",
-      "desc":"Start apk",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"am start -n com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity"
-         }
-      },
-      "order":0,
-      "type":"static",
       "preDelay":1000,
       "postDelay":9500,
       "maxLoop":10,
@@ -427,43 +296,20 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3_c_open_profile_2"
+         "tk_follow_find_2",
+         "tk_follow_find_2",
+         "tk_follow_find_2",
+         "tk_follow_find_2",
+         "tk_follow_end_2"
       ]
    },
-   "tk_x3_c_open_profile_2":{
-      "name":"APK_CLICK",
-      "desc":"click on icon",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input tap 646 1457"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":1000,
-      "postDelay":1000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "tk_x3_c_close_add_email_2",
-         "tk_x3_c_click_ch_profile_2"
-      ]
-   },
-   "tk_x3_c_close_add_email_2":{
-      "name":"TK_CLOSE_EMAIL",
-      "desc":"Close add email",
+   "tk_follow_find_2":{
+      "name":"TK_FOLLOW",
+      "desc":"tiktok follow live",
       "trigger":[
          {
             "type":"pattern",
-            "pattern":"pattern_tk1_add_email",
+            "pattern":"tk_pattern_pf_follow",
             "condition":true,
             "cmd":{
                "action":"Screen",
@@ -486,7 +332,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 660 360"
+            "command":"input tap {wm} {hm}"
          }
       },
       "order":0,
@@ -497,15 +343,14 @@
       "loop":0,
       "maxTry":10,
       "try":0,
-      "timeout":5000,
+      "timeout":500,
       "next":[
-         "tk_x3_c_close_add_email_2",
-         "tk_x3_c_click_ch_profile_2"
+         "tk_follow_end_2"
       ]
    },
-   "tk_x3_c_click_ch_profile_2":{
-      "name":"CLICK",
-      "desc":"Click change icon",
+   "tk_follow_end_2":{
+      "name":"HOME",
+      "desc":"Go home",
       "trigger":[
          
       ],
@@ -513,7 +358,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 325 368"
+            "command":"\"input keyevent 4 & sleep 1; input keyevent 3\""
          }
       },
       "order":0,
@@ -526,10 +371,107 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3_c_click_seccond_acc_2"
+         "tk_follow_ch_open_2"
       ]
    },
-   "tk_x3_c_click_seccond_acc_2":{
+	"tk_follow_ch_open_2":{
+      "name":"START_APK",
+      "desc":"Start apk",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am start -n com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":9500,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_follow_ch_profile_2"
+      ]
+   },
+   "tk_follow_ch_profile_2":{
+      "name":"APK_CLICK",
+      "desc":"click on icon",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 646 1457"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_follow_ch_pattern_2","tk_follow_ch_pattern_2","tk_follow_ch_pattern_2","tk_follow_ch_pattern_2"
+      ]
+   },
+   "tk_follow_ch_pattern_2":{
+      "name":"TK_EDIT_PROFILE",
+      "desc":"Edit profile",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"tk3_pattern_editprofile",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{deviceId}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 325 {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":200,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":500,
+      "next":[
+         "tk_follow_ch_click_2"
+      ]
+   },
+   "tk_follow_ch_click_2":{
       "name":"CLICK ",
       "desc":"Click second account",
       "trigger":[
@@ -552,11 +494,11 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3_c_close_follow_friends_2",
-         "tk_x3_open_apk_3"
+         "tk_follow_ch_close_2",
+         "tk_follow_ch_start_3"
       ]
    },
-   "tk_x3_c_close_follow_friends_2":{
+   "tk_follow_ch_close_2":{
       "name":"TK_CLOSE_EMAIL",
       "desc":"Close add email",
       "trigger":[
@@ -598,12 +540,14 @@
       "try":0,
       "timeout":500,
       "next":[
-         "tk_x3_open_apk_3"
+         "tk_follow_ch_start_3"
       ]
    },
-   "tk_x3_open_apk_3":{
+ 
+   
+   "tk_follow_ch_start_3":{
       "name":"START_APK",
-      "desc":"Open apk",
+      "desc":"Start apk",
       "trigger":[
          
       ],
@@ -616,7 +560,7 @@
       },
       "order":0,
       "type":"static",
-      "preDelay":2000,
+      "preDelay":1000,
       "postDelay":9500,
       "maxLoop":10,
       "loop":0,
@@ -624,64 +568,62 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3_like_3"
+         "tk_follow_find_3",
+         "tk_follow_find_3",
+         "tk_follow_find_3",
+         "tk_follow_find_3",
+         "tk_follow_find_3",
+         "tk_follow_end_3"
       ]
    },
-   "tk_x3_like_3":{
-      "name":"TK_LIVE_LIKE",
-      "desc":"tiktok Live send like",
+   "tk_follow_find_3":{
+      "name":"TK_FOLLOW",
+      "desc":"tiktok follow live",
       "trigger":[
-         
+         {
+            "type":"pattern",
+            "pattern":"tk_pattern_pf_follow",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{deviceId}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
       ],
       "command":{
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"\"input tap 324 521 & sleep 0.1; input tap 324 521\""
+            "command":"input tap {wm} {hm}"
          }
       },
       "order":0,
-      "type":"static",
+      "type":"pattern",
       "preDelay":200,
-      "postDelay":4000,
+      "postDelay":2000,
       "maxLoop":10,
       "loop":0,
       "maxTry":10,
       "try":0,
       "timeout":500,
       "next":[
-         "tk_x3_pattern_like_next_3"
+         "tk_follow_end_3"
       ]
    },
-   "tk_x3_pattern_like_next_3":{
-      "name":"BACK",
-      "desc":"Back page",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input keyevent 4"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":2000,
-      "postDelay":1000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "tk_x3_back_3"
-      ]
-   },
-   "tk_x3_back_3":{
+   "tk_follow_end_3":{
       "name":"HOME",
-      "desc":"Back to home",
+      "desc":"Go home",
       "trigger":[
          
       ],
@@ -689,12 +631,12 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input keyevent 3"
+            "command":"\"input keyevent 4 & sleep 1; input keyevent 3\""
          }
       },
       "order":0,
       "type":"static",
-      "preDelay":2000,
+      "preDelay":1000,
       "postDelay":1000,
       "maxLoop":10,
       "loop":0,
@@ -702,7 +644,6 @@
       "try":0,
       "timeout":5000,
       "next":[
-         
       ]
    }
 }

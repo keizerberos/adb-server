@@ -1,7 +1,9 @@
 {
    "facebook_comment_x2":{
-      "name":"Comentar facebook",
-      "description":"<i class=\"bi bi-facebook\"></i> Facebook - Enviar comentarios 3 cuentas",
+      "name":"Comentarios en 3 cuentas (Post)",
+		"group": "Facebook",
+		"type": "task",
+      "description":"<i class=\"bi bi-facebook\"></i> Facebook - Enviar comentarios 3 cuentas (Post)",
       "params":{
          "link":"https://www.facebook.com/100064177324343/posts/pfbid0V1QR37nGwNiAUwSeV3hF38fp7yNLNAuChtqnbR2VDradn64fwdDrBn8FSQwF6NePl",
          "comment":""

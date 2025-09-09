@@ -1,16 +1,17 @@
 {	
 	"wifi_change":{
 		"name": "Cambiar WIFI",
-		"description": "<i class='bi bi-gear'></i> Cambiar Wifi",
+		"group": "Configuraciones",
 		"type": "config",
+		"description": "<i class='bi bi-gear'></i> Cambiar Wifi",
 		"params": {
-			"ssid": "",
+			"ssid": "WIFICORP",
 			"password_type": "WPA",
 			"password": ""
 		},
 		"functions": {
 		},
 		"start": "wifi_action_1",
-		"end": "wifi_action_1"
+		"end": "wifi_action_2"
 	}
 }

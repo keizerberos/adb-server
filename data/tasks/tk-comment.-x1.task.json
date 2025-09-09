@@ -1,9 +1,9 @@
 {
-   "tiktok_comment_x3":{
-      "name":"Comentarios en 3 cuentas",
+   "tiktok_comment_x1":{
+      "name":"Comentarios",
       "group":"TikTok",
       "type":"task",
-      "description":"<i class=\"bi bi-tiktok\"></i> Tiktok - Enviar comentarios - 3 cuentas ",
+      "description":"<i class=\"bi bi-tiktok\"></i> Tiktok - Enviar comentarios",
       "params":{
          "link":"https://www.tiktok.com/@li_storys/video/7496004726841068808",
          "comment":""
@@ -19,7 +19,7 @@
             ]
          }
       },
-      "start":"tk3_x3_start_1",
-      "end":"tk3_x3_home_3"
+      "start":"tk03_start",
+      "end":"tk03_home"
    }
 }
