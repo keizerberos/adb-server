@@ -489,17 +489,10 @@ function executeTask(devices, task) {
 		});
 	});
 }
-function executeTaskBatch(devices, task, cbEnd) {
+function executeTaskBatch(devices, params, task, cbEnd) {
 	let tasks = [];
-	let params = {};
 
-	task.paramsArray.forEach(param => {
-		const paramLines = param.value.split('\n');
-		if (paramLines.length < 2) {
-			params[param.id] = param.value;
-		} else
-			params[param.id] = { random: false, index: 0, data: paramLines };
-	});
+	
 	devicesActions = {};
 	console.log("params", params);
 	let countEnded = 0;
@@ -713,17 +706,24 @@ class Executor {
 		eventNodes = [];
 		signalStop = false;
 		let batchs = [];
+		let params = [];
 		console.log("building batch");
 
 		if (!task.config.isBatch){
 			executeTask(_devices, task);
 			return;
 		}
-
+		task.paramsArray.forEach(param => {
+			const paramLines = param.value.split('\n');
+			if (paramLines.length < 2) {
+				params[param.id] = param.value;
+			} else
+				params[param.id] = { random: false, index: 0, data: paramLines };
+		});
 		task.config.batch.groups.forEach(groupDevices=>{
 			let batch = (cb)=>{
 				setTimeout(()=>{
-					executeTaskBatch(groupDevices, task, ()=>{
+					executeTaskBatch(groupDevices, params, task, ()=>{
 						cb();
 					});
 				},task.config.batch.offset*1000);
