@@ -171,7 +171,7 @@ class AdbSocketServer {
 			const device = dget(devices, 'serial', deviceId);
 			if (device != null) {							
 				device['progress'] = progress;
-				clients.filter(client=>client.features.capture).forEach(client => client.socket.emit("task.progress", {serial:deviceId,data:progress}));
+				clients.filter(client=>client.features.progress).forEach(client => client.socket.emit("task.progress", {serial:deviceId,data:progress}));
 			}
 		});
 		let getDeviceRemoteList = ()=>{
