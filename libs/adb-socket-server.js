@@ -443,6 +443,7 @@ class AdbSocketServer {
 					}
 				}
 				if (data.action == 'Screen') {
+					Log.i("device.adb data.action == 'Screen'");
 					const device = dget(devices, 'serial', data.devices);
 					if (device != null) {
 						const cluster = dget(clusters, 'uuid', device.clusterId);

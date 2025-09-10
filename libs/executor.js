@@ -616,9 +616,9 @@ function clearScreens(serial){
     fs.readdir(pathScreens, function(err,list){
         if(err) throw err;
         for(var i=0; i<list.length; i++){
-			console.log("test",list[i]); 
+			//console.log("test",list[i]); 
             if(list[i].includes(serial)){
-                console.log("deleting",list[i]); 
+                //console.log("deleting",list[i]); 
                 //files.push(list[i]);
 				fs.unlinkSync(pathScreens+list[i]);
             }
