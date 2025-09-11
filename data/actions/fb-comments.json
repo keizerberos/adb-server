@@ -574,32 +574,6 @@
          "fbc2_action2_2"
       ]
    },
-   "fbc2_action2_1":{
-      "name":"STOP_APK",
-      "desc":"Stop apk",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"stopApk",
-         "devices":"{deviceId}",
-         "data":{
-            "apk":"com.facebook.lite"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":1000,
-      "postDelay":5000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbc2_action_2"
-      ]
-   },
    "fbc2_action2_2":{
       "name":"START_APK",
       "desc":"Start apk link",
@@ -1247,8 +1221,8 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fbc2_action2_3_b",
-         "fbc2_action2_3_c"
+         "fbc2_action2_3_b_x3",
+         "fbc2_action2_3_c_x3"
       ],
       "beforeLoop":"fbc2_action2_5_x3"
    },
