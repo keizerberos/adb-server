@@ -118,6 +118,11 @@ class AdbSocketServer {
 			res.setHeader('Content-Type', 'application/json');
 			res.send(JSON.stringify(actionsData));
 		});
+		fastServer.get("/patterns",(req,res)=>{
+			const task = tasks[req.query.taskId];
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify(patternsData));
+		});
 		fastServer.get("/screens",(req,res)=>{
 			console.log("req.query.screenId",req.query.screenId);
 			const screenId = req.query.screenId;

@@ -180,14 +180,19 @@
       "next":[
          "fbvcc2_action_4b",
          "fbvcc2_action_4c",
+         "fbvcc2_action_4d",
          "fbvcc2_action_4b",
          "fbvcc2_action_4c",
+         "fbvcc2_action_4d",
          "fbvcc2_action_4b",
          "fbvcc2_action_4c",
+         "fbvcc2_action_4d",
          "fbvcc2_action_4b",
          "fbvcc2_action_4c",
+         "fbvcc2_action_4d",
          "fbvcc2_action_4b",
-         "fbvcc2_action_4c"
+         "fbvcc2_action_4c",
+         "fbvcc2_action_4d"
       ]
    },
    "fbvcc2_action_4b":{
@@ -242,6 +247,51 @@
          {
             "type":"pattern",
             "pattern":"pattern_fb_send_2",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{devices}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap {wm} {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":400,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "fbvcc2_action_5"
+      ]
+   },
+   "fbvcc2_action_4d":{
+      "name":"PATTERN",
+      "desc":"Find send button 3",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"pattern_fb_send_3",
             "condition":true,
             "cmd":{
                "action":"Screen",
@@ -638,14 +688,19 @@
       "next":[
          "fbvcc2_action2_4b",
          "fbvcc2_action2_4c",
+         "fbvcc2_action2_4d",
          "fbvcc2_action2_4b",
          "fbvcc2_action2_4c",
+         "fbvcc2_action2_4d",
          "fbvcc2_action2_4b",
          "fbvcc2_action2_4c",
+         "fbvcc2_action2_4d",
          "fbvcc2_action2_4b",
          "fbvcc2_action2_4c",
+         "fbvcc2_action2_4d",
          "fbvcc2_action2_4b",
-         "fbvcc2_action2_4c"
+         "fbvcc2_action2_4c",
+         "fbvcc2_action2_4d"
       ]
    },
    "fbvcc2_action2_4b":{
@@ -700,6 +755,51 @@
          {
             "type":"pattern",
             "pattern":"pattern_fb_send_2",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{devices}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap {wm} {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":400,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "fbvcc2_action2_5"
+      ]
+   },
+   "fbvcc2_action2_4d":{
+      "name":"PATTERN",
+      "desc":"Find send button 3",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"pattern_fb_send_3",
             "condition":true,
             "cmd":{
                "action":"Screen",
@@ -1099,14 +1199,19 @@
       "next":[
          "fbvcc2_action2_4b_x3",
          "fbvcc2_action2_4c_x3",
+         "fbvcc2_action2_4d_x3",
          "fbvcc2_action2_4b_x3",
          "fbvcc2_action2_4c_x3",
+         "fbvcc2_action2_4d_x3",
          "fbvcc2_action2_4b_x3",
          "fbvcc2_action2_4c_x3",
+         "fbvcc2_action2_4d_x3",
          "fbvcc2_action2_4b_x3",
          "fbvcc2_action2_4c_x3",
+         "fbvcc2_action2_4d_x3",
          "fbvcc2_action2_4b_x3",
-         "fbvcc2_action2_4c_x3"
+         "fbvcc2_action2_4c_x3",
+         "fbvcc2_action2_4d_x3"
       ]
    },
    "fbvcc2_action2_4b_x3":{
@@ -1161,6 +1266,51 @@
          {
             "type":"pattern",
             "pattern":"pattern_fb_send_2",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{devices}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap {wm} {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":400,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "fbvcc2_action2_5_x3"
+      ]
+   },
+   "fbvcc2_action2_4d_x3":{
+      "name":"PATTERN",
+      "desc":"Find send button 3",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"pattern_fb_send_3",
             "condition":true,
             "cmd":{
                "action":"Screen",
