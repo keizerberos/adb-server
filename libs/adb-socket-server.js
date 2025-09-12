@@ -1,3 +1,4 @@
+const { LoginModule } = require('./modules/login.module');
 const { FastServer } = require('./fast-server');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
@@ -18,6 +19,7 @@ const actionsPath = "./data/actions";
 let saveProgrammed = false;
 
 let Log = null;
+let Dbm = null;
 
 function generateUniqueId(str) {
 	const hash = crypto.createHash('sha256'); // Ysou can choose a different hash algorithm if needed
@@ -64,12 +66,15 @@ const ClientType = Object.freeze({
   EXECUTOR: 3,
 });
 class AdbSocketServer {
-	constructor(Logger) {
+	constructor(Logger,Dbm) {
 		Log = Logger;
+		Dbm = Dbm;
 		this.executor = new Executor();
 		const clients = [];
 		const devices = [];
 		const clusters = [];
+		this.modules = [];
+		this.modules.push(new LoginModule(Dbm,))
 		this.startServer(clients, clusters, devices);
 		this.startServerCluster(clients, clusters, devices);
 		scanTasksFolder();
@@ -81,7 +86,7 @@ class AdbSocketServer {
 	drawProgressForm(){		
 		Object.keys(tasks).forEach(k => {
 			tasks[k]['progressPath'] = genPlant(tasks[k]);
-			console.log("progressPath",tasks[k]['progressPath']);
+			//console.log("progressPath",tasks[k]['progressPath']);
 		});
 	}
 	saveDevices(){
@@ -103,11 +108,12 @@ class AdbSocketServer {
 		const self = this;
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
 		const httpServer = createServer(fastServer);
+		self.modules.forEach(m=>m.on("startServer.init", {fastServer:fastServer, clients:clients}));
 		fastServer.get("/tasks",(req,res)=>{ 
 			const task = tasks[req.query.id];
 			res.setHeader('Content-Type', 'application/json');
 			if (task==null){
-				res.send(JSON.stringify(tasks));  
+				res.send(JSON.stringify(tasks));
 			}else
 				res.send(JSON.stringify(task));
 		});
@@ -140,7 +146,7 @@ class AdbSocketServer {
 		});
 		fastServer.get("/clients",(req,res)=>{
 			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify(clients.map(c=>{ return {type:c.type,devices:c.devices,uuid:c.uuid,features:c.features,address:c.address}; } )));
+			res.send(JSON.stringify(clients.map(c=>{ return {type:c.type,devices:c.devices,uuid:c.uuid,features:c.features,address:c.address,windows:c.windows,parentUid:c.parentUid}; } )));
 		});
 		fastServer.post("/adb",(req,res)=>{			
     		const data = req.body.data;
@@ -203,9 +209,6 @@ class AdbSocketServer {
 			});
 		};
 					
-		let hexStringToUint8Array = (hexString)  =>{
-				return Uint8Array.from(Array.from(hexString).map(letter => letter.charCodeAt(0)));
-			}
 		let wsLowQuality = (serial)=>{
 			const device = devices.find(d=>d.serial == serial);
 			if (device == null) return;
@@ -247,22 +250,60 @@ class AdbSocketServer {
 				clients.forEach(client => client.socket.emit("device.remote.leave", {serial:device.serial}));
 			});
 		}
+		let disconnectRemoteWindows = (client)=>{
+			if (client.type == ClientType.REMOTE){
+				const parentClient = clients.find(c=>client.parentUid==c.uuid);
+				if (parentClient!=undefined){
+					parentClient.socket.emit("window.close",{uuid:parentClient.uuid});
+					if (parentClient["windows"]==undefined) return;
+					const window = parentClient.windows.find(w=>w.uuid == client.uuid);
+					if (window==undefined) return;
+					parentClient.windows.splice(parentClient.windows.indexOf(window),1);
+				}
+			}
+		};
 		io.on("connection", (socket) => {
 			let uuid = short.generate();
   			var address = socket.request.connection._peername;
-			const client = { socket: socket,address:address.addresss, type:ClientType.DASHBOARD,devices:[], uuid: uuid, features:{'capture':true,'progress':true,'adb':true} };
+			const client = { socket: socket,address:address.addresss, type:ClientType.DASHBOARD,devices:[], uuid: uuid, features:{'capture':true,'progress':true,'adb':true,'remote':false} };
 			clients.push(client);
 			Log.i("Socket connected " + uuid);
 
+			socket.emit("uuid", uuid);
 			socket.emit("clusters", clusters.map(cluster => { return {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address};}));
 			socket.emit("tasks", tasks);
 			socket.emit("actions", actions);
 			socket.emit("devices", devices);
 
+			self.modules.forEach(m=>m.on("io.connection", {socket:socket,uuid:uuid,client:client}));
+
 			socket.on("disconnect", () => {
-				Log.i("socket disconnected " + uuid);
+				Log.i("socket disconnected " + uuid);		
+				disconnectRemoteWindows(client);
 				disconnectRemote(client);
-				ddelete(clients, 'uuid', uuid);				
+				ddelete(clients, 'uuid', uuid);
+
+				self.modules.forEach(m=>m.on("io.disconnect", {socket:socket}));
+			});
+			socket.on("window.update", (data)=>{
+				Log.i("window.update");
+				Log.o(data);
+				clients.forEach(client=>{
+					client.socket.emit("window.update", data);
+				});
+			});
+			socket.on("window.open", (data)=>{
+				Log.i("window.open");
+				Log.o(data);
+				client["parentUid"] = data.parentUid;
+				const clientParent = clients.find(c=>c.uuid == data.parentUid);
+				if (clientParent != undefined){
+					if(clientParent['windows']==undefined) clientParent['windows'] = [];
+					clientParent['windows'].push({parentUid:data.cuid, type:data.type, uuid:uuid});
+					clients.filter(c=>c.uuid==data.parentUid).forEach(client=>{
+						client.socket.emit("window.open",data);
+					});
+				}
 			});
 			socket.on("device.assign", (data) => {
 				Log.i("device.assign");				
@@ -482,7 +523,7 @@ class AdbSocketServer {
 			const cluster = { socket: socket, devices: [], uuid, uuid,address:address };
 			clusters.push(cluster);
 			clients.forEach(client => client.socket.emit("cluster.connect", {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address}));
-			socket.on("disconnect", () => {
+			socket.on("disconnect", () => {				
 				Log.i("Cluster Socket disconnected " + uuid + " " +address.address);
 				let clusterDevices = devices.filter(d => d.clusterId == uuid);
 				Log.i("delete devices disconnected " + clusterDevices.length);
