@@ -14,7 +14,10 @@ function createToken(data){
 class LoginModule{
     constructor(dbm){
         this.users = this.loadUsers(dbm);
-        this.tokens = [];
+        this.tokens = {};
+        this.events = {
+            login:[],
+        };
         this.fastServer = null;
         this.socket = null;
     }
@@ -23,17 +26,27 @@ class LoginModule{
         console.log("users",this.users);
         return users;
     }
-    on(ev,_data){
+    on(ev,fn){
+        this.events[ev].push(fn);
+    }
+    when(ev,_data){
         const self = this;
         if (ev=="startServer.init"){
             this.fastServer = _data.fastServer;
             this.clients = _data.clients;
+
+            this.fastServer.get("/tokens",(req,res)=>{
+                res.setHeader('Content-Type', 'application/json');            
+                res.send(JSON.stringify(self.tokens));
+            });
         }
         if (ev=="io.connection"){
             this.socket = _data.socket;
             const uuid = _data.uuid;
             const client = _data.client;
-            //this.socket.emit("i", CRP(Date.now()));
+            //this.socket.emit("i", CRP(Date.now()));            
+            //this.socket.removeAllListeners();
+
             this.socket.on("auth.login", (data)=>{
                 console.log("auth",data);
                 const user = self.users.find(u=>u.username==data.user && u.password==data.pass);
@@ -41,9 +54,11 @@ class LoginModule{
                     console.log("auth");
                     const tokenId = CRP(Date.now());
                     const token = createToken(user);
-                    self.tokens[tokenId] = {token:token, uuid:uuid, client:client};
+                    self.tokens[tokenId] = {token:token, uuid:uuid, client:{type:client.type,devices:client.devices,uuid:client.uuid,features:client.features,address:client.address,windows:client.windows,parentUid:client.parentUid} };                    
                     this.socket.emit("auth", {t:tokenId, i:token});
+                    self.events.login(fn=>fn(self.tokens[tokenId]));
                 }else
+                    this.socket.emit("auth.bad", {});
                     console.log("bad auth");
             });
             this.socket.on("user.create",(data)=>{
