@@ -147,7 +147,7 @@ class AdbSocketServer {
 		});
 		fastServer.get("/clients",(req,res)=>{
 			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify(clients.map(c=>{ return {type:c.type,devices:c.devices,uuid:c.uuid,features:c.features,address:c.address,windows:c.windows,parentUid:c.parentUid}; } )));
+			res.send(JSON.stringify(clients.map(c=>{ return {type:c.type,devices:c.devices,uuid:c.uuid,features:c.features,address:c.address,windows:c.windows,parentUid:c.parentUid,login:c.login}; } )));
 		});
 		fastServer.post("/adb",(req,res)=>{			
     		const data = req.body.data;
@@ -269,24 +269,22 @@ class AdbSocketServer {
 			const client = { socket: socket,address:address.addresss, type:ClientType.DASHBOARD,devices:[], uuid: uuid, features:{'capture':true,'progress':true,'adb':true,'remote':false} };
 			clients.push(client);
 			Log.i("Socket connected " + uuid);
-			self.modules.forEach(m=>m.when("io.connection", {socket:socket,uuid:uuid,client:client}));
-
+			socket.on("disconnect", () => {
+				Log.i("socket disconnected " + uuid);		
+				disconnectRemoteWindows(client);
+				disconnectRemote(client);
+				ddelete(clients, 'uuid', uuid);
+				self.modules.forEach(m=>m.when("io.disconnect", {socket:socket}));
+			});
+			
 			socket.emit("uuid", uuid);
-			this.loginModule.on('login',()=>{
-							
+			const configSocket = ()=>{
+							console.log("setup socket");
 				socket.emit("clusters", clusters.map(cluster => { return {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address};}));
 				socket.emit("tasks", tasks);
 				socket.emit("actions", actions);
 				socket.emit("devices", devices);
 
-				socket.on("disconnect", () => {
-					Log.i("socket disconnected " + uuid);		
-					disconnectRemoteWindows(client);
-					disconnectRemote(client);
-					ddelete(clients, 'uuid', uuid);
-
-					self.modules.forEach(m=>m.when("io.disconnect", {socket:socket}));
-				});
 				socket.on("window.update", (data)=>{
 					Log.i("window.update");
 					Log.o(data);
@@ -499,7 +497,8 @@ class AdbSocketServer {
 						}
 					}
 				});				
-			});
+			};
+			self.modules.forEach(m=>m.when("io.connection", {socket:socket,uuid:uuid,client:client,configSocket:configSocket}));
 		});
 		httpServer.listen(7000, () => {
 			Log.i("Server connected");
