@@ -59,7 +59,7 @@ class LoginModule{
                     self.tokens[tokenId] = {token:token, uuid:uuid, client:{type:client.type,devices:client.devices,uuid:client.uuid,features:client.features,address:client.address,windows:client.windows,parentUid:client.parentUid} };                    
                     this.socket.emit("auth", {t:tokenId, i:token, n:user.fullname});
 					client['login'] = {user:user, tokenId:tokenId}
-                    self.events.login.forEach(fn=>fn(self.tokens[tokenId]));
+					_data.configSocket();
                 }else{					
                 	if (data.i != undefined && data.t != undefined ){
 						
