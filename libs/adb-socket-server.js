@@ -220,7 +220,7 @@ class AdbSocketServer {
 			socket.on('open',() => {				
 				console.log("socket reducing quality");
 				//socket.send(hexStringToUint8Array("6500020000000000050503840193000000000000000000ff000000000000000000000000"));
-				socket.send(Buffer.from("6500020000000000050500b40193000000000000000000ff000000000000000000000000", "hex"));
+				socket.send(Buffer.from("6500020000000000050500b40193000000000000000000ff0000000000000000000000174f4d582e676f6f676c652e683236342e656e636f646572", "hex"));
 				//setTimeout(() => socket.send(self.hexStringToUint8Array("0A00")), 200);
 				setTimeout(() => { socket.close();  }, 600);
 			});
