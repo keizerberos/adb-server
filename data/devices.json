@@ -432,9 +432,9 @@
 		"NBA34BOAC5042224": {
 			"number": "23",
 			"network": {
-				"ip": "172.20.51.85/16",
+				"ip": "172.20.3.182/16",
 				"mac": "54:1f:8d:c2:0b:eb",
-				"ssid": "KERNOTEC1",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},

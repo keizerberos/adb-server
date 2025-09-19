@@ -102,8 +102,16 @@ class AdbSocketServer {
 				console.log('File written successfully!');
 			});
 		},5000);
-		saveProgrammed=true;
-		
+		saveProgrammed=true;		
+	}
+	savePatterns(){		
+		fs.writeFile('./data/patterns.json',JSON.stringify(patternsData, null, '\t'),'utf8', (err)=>{
+			if (err) {
+				console.error('patterns.new Error writing file:', err);
+				return;
+			}
+			console.log('patterns.new written successfully!');
+		});
 	}
 	startServer(clients, clusters, devices) {
 		const self = this;
@@ -161,7 +169,20 @@ class AdbSocketServer {
 				}				
 			}
 			res.send(JSON.stringify('{"response":"ok}'));
-		});
+		});		
+		fastServer.post("/pattern.upload",(req,res)=>{			
+    		const data = req.body.data;
+			const name = req.body.name;
+			Log.i("fastServer.post pattern_upload" );
+			//Log.o(data);
+			if (patternsData[name] !=undefined){
+				res.send(JSON.stringify('{"response":"name exist}'));	
+				return;
+			}
+			patternsData[name] = data;
+			this.savePatterns(patternsData);
+			res.send(JSON.stringify('{"response":"ok}'));
+		});		
 		
 		const io = new Server(httpServer, {
 			cors: {
