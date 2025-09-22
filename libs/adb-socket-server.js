@@ -64,6 +64,7 @@ const ClientType = Object.freeze({
   DASHBOARD: 1,
   REMOTE: 2,
   EXECUTOR: 3,
+  DEVICES: 1,
 });
 class AdbSocketServer {
 	constructor(Logger,Dbm) {
@@ -155,7 +156,7 @@ class AdbSocketServer {
 		});
 		fastServer.get("/clients",(req,res)=>{
 			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify(clients.map(c=>{ return {type:c.type,devices:c.devices,uuid:c.uuid,features:c.features,address:c.address,windows:c.windows,parentUid:c.parentUid,login:c.login}; } )));
+			res.send(JSON.stringify(clients.map(c=>{ return {type:c.type,devices:c.devices,uuid:c.uuid,features:c.features,address:c.address,windows:c.windows,parentUid:c.parentUid,login:c.login,extra:c.extra}; } )));
 		});
 		fastServer.post("/adb",(req,res)=>{			
     		const data = req.body.data;
@@ -273,10 +274,10 @@ class AdbSocketServer {
 			});
 		}
 		let disconnectRemoteWindows = (client)=>{
-			if (client.type == ClientType.REMOTE){
+			if (client.type == ClientType.REMOTE || client.type == ClientType.DEVICES){
 				const parentClient = clients.find(c=>client.parentUid==c.uuid);
 				if (parentClient!=undefined){
-					parentClient.socket.emit("window.close",{uuid:parentClient.uuid});
+					parentClient.socket.emit("window.close",{uuid:parentClient.uuid,type:client.type});
 					if (parentClient["windows"]==undefined) return;
 					const window = parentClient.windows.find(w=>w.uuid == client.uuid);
 					if (window==undefined) return;
@@ -287,7 +288,7 @@ class AdbSocketServer {
 		io.on("connection", (socket) => {
 			let uuid = short.generate();
   			var address = socket.request.connection._peername;
-			const client = { socket: socket,address:address.addresss, type:ClientType.DASHBOARD,devices:[], uuid: uuid, features:{'capture':true,'progress':true,'adb':true,'remote':false} };
+			const client = { socket: socket,address:address.addresss,extra:{}, type:ClientType.DASHBOARD,devices:[], uuid: uuid, features:{'capture':true,'progress':true,'adb':true,'remote':false} };
 			clients.push(client);
 			Log.i("Socket connected " + uuid);
 			socket.on("disconnect", () => {
@@ -300,7 +301,7 @@ class AdbSocketServer {
 			
 			socket.emit("uuid", uuid);
 			const configSocket = ()=>{
-							console.log("setup socket");
+				console.log("setup socket");
 				socket.emit("clusters", clusters.map(cluster => { return {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address};}));
 				socket.emit("tasks", tasks);
 				socket.emit("actions", actions);
@@ -345,6 +346,11 @@ class AdbSocketServer {
 					Log.i("sending.patterns");
 					socket.emit("patterns", patternsData);
 				});
+				socket.on("client.extra", (data) => {
+					Log.i("client.extra");
+					Log.o(data);
+					client['extra']=data;
+				});
 				socket.on("client.type.progress", (data) => {
 					Log.i("client.type.progress");
 					Log.o(data);
@@ -354,6 +360,11 @@ class AdbSocketServer {
 					Log.i("client.type.dashboard");
 					Log.o(data);
 					client.type = ClientType.DASHBOARD;
+				});
+				socket.on("client.type.devices", (data) => {
+					Log.i("client.type.devices");
+					Log.o(data);
+					client.type = ClientType.DEVICES;
 				});
 				socket.on("client.type.remote", (data) => {
 					Log.i("client.type.remote");
@@ -380,11 +391,6 @@ class AdbSocketServer {
 					Log.o(data);
 					client.features.progress = true;
 				});
-				socket.on("feature.progress.off", (data) => {
-					Log.i("feature.progress");
-					Log.o(data);
-					client.features.progress = false;
-				});
 				socket.on("client.subscribe.devices", (data) => {
 					Log.i("client.subscribe.devices");
 					Log.o(data);
@@ -395,7 +401,6 @@ class AdbSocketServer {
 					
 					let devicesList = getDeviceRemoteList();
 					updateDevicesRemote(devicesList);
-					
 					client.devices.forEach(deviceSerial=>{
 						if (devicesList[deviceSerial] !=undefined)
 							clients.forEach(client => client.socket.emit("device.remote.add", devicesList[deviceSerial]));
