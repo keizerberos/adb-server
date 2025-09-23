@@ -245,8 +245,8 @@ class AdbSocketServer {
 				//socket.send(Buffer.from("6500020000000000050500b40193000000000000000000ff0000000000000000000000174f4d582e676f6f676c652e683236342e656e636f646572", "hex"));
 				const fps = 1;
 				const fpsr = 1;
-				const w = "5A";
-				const h = "C9";
+				const w = "005A";
+				const h = "00C9";
 				socket.send(Buffer.from(`6500020000000000${fps}${fpsr}${w}${h}000000000000000000ff0000000000000000000000174f4d582e676f6f676c652e683236342e656e636f646572`, "hex"));
 				//setTimeout(() => socket.send(self.hexStringToUint8Array("0A00")), 200);
 				setTimeout(() => { socket.close();  }, 600);
