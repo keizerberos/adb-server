@@ -792,7 +792,12 @@
 			}
 		},
 		"0123456789AB0000": {
-			"number": "61"
+			"number": "61",
+			"network": {
+				"ip": "",
+				"mac": "",
+				"wifiOn": false
+			}
 		}
 	}
 }
