@@ -64,7 +64,7 @@ const ClientType = Object.freeze({
   DASHBOARD: 1,
   REMOTE: 2,
   EXECUTOR: 3,
-  DEVICES: 1,
+  DEVICES: 4,
 });
 class AdbSocketServer {
 	constructor(Logger,Dbm) {
