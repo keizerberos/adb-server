@@ -1,5 +1,6 @@
 const { Logger } = require('atx-logger');
 const { createCanvas, loadImage } = require('canvas');
+const tesseract = require ("node-tesseract-ocr");
 const fs = require('fs');
 const e = require('cors');
 let devicesActions = {};
@@ -54,7 +55,9 @@ function replaceParams(params, str) {
 			str = str.replace("{" + k + "}", params[k])
 		else {
 			//console.log("k",k);
-			if (params[k].random) {
+			if (Array.isArray(params[k])) {
+				//str = str.replace("{" + k + "}", "[]");
+			}else if (params[k].random) {
 				//console.log("Math.round(params[k].data.length*Math.random())",Math.round(params[k].data.length*Math.random()));
 				//console.log("str",str);
 				str = str.replace("{" + k + "}", params[k].data[Math.round((params[k].data.length - 1) * Math.random())])
@@ -391,8 +394,138 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 			};
 			events['send'].forEach(fn => fn(data));
 			//myWebSocket.send(JSON.stringify(data));
+		}else if (currentAction.type == "reader") {
+			console.log(deviceId +" new eventNodes[reader]");
+			eventNodes.push({
+				deviceId: deviceId,
+				action: nodeAction,
+				state: true,
+				cbSuccess: async(img,bimg) => {
+					console.log("reading");
+					const textImg = await ocr(bimg);
+					console.log("OCR all");
+					console.log(textImg);
+					const constStates = Object.keys(params).map(k=>k+" = params['"+k+"']");
+					let resultGlobal = true;
+					let x = -1;
+					let y = -1;
+					let xm = -1;
+					let ym = -1;
+					console.log("constStates:");
+					console.log(constStates.join(";\n"));
+					eval(constStates.join(";"));
+					currentAction.trigger.forEach(async (trigger,i) => {	
+						let result = true;					
+						xm = trigger.crop[2]-trigger.crop[0];
+						ym = trigger.crop[3]-trigger.crop[1];
+						const blobCrop = await getBlobCrop(img,trigger.crop);
+						const text = await ocr(blobCrop);
+						console.log("text",text);
+						eval(trigger.pre.join(";"));
+						result = eval(trigger.result);
+						if ( !result )
+							resultGlobal=false;
+					});
+					console.log("accounts",params);
+					console.log("resultGlobal",resultGlobal);
+					if (resultGlobal){						
+						console.log(deviceId +" executeNode.reader true");
+						currentAction.loop++;
+						setTimeout(() => {
+							executeNode(currentAction, 0, deviceId, params,
+								() => {
+									cbSuccess();
+								},
+								() => {
+									cbFail();
+								}
+							);
+						}, currentAction.postDelay);
+					}else{
+						console.log(deviceId +" executeNode.reader false");
+						currentAction.try++;
+							setTimeout(() => {
+								executeNode(action, actionIndex + 1, deviceId, params, () => {
+										cbSuccess();
+									},
+									() => {
+										cbFail();
+									});
+							}, currentAction.postDelay);
+					}
+				},
+				cbFail: () => {
+					let data = {
+						"action": "Screen",
+						"devices": deviceId,
+						"data": {
+							"savePath": "{screen_path}"
+						}
+					};
+					events['send'].forEach(fn => fn(command));
+				}
+			});
+			
+			setTimeout(() => {
+				if (eventNodes.find(d => d.deviceId == deviceId) != undefined) {
+					console.log("timeout for ", deviceId);
+					let data = {
+						"action": "Screen",
+						"devices": deviceId,
+						"data": {
+							"savePath": "{screen_path}"
+						}
+					};
+					events['send'].forEach(fn => fn(data));
+					//myWebSocket.send(JSON.stringify(data));
+				}
+			}, currentAction.timeout);
+
+			let data = {
+				"action": "Screen",
+				"devices": deviceId,
+				"data": {
+					"savePath": "{screen_path}"
+				}
+			};
+			events['send'].forEach(fn => fn(data));
 		}
 	}, currentAction.preDelay);
+}
+function ocr(blob){
+	return new Promise((resolve,reject) =>{		
+		tesseract.recognize(blob, {							
+			lang: "eng",
+			oem: 1,
+			psm: 3,
+			//tessedit_char_whitelist: "0123456789X",
+		})
+		.then((text) => {
+			//console.log("triger " + i +" text:",text)
+			resolve(text);
+		})
+		.catch((error) => {
+			console.error("[reader]error:",error)
+		})
+	})
+}
+function getBlobCrop(img, crop){
+	return new Promise( (resolve,reject) => {
+		const x = crop[0];
+		const y = crop[1];
+		const w = crop[2];
+		const h = crop[3];
+		const outputcanvas = createCanvas(w,h);
+		const canvasctx = outputcanvas.getContext("2d");
+		outputcanvas.width = w;
+		outputcanvas.height = h;
+		canvasctx.drawImage(img, x, y, w, h, 0, 0, w, h);
+		const image = canvasctx.getImageData(0, 0, w, h);
+		resolve(outputcanvas.toBuffer('image/png'));
+		/*outputcanvas.toBlob((blob) => {
+			resolve(blob)	
+		}, 'image/png');*/
+	});
 }
 function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, cbSuccess, cbFail) {
 	//console.log("androidActions[actionId]",androidActions[actionId]);
@@ -452,6 +585,10 @@ function executeTask(devices, task) {
 	let params = {};
 
 	task.paramsArray.forEach(param => {
+		if(Array.isArray(param.value)){			
+			params[param.id] = param.value;
+			return;
+		}
 		const paramLines = param.value.split('\n');
 		if (paramLines.length < 2) {
 			params[param.id] = param.value;
@@ -540,6 +677,10 @@ function resumeTask(devices, task) {
 	let params = {};
 
 	task.paramsArray.forEach(param => {
+		if(Array.isArray(param.value)){			
+			params[param.id] = param.value;
+			return;
+		}
 		const paramLines = param.value.split('\n');
 		if (paramLines.length < 2) {
 			params[param.id] = param.value;
@@ -613,7 +754,8 @@ function clearScreens(serial){
             if(list[i].includes(serial)){
                 //console.log("deleting",list[i]); 
                 //files.push(list[i]);
-				fs.unlinkSync(pathScreens+list[i]);
+				if(fs.existsSync(pathScreens+list[i]))
+					fs.unlinkSync(pathScreens+list[i]);
             }
         }
     });
@@ -637,18 +779,18 @@ class Executor {
 		//screensCache[screenUid] = img;
 		fs.writeFileSync(pathScreens+id+'-'+timestamp+'.png', img)
 	}
-	screen(id, img) {
-		this.regScreen(id,img);
+	screen(id, bimg) {
+		this.regScreen(id,bimg);
 		if ( eventNodes.find(e=>e.deviceId == id )==undefined ) {
 			return;
 		}
-		if (img.length > 0) {
+		if (bimg.length > 0) {
 			try {
-				loadImage(img).then((img) => {
+				loadImage(bimg).then((img) => {
 					eventNodes.forEach((e, i) => {
 						if (e.deviceId == id) {
 							console.log("event success", e);
-							e.cbSuccess(img);
+							e.cbSuccess(img,bimg);
 							eventNodes.splice(i, 1);
 						}
 					});
@@ -714,6 +856,11 @@ class Executor {
 			return;
 		}
 		task.paramsArray.forEach(param => {
+				
+			if(Array.isArray(param.value)){			
+				params[param.id] = param.value;
+				return;
+			}
 			const paramLines = param.value.split('\n');
 			if (paramLines.length < 2) {
 				params[param.id] = param.value;

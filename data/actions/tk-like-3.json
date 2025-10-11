@@ -1,0 +1,190 @@
+{
+   "tk_x3b_open_apk":{
+      "name":"START_APK",
+      "desc":"Open apk",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am start -a android.intent.action.VIEW -d {link} com.zhiliaoapp.musically"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":2000,
+      "postDelay":5500,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_x3b_click"
+      ]
+   },
+   "tk_x3b_click":{
+      "name":"CLICK_PROFILE",
+      "desc":"Click profile",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 648 1461"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":2000,
+      "postDelay":4000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_x3b_reader","tk_x3b_home"
+      ]
+   },
+   "tk_x3b_reader":{
+      "name":"TK_READ_1",
+      "desc":"tiktok read",
+      "trigger":[
+            {
+                "crop": [177, 557, 425, 44],
+                "pre":[
+                    "if (!accounts.includes(text)&&text!=''){",
+                    "   accounts.push(text)",
+                    "   x=-1",
+                    "   y=-1",
+                    "   result=true",
+                    "}"],       
+                "result": "result",
+                "post":[]
+            },
+            {
+                "crop": [172, 669, 435, 41],
+                "pre":[
+                    "if (!accounts.includes(text)&&x==-1&&text!=''){",
+                    "   accounts.push(text)",
+                    "   x=xm",
+                    "   y=ym",
+                    "}"
+                ],
+                "result":"result",
+                "post":[]
+            },
+            {
+                "crop": [172, 775, 435, 44],
+                "pre":[
+                    "if (!accounts.includes(text)&&x==-1&&text!=''){",
+                    "   accounts.push(text)",
+                    "   x=xm",
+                    "   y=ym",
+                    "}"
+                ],
+                "result":"result",
+                "post":[]
+            },
+            {
+                "crop": [172, 889, 435, 44],
+                "pre":[
+                    "if (!accounts.includes(text)&&x==-1&&text!=''){",
+                    "   accounts.push(text)",
+                    "   x=xm",
+                    "   y=ym",
+                    "}"
+                ],
+                "result":"result",
+                "post":[]
+            },
+            {
+                "crop": [172, 1002, 435, 44],
+                "pre":[
+                    "if (!accounts.includes(text)&&x==-1&&text!=''){",
+                    "   accounts.push(text)",
+                    "   x=xm",
+                    "   y=ym",
+                    "}",
+                    "if(x==-1) result = false"
+                ],
+                "result":"result",
+                "post":[]
+            }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap {x} {y}"
+         }
+      },
+      "order":0,
+      "type":"reader",
+      "preDelay":200,
+      "postDelay":4000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":500,
+      "next":[
+         "tk_x3b_back"
+      ]
+   },
+   "tk_x3b_back":{
+      "name":"BACK",
+      "desc":"Back page",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input keyevent 4"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":2000,
+      "postDelay":4000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_x3b_click"
+      ]
+   },
+   "tk_x3b_home":{
+      "name":"HOME",
+      "desc":"Back to home",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input keyevent 3"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":2000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[ ]
+   }
+}
