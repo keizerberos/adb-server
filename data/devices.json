@@ -3,7 +3,7 @@
 		"NBA34BOAC5047046": {
 			"number": "01",
 			"network": {
-				"ip": "192.168.101.251/24",
+				"ip": "192.168.101.223/24",
 				"mac": "2a:f4:9d:dd:47:a0",
 				"ssid": "G01-ACH",
 				"wifiOn": true
@@ -16,7 +16,7 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.102.11/24",
+				"ip": "192.168.102.76/24",
 				"mac": "fe:f2:c2:5b:e2:63",
 				"ssid": "G02-ACH",
 				"wifiOn": true
@@ -29,7 +29,7 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.103.30/24",
+				"ip": "192.168.103.35/24",
 				"mac": "b6:b4:a6:76:95:d7",
 				"ssid": "G03-ACH",
 				"wifiOn": true
@@ -38,9 +38,9 @@
 		"NBA34BOAC5042623": {
 			"number": "04",
 			"network": {
-				"ip": "192.168.104.253/24",
-				"mac": "b6:b3:0a:d5:88:3a",
-				"ssid": "G04-ACH",
+				"ip": "192.168.103.148/24",
+				"mac": "9a:2d:fc:f2:66:ab",
+				"ssid": "G03-ACH",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -51,9 +51,9 @@
 		"NBA34BOAC5042652": {
 			"number": "05",
 			"network": {
-				"ip": "192.168.101.203/24",
-				"mac": "4a:e8:e8:71:53:eb",
-				"ssid": "G01-ACH",
+				"ip": "192.168.102.235/24",
+				"mac": "f2:19:4b:d2:32:8d",
+				"ssid": "G02-ACH",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -68,9 +68,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.102.25/24",
-				"mac": "b6:15:1b:1c:27:94",
-				"ssid": "G02-ACH",
+				"ip": "192.168.101.201/24",
+				"mac": "b6:84:a8:4d:00:58",
+				"ssid": "G01-ACH",
 				"wifiOn": true
 			}
 		},
@@ -81,9 +81,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.103.34/24",
-				"mac": "0e:f0:89:59:d1:3f",
-				"ssid": "G03-ACH",
+				"ip": "192.168.107.35/24",
+				"mac": "72:aa:c1:dc:17:e6",
+				"ssid": "G07-ACH",
 				"wifiOn": true
 			}
 		},
@@ -94,16 +94,16 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.104.252/24",
-				"mac": "96:e4:55:05:5c:d0",
-				"ssid": "G04-ACH",
+				"ip": "192.168.108.78/24",
+				"mac": "c2:3f:3f:9e:fc:47",
+				"ssid": "G08-ACH",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOPC5000854": {
 			"number": "09",
 			"network": {
-				"ip": "192.168.101.202/24",
+				"ip": "192.168.101.233/24",
 				"mac": "9e:ba:88:9a:86:a4",
 				"ssid": "G01-ACH",
 				"wifiOn": true
@@ -116,7 +116,7 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.102.31/24",
+				"ip": "192.168.102.206/24",
 				"mac": "1a:8b:4a:29:c5:09",
 				"ssid": "G02-ACH",
 				"wifiOn": true
@@ -129,7 +129,7 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.103.35/24",
+				"ip": "192.168.103.26/24",
 				"mac": "c2:b1:a1:7e:c1:88",
 				"ssid": "G03-ACH",
 				"wifiOn": true
@@ -142,9 +142,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.104.251/24",
-				"mac": "1a:8a:b6:4c:56:9e",
-				"ssid": "G04-ACH",
+				"ip": "192.168.101.74/24",
+				"mac": "2e:c5:f2:32:77:a4",
+				"ssid": "G01-ACH",
 				"wifiOn": true
 			}
 		},
@@ -155,9 +155,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.102.13/24",
-				"mac": "ba:1e:5b:2f:ed:50",
-				"ssid": "G02-ACH",
+				"ip": "192.168.106.195/24",
+				"mac": "7a:bc:5e:29:5e:8c",
+				"ssid": "G06-ACH",
 				"wifiOn": true
 			}
 		},
@@ -168,7 +168,7 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.101.209/24",
+				"ip": "192.168.101.244/24",
 				"mac": "2e:e2:e2:85:da:f8",
 				"ssid": "G01-ACH",
 				"wifiOn": true
@@ -181,9 +181,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.104.248/24",
-				"mac": "d2:96:22:ff:3d:21",
-				"ssid": "G04-ACH",
+				"ip": "192.168.102.69/24",
+				"mac": "ae:56:a4:d9:98:3a",
+				"ssid": "G02-ACH",
 				"wifiOn": true
 			}
 		},
@@ -194,9 +194,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.103.36/24",
-				"mac": "f6:d3:cb:39:22:51",
-				"ssid": "G03-ACH",
+				"ip": "192.168.102.223/24",
+				"mac": "c2:fa:02:89:4c:0a",
+				"ssid": "G02-ACH",
 				"wifiOn": true
 			}
 		},
@@ -207,7 +207,7 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.102.32/24",
+				"ip": "192.168.102.153/24",
 				"mac": "46:b3:31:fd:51:9b",
 				"ssid": "G02-ACH",
 				"wifiOn": true
@@ -220,7 +220,7 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.101.201/24",
+				"ip": "192.168.101.89/24",
 				"mac": "ea:ee:2d:c9:c2:a3",
 				"ssid": "G01-ACH",
 				"wifiOn": true
@@ -233,9 +233,9 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.104.250/24",
-				"mac": "46:e8:11:de:60:73",
-				"ssid": "G04-ACH",
+				"ip": "192.168.108.218/24",
+				"mac": "76:e8:db:55:f9:82",
+				"ssid": "G08-ACH",
 				"wifiOn": true
 			}
 		},
@@ -246,16 +246,16 @@
 				"density": "Physical density: 320"
 			},
 			"network": {
-				"ip": "192.168.103.12/24",
-				"mac": "ae:b8:2b:72:e4:44",
-				"ssid": "G03-ACH",
+				"ip": "192.168.107.190/24",
+				"mac": "0a:3b:dd:09:12:a2",
+				"ssid": "G07-ACH",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042616": {
 			"number": "35",
 			"network": {
-				"ip": "192.168.103.39/24",
+				"ip": "192.168.103.45/24",
 				"mac": "ee:82:d2:b0:ff:d3",
 				"ssid": "G03-ACH",
 				"wifiOn": true
@@ -277,18 +277,18 @@
 		"NBA34BOAC5042260": {
 			"number": "40",
 			"network": {
-				"ip": "192.168.104.245/24",
-				"mac": "82:90:69:1b:68:23",
-				"ssid": "G04-ACH",
+				"ip": "192.168.102.145/24",
+				"mac": "82:ce:09:9b:75:ce",
+				"ssid": "G02-ACH",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOAC4006802": {
 			"number": "39",
 			"network": {
-				"ip": "192.168.103.17/24",
-				"mac": "22:01:11:5f:bc:46",
-				"ssid": "G03-ACH",
+				"ip": "192.168.107.94/24",
+				"mac": "0e:2a:2a:d9:62:d4",
+				"ssid": "G07-ACH",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -317,9 +317,9 @@
 		"NBA34BOPC5000831": {
 			"number": "38",
 			"network": {
-				"ip": "192.168.102.10/24",
-				"mac": "0a:9d:5b:22:2d:f9",
-				"ssid": "G02-ACH",
+				"ip": "192.168.106.162/24",
+				"mac": "02:96:38:9b:21:5d",
+				"ssid": "G06-ACH",
 				"wifiOn": true
 			}
 		},
@@ -357,9 +357,9 @@
 		"NBA34BOAC5046072": {
 			"number": "37",
 			"network": {
-				"ip": "192.168.101.233/24",
-				"mac": "d6:ff:ad:2e:79:bd",
-				"ssid": "G01-ACH",
+				"ip": "192.168.103.19/24",
+				"mac": "96:19:da:92:5e:76",
+				"ssid": "G03-ACH",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -370,9 +370,9 @@
 		"NBA34BOAC5046069": {
 			"number": "36",
 			"network": {
-				"ip": "192.168.104.244/24",
-				"mac": "32:76:d2:f9:18:93",
-				"ssid": "G04-ACH",
+				"ip": "192.168.102.226/24",
+				"mac": "fa:5c:3e:40:96:82",
+				"ssid": "G02-ACH",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -383,27 +383,27 @@
 		"NBA34BOAC5043104": {
 			"number": "34",
 			"network": {
-				"ip": "192.168.102.34/24",
-				"mac": "d2:9e:0b:79:6d:6a",
-				"ssid": "G02-ACH",
+				"ip": "192.168.106.196/24",
+				"mac": "42:48:ff:bf:24:01",
+				"ssid": "G06-ACH",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042644": {
 			"number": "32",
 			"network": {
-				"ip": "192.168.104.246/24",
-				"mac": "42:5d:37:b1:4a:3f",
-				"ssid": "G04-ACH",
+				"ip": "192.168.108.63/24",
+				"mac": "d6:85:18:02:0d:d0",
+				"ssid": "G08-ACH",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042556": {
 			"number": "30",
 			"network": {
-				"ip": "192.168.102.35/24",
-				"mac": "36:20:65:20:30:8d",
-				"ssid": "G02-ACH",
+				"ip": "192.168.106.66/24",
+				"mac": "76:10:d3:39:ab:6b",
+				"ssid": "G06-ACH",
 				"wifiOn": true
 			},
 			"resolution": {
@@ -414,7 +414,7 @@
 		"NBA34BOAC5042568": {
 			"number": "33",
 			"network": {
-				"ip": "192.168.101.237/24",
+				"ip": "192.168.101.221/24",
 				"mac": "72:cb:aa:a9:bb:9e",
 				"ssid": "G01-ACH",
 				"wifiOn": true
@@ -423,18 +423,18 @@
 		"NBA34BOAC5042624": {
 			"number": "31",
 			"network": {
-				"ip": "192.168.103.38/24",
-				"mac": "2a:07:6e:d5:17:4b",
-				"ssid": "G03-ACH",
+				"ip": "192.168.107.62/24",
+				"mac": "22:1d:46:6e:48:9c",
+				"ssid": "G07-ACH",
 				"wifiOn": true
 			}
 		},
 		"NBA34BOAC5042224": {
 			"number": "23",
 			"network": {
-				"ip": "172.20.3.182/16",
+				"ip": "172.20.51.85/16",
 				"mac": "54:1f:8d:c2:0b:eb",
-				"ssid": "WIFICORP",
+				"ssid": "KERNOTEC1",
 				"wifiOn": true
 			}
 		},
@@ -450,9 +450,9 @@
 		"NBA34BOAC5042188": {
 			"number": "29",
 			"network": {
-				"ip": "192.168.101.241/24",
-				"mac": "9e:44:99:6b:21:72",
-				"ssid": "G01-ACH",
+				"ip": "192.168.103.119/24",
+				"mac": "d6:fa:12:95:9d:2a",
+				"ssid": "G03-ACH",
 				"wifiOn": true
 			}
 		},
@@ -463,9 +463,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.103.41/24",
-				"mac": "0e:b9:da:0c:0e:b3",
-				"ssid": "G03-ACH",
+				"ip": "192.168.108.14/24",
+				"mac": "4a:52:ab:1b:8e:93",
+				"ssid": "G08-ACH",
 				"wifiOn": true
 			}
 		},
@@ -476,7 +476,7 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.102.37/24",
+				"ip": "192.168.102.130/24",
 				"mac": "6e:78:55:ce:85:c1",
 				"ssid": "G02-ACH",
 				"wifiOn": true
@@ -489,9 +489,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.104.243/24",
-				"mac": "8a:93:61:8c:3f:dc",
-				"ssid": "G04-ACH",
+				"ip": "192.168.108.51/24",
+				"mac": "f2:f4:9c:25:31:9b",
+				"ssid": "G08-ACH",
 				"wifiOn": true
 			}
 		},
@@ -502,9 +502,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.103.40/24",
-				"mac": "2a:d1:2a:fc:51:8a",
-				"ssid": "G03-ACH",
+				"ip": "192.168.108.11/24",
+				"mac": "8a:f3:6f:ad:41:d9",
+				"ssid": "G08-ACH",
 				"wifiOn": true
 			}
 		},
@@ -515,9 +515,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.101.217/24",
-				"mac": "a6:92:58:3b:01:47",
-				"ssid": "G01-ACH",
+				"ip": "192.168.105.201/24",
+				"mac": "ae:27:03:fb:e8:fa",
+				"ssid": "G05-ACH",
 				"wifiOn": true
 			}
 		},
@@ -528,9 +528,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.102.36/24",
-				"mac": "46:4a:df:5d:f3:44",
-				"ssid": "G02-ACH",
+				"ip": "192.168.108.238/24",
+				"mac": "ba:03:15:a6:fb:8f",
+				"ssid": "G08-ACH",
 				"wifiOn": true
 			}
 		},
@@ -541,9 +541,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.101.225/24",
-				"mac": "02:90:74:dd:ab:ae",
-				"ssid": "G01-ACH",
+				"ip": "192.168.103.39/24",
+				"mac": "92:4f:1f:62:a0:fe",
+				"ssid": "G03-ACH",
 				"wifiOn": true
 			}
 		},
@@ -554,7 +554,7 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.102.39/24",
+				"ip": "192.168.102.14/24",
 				"mac": "e2:56:d0:5a:0e:d4",
 				"ssid": "G02-ACH",
 				"wifiOn": true
@@ -567,9 +567,9 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.101.229/24",
-				"mac": "b2:d3:19:de:54:12",
-				"ssid": "G01-ACH",
+				"ip": "192.168.103.181/24",
+				"mac": "66:1b:9a:1c:6e:df",
+				"ssid": "G03-ACH",
 				"wifiOn": true
 			}
 		},
@@ -580,34 +580,34 @@
 				"density": "Physical density: 480"
 			},
 			"network": {
-				"ip": "192.168.103.22/24",
-				"mac": "6a:63:89:ea:03:f4",
-				"ssid": "G03-ACH",
+				"ip": "192.168.107.137/24",
+				"mac": "ca:ba:0f:da:27:5a",
+				"ssid": "G07-ACH",
 				"wifiOn": true
 			}
 		},
 		"R3CN50B1MAY": {
 			"number": "53",
 			"network": {
-				"ip": "192.168.104.241/24",
-				"mac": "7e:01:a0:b1:62:9b",
-				"ssid": "G04-ACH",
+				"ip": "192.168.103.172/24",
+				"mac": "f6:36:2a:8e:fb:72",
+				"ssid": "G03-ACH",
 				"wifiOn": true
 			}
 		},
 		"R3CN50EE05T": {
 			"number": "57",
 			"network": {
-				"ip": "192.168.104.240/24",
-				"mac": "fe:9f:0c:06:d5:36",
-				"ssid": "G04-ACH",
+				"ip": "192.168.108.112/24",
+				"mac": "66:71:30:5d:ef:1d",
+				"ssid": "G08-ACH",
 				"wifiOn": true
 			}
 		},
 		"R3CN50JGLYV": {
 			"number": "51",
 			"network": {
-				"ip": "192.168.102.21/24",
+				"ip": "192.168.102.159/24",
 				"mac": "c2:c6:d5:92:50:0c",
 				"ssid": "G02-ACH",
 				"wifiOn": true
@@ -616,45 +616,45 @@
 		"R3CN50JH6DB": {
 			"number": "52",
 			"network": {
-				"ip": "192.168.103.27/24",
-				"mac": "72:8f:3f:83:d6:fd",
-				"ssid": "G03-ACH",
+				"ip": "192.168.107.104/24",
+				"mac": "6e:2c:0b:3a:ed:6e",
+				"ssid": "G07-ACH",
 				"wifiOn": true
 			}
 		},
 		"R3CN606ESXH": {
 			"number": "50",
 			"network": {
-				"ip": "192.168.101.221/24",
-				"mac": "9a:a2:35:66:13:17",
-				"ssid": "G01-ACH",
+				"ip": "192.168.106.125/24",
+				"mac": "b2:64:f1:d8:bb:c0",
+				"ssid": "G06-ACH",
 				"wifiOn": true
 			}
 		},
 		"R3CN704SY4P": {
 			"number": "49",
 			"network": {
-				"ip": "192.168.104.242/24",
-				"mac": "5e:df:44:a6:d3:f6",
-				"ssid": "G04-ACH",
+				"ip": "192.168.108.225/24",
+				"mac": "42:6f:80:8b:6e:e3",
+				"ssid": "G08-ACH",
 				"wifiOn": true
 			}
 		},
 		"R3CN705VM8F": {
 			"number": "55",
 			"network": {
-				"ip": "192.168.102.38/24",
-				"mac": "66:02:21:9c:ce:7d",
-				"ssid": "G02-ACH",
+				"ip": "192.168.105.217/24",
+				"mac": "7a:20:ea:e2:d1:3e",
+				"ssid": "G05-ACH",
 				"wifiOn": true
 			}
 		},
 		"R3CN80PG2DV": {
 			"number": "58",
 			"network": {
-				"ip": "192.168.101.213/24",
-				"mac": "06:49:14:75:21:9d",
-				"ssid": "G01-ACH",
+				"ip": "192.168.102.230/24",
+				"mac": "c2:13:ee:44:dd:52",
+				"ssid": "G02-ACH",
 				"wifiOn": true
 			}
 		},
@@ -663,7 +663,7 @@
 			"network": {
 				"ip": "172.20.51.60/16",
 				"mac": "18:48:ca:1a:0a:5d",
-				"ssid": "KERNOTEC2",
+				"ssid": "WIFICORP",
 				"wifiOn": true
 			}
 		},
@@ -673,9 +673,9 @@
 			"serial": "YBZ2466LMCC3003259",
 			"number": "22",
 			"network": {
-				"ip": "192.168.102.33/24",
-				"mac": "9e:ae:b9:8b:59:3e",
-				"ssid": "G02-ACH",
+				"ip": "192.168.106.181/24",
+				"mac": "9e:01:cd:43:3f:38",
+				"ssid": "G06-ACH",
 				"wifiOn": true
 			},
 			"clusterId": "qzoYDxWtYQi9iGkVAZP7NW",
@@ -691,9 +691,9 @@
 			"checked": true,
 			"selected": 1,
 			"network": {
-				"ip": "192.168.104.249/24",
-				"mac": "92:71:be:19:a3:47",
-				"ssid": "G04-ACH",
+				"ip": "192.168.108.82/24",
+				"mac": "de:cb:ad:5e:ec:2d",
+				"ssid": "G08-ACH",
 				"wifiOn": true
 			}
 		},
@@ -703,9 +703,9 @@
 			"serial": "YBZ2466LMCC3003861",
 			"number": "21",
 			"network": {
-				"ip": "192.168.101.249/24",
-				"mac": "4a:99:7e:14:5f:91",
-				"ssid": "G01-ACH",
+				"ip": "192.168.103.155/24",
+				"mac": "c2:64:ab:59:cf:41",
+				"ssid": "G03-ACH",
 				"wifiOn": true
 			},
 			"clusterId": "qzoYDxWtYQi9iGkVAZP7NW",
@@ -721,9 +721,9 @@
 			"checked": true,
 			"selected": 1,
 			"network": {
-				"ip": "192.168.102.27/24",
-				"mac": "ce:aa:25:97:6c:8a",
-				"ssid": "G02-ACH",
+				"ip": "192.168.108.68/24",
+				"mac": "86:2f:ef:c7:6c:2a",
+				"ssid": "G08-ACH",
 				"wifiOn": true
 			}
 		},
@@ -736,7 +736,7 @@
 			"checked": true,
 			"selected": 1,
 			"network": {
-				"ip": "192.168.101.245/24",
+				"ip": "192.168.101.202/24",
 				"mac": "22:ef:dc:86:de:f3",
 				"ssid": "G01-ACH",
 				"wifiOn": true
@@ -755,9 +755,9 @@
 			"checked": true,
 			"selected": 1,
 			"network": {
-				"ip": "192.168.104.247/24",
-				"mac": "d6:a7:c1:f5:12:1a",
-				"ssid": "G04-ACH",
+				"ip": "192.168.107.67/24",
+				"mac": "76:97:53:12:c1:1d",
+				"ssid": "G07-ACH",
 				"wifiOn": true
 			}
 		},
@@ -770,9 +770,9 @@
 			"checked": true,
 			"selected": 1,
 			"network": {
-				"ip": "192.168.103.37/24",
-				"mac": "06:4f:89:1c:48:46",
-				"ssid": "G03-ACH",
+				"ip": "192.168.107.165/24",
+				"mac": "7a:f5:14:aa:3a:9a",
+				"ssid": "G07-ACH",
 				"wifiOn": true
 			}
 		},
@@ -785,22 +785,1781 @@
 			"checked": true,
 			"selected": 1,
 			"network": {
-				"ip": "192.168.103.26/24",
-				"mac": "0a:5a:c6:8f:21:b5",
+				"ip": "192.168.101.45/24",
+				"mac": "52:2e:ee:86:87:2d",
+				"ssid": "G01-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500001": {
+			"number": "61",
+			"network": {
+				"ip": "192.168.103.22/24",
+				"mac": "00:08:22:5c:fe:1e",
 				"ssid": "G03-ACH",
 				"wifiOn": true
 			}
 		},
-		"0123456789AB0000": {
-			"number": "61",
+		"K3RN0MT676500002": {
+			"number": "62",
+			"network": {
+				"ip": "192.168.102.150/24",
+				"mac": "00:08:22:2c:f6:fc",
+				"ssid": "G02-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500015": {
+			"number": "75",
+			"network": {
+				"ip": "192.168.103.187/24",
+				"mac": "82:78:35:05:5d:56",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500016": {
+			"number": "76",
+			"network": {
+				"ip": "192.168.107.201/24",
+				"mac": "ba:a7:9e:22:70:79",
+				"ssid": "G07-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500017": {
+			"number": "77",
+			"network": {
+				"ip": "192.168.103.184/24",
+				"mac": "d2:35:7e:4d:9d:e8",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500018": {
+			"number": "78",
+			"network": {
+				"ip": "192.168.103.72/24",
+				"mac": "2a:bc:13:b7:5b:a4",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500020": {
+			"number": "80",
+			"network": {
+				"ip": "192.168.102.31/24",
+				"mac": "0e:61:48:78:08:32",
+				"ssid": "G02-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500003": {
+			"number": "63",
+			"network": {
+				"ip": "192.168.103.198/24",
+				"mac": "ce:82:4c:07:0a:8f",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500011": {
+			"number": "71",
+			"network": {
+				"ip": "192.168.103.107/24",
+				"mac": "aa:48:8b:64:86:42",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500012": {
+			"number": "72",
+			"network": {
+				"ip": "192.168.101.41/24",
+				"mac": "a6:97:c7:7f:50:e3",
+				"ssid": "G01-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500014": {
+			"number": "74",
+			"network": {
+				"ip": "192.168.108.174/24",
+				"mac": "a6:b1:6d:c1:e2:d9",
+				"ssid": "G08-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500007": {
+			"number": "67",
+			"network": {
+				"ip": "192.168.101.239/24",
+				"mac": "b2:66:73:8b:44:27",
+				"ssid": "G01-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500006": {
+			"number": "66",
+			"network": {
+				"ip": "192.168.108.35/24",
+				"mac": "fe:11:96:42:53:51",
+				"ssid": "G08-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500004": {
+			"number": "64",
+			"network": {
+				"ip": "192.168.106.189/24",
+				"mac": "6a:3b:c0:a0:9e:d9",
+				"ssid": "G06-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500019": {
+			"number": "79",
+			"network": {
+				"ip": "192.168.103.54/24",
+				"mac": "0a:bf:1b:d1:46:18",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500005": {
+			"number": "65",
+			"network": {
+				"ip": "192.168.103.16/24",
+				"mac": "00:08:22:c4:75:06",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500009": {
+			"number": "69",
+			"network": {
+				"ip": "192.168.103.144/24",
+				"mac": "ce:8f:c0:93:d0:f7",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500010": {
+			"number": "70",
+			"network": {
+				"ip": "192.168.102.8/24",
+				"mac": "4a:a2:c6:52:02:30",
+				"ssid": "G02-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500013": {
+			"number": "73",
+			"network": {
+				"ip": "192.168.103.90/24",
+				"mac": "ba:63:d7:53:66:55",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500008": {
+			"number": "68",
+			"network": {
+				"ip": "192.168.108.93/24",
+				"mac": "c2:82:52:6d:a3:28",
+				"ssid": "G08-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500022": {
+			"number": "82",
+			"network": {
+				"ip": "192.168.108.54/24",
+				"mac": "e2:d8:30:c4:a3:e9",
+				"ssid": "G08-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500021": {
+			"number": "81",
+			"network": {
+				"ip": "192.168.103.128/24",
+				"mac": "52:fb:ae:5c:7a:2e",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500033": {
+			"number": "93",
+			"network": {
+				"ip": "192.168.103.140/24",
+				"mac": "a2:fe:c6:dd:42:9b",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500034": {
+			"number": "94",
+			"network": {
+				"ip": "192.168.102.195/24",
+				"mac": "ce:0c:2e:43:ef:41",
+				"ssid": "G02-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500025": {
+			"number": "85",
+			"network": {
+				"ip": "192.168.102.147/24",
+				"mac": "e2:50:2c:13:e8:d1",
+				"ssid": "G02-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500024": {
+			"number": "84",
+			"network": {
+				"ip": "192.168.102.129/24",
+				"mac": "c6:7c:dd:35:58:15",
+				"ssid": "G02-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500023": {
+			"number": "83",
+			"network": {
+				"ip": "192.168.101.51/24",
+				"mac": "06:10:f9:73:4b:34",
+				"ssid": "G01-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500026": {
+			"number": "86",
+			"network": {
+				"ip": "192.168.102.40/24",
+				"mac": "00:08:22:04:fb:fb",
+				"ssid": "G02-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500038": {
+			"number": "98",
+			"network": {
+				"ip": "192.168.101.146/24",
+				"mac": "a6:71:5c:7f:0b:92",
+				"ssid": "G01-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500035": {
+			"number": "95",
+			"network": {
+				"ip": "192.168.103.58/24",
+				"mac": "ce:c2:7e:6a:cd:e4",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500039": {
+			"number": "99",
+			"network": {
+				"ip": "192.168.101.105/24",
+				"mac": "56:9a:0d:7b:2d:0c",
+				"ssid": "G01-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500037": {
+			"number": "97",
+			"network": {
+				"ip": "192.168.103.161/24",
+				"mac": "de:d6:4d:a4:63:76",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500036": {
+			"number": "96",
+			"network": {
+				"ip": "192.168.102.110/24",
+				"mac": "ca:10:eb:53:5f:01",
+				"ssid": "G02-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500040": {
+			"number": "100",
+			"network": {
+				"ip": "192.168.107.189/24",
+				"mac": "82:93:7b:fe:a4:6d",
+				"ssid": "G07-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500032": {
+			"number": "92",
+			"network": {
+				"ip": "192.168.101.114/24",
+				"mac": "56:4b:70:aa:ba:e4",
+				"ssid": "G01-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500031": {
+			"number": "91",
+			"network": {
+				"ip": "192.168.101.234/24",
+				"mac": "de:db:60:b0:7d:7e",
+				"ssid": "G01-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500030": {
+			"number": "90",
+			"network": {
+				"ip": "192.168.108.114/24",
+				"mac": "16:5b:cd:83:1d:f9",
+				"ssid": "G08-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500027": {
+			"number": "87",
+			"network": {
+				"ip": "192.168.103.231/24",
+				"mac": "ae:f9:d3:23:35:84",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500028": {
+			"number": "88",
+			"network": {
+				"ip": "192.168.106.60/24",
+				"mac": "42:c8:7a:a5:84:00",
+				"ssid": "G06-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500029": {
+			"number": "89",
+			"network": {
+				"ip": "192.168.107.247/24",
+				"mac": "fa:e5:8f:00:03:73",
+				"ssid": "G07-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500041": {
+			"number": "101",
+			"network": {
+				"ip": "192.168.101.224/24",
+				"mac": "22:8b:b6:8d:57:91",
+				"ssid": "G01-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500042": {
+			"number": "102",
+			"network": {
+				"ip": "",
+				"mac": "06:44:c5:3d:24:02",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500043": {
+			"number": "103",
+			"network": {
+				"ip": "",
+				"mac": "a6:99:f7:7e:47:b2",
+				"ssid": "G06-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500046": {
+			"number": "106",
+			"network": {
+				"ip": "",
+				"mac": "ee:ef:40:37:c4:08",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500047": {
+			"number": "107",
+			"network": {
+				"ip": "",
+				"mac": "22:b3:df:fd:e4:10",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500051": {
+			"number": "111",
+			"network": {
+				"ip": "",
+				"mac": "a2:57:d1:e1:aa:ae",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500052": {
+			"number": "112",
+			"network": {
+				"ip": "",
+				"mac": "22:04:e6:77:cb:c9",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500048": {
+			"number": "108",
+			"network": {
+				"ip": "",
+				"mac": "a2:c8:06:7b:34:9d",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500045": {
+			"number": "105",
+			"network": {
+				"ip": "",
+				"mac": "e2:9f:34:39:89:b7",
+				"ssid": "G07-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500049": {
+			"number": "109",
+			"network": {
+				"ip": "",
+				"mac": "1e:ac:67:93:ba:d8",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500053": {
+			"number": "113",
+			"network": {
+				"ip": "",
+				"mac": "6a:9a:95:32:1a:87",
+				"ssid": "G07-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500054": {
+			"number": "114",
+			"network": {
+				"ip": "",
+				"mac": "c6:d5:ef:96:58:0c",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500055": {
+			"number": "115",
+			"network": {
+				"ip": "",
+				"mac": "f6:86:41:ec:99:78",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500050": {
+			"number": "110",
+			"network": {
+				"ip": "",
+				"mac": "72:96:35:26:88:8d",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500056": {
+			"number": "116",
+			"network": {
+				"ip": "",
+				"mac": "86:ee:e4:fc:9e:2e",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500044": {
+			"number": "104",
+			"network": {
+				"ip": "",
+				"mac": "7a:d8:7f:64:43:64",
+				"ssid": "G06-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500057": {
+			"number": "117",
+			"network": {
+				"ip": "",
+				"mac": "ea:d0:6e:82:7f:92",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500058": {
+			"number": "118",
+			"network": {
+				"ip": "",
+				"mac": "26:65:b1:b0:d7:16",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500059": {
+			"number": "119",
+			"network": {
+				"ip": "",
+				"mac": "b6:7b:b7:07:8e:84",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500060": {
+			"number": "120",
+			"network": {
+				"ip": "",
+				"mac": "8a:ab:8e:72:df:b7",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500061": {
+			"number": "121",
+			"network": {
+				"ip": "",
+				"mac": "b6:19:af:6f:cc:4b",
+				"ssid": "G07-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500062": {
+			"number": "122",
+			"network": {
+				"ip": "",
+				"mac": "52:0b:36:32:b6:39",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500063": {
+			"number": "123",
+			"network": {
+				"ip": "",
+				"mac": "00:08:22:8c:0f:fd",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500064": {
+			"number": "124",
+			"network": {
+				"ip": "",
+				"mac": "00:08:22:f0:a2:fd",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500065": {
+			"number": "125",
+			"network": {
+				"ip": "",
+				"mac": "00:08:22:d0:41:fd",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500068": {
+			"number": "128",
+			"network": {
+				"ip": "",
+				"mac": "f2:71:2c:88:2f:e2",
+				"ssid": "G06-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500069": {
+			"number": "129",
+			"network": {
+				"ip": "",
+				"mac": "7a:fd:6f:b2:11:0a",
+				"ssid": "G07-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500070": {
+			"number": "130",
+			"network": {
+				"ip": "",
+				"mac": "e2:1d:f1:a8:73:a9",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500071": {
+			"number": "131",
+			"network": {
+				"ip": "",
+				"mac": "96:7d:d5:bf:af:c8",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500072": {
+			"number": "132",
+			"network": {
+				"ip": "",
+				"mac": "2a:e3:46:c6:39:0f",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500073": {
+			"number": "133",
+			"network": {
+				"ip": "",
+				"mac": "82:21:91:27:ec:63",
+				"ssid": "G06-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500074": {
+			"number": "134",
+			"network": {
+				"ip": "",
+				"mac": "0a:cd:77:56:21:05",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500075": {
+			"number": "135",
+			"network": {
+				"ip": "",
+				"mac": "9a:45:d5:6f:c2:58",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500076": {
+			"number": "136",
+			"network": {
+				"ip": "",
+				"mac": "7a:13:ec:7d:23:38",
+				"ssid": "G06-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500077": {
+			"number": "137",
+			"network": {
+				"ip": "",
+				"mac": "76:2e:25:c0:ff:b9",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500078": {
+			"number": "138",
+			"network": {
+				"ip": "",
+				"mac": "72:2b:4c:75:0e:b7",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500079": {
+			"number": "139",
+			"network": {
+				"ip": "",
+				"mac": "26:28:f1:bf:a8:66",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500080": {
+			"number": "140",
+			"network": {
+				"ip": "",
+				"mac": "7a:a7:a4:4e:d6:c0",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500066": {
+			"number": "126",
+			"network": {
+				"ip": "",
+				"mac": "a2:f3:95:0c:57:c7",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500067": {
+			"number": "127",
+			"network": {
+				"ip": "",
+				"mac": "46:2e:fd:cc:c1:c2",
+				"ssid": "G07-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500081": {
+			"number": "141",
+			"network": {
+				"ip": "",
+				"mac": "c6:a2:e9:d6:2a:fa",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500082": {
+			"number": "142",
+			"network": {
+				"ip": "",
+				"mac": "2a:4b:ba:f6:5f:d9",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500083": {
+			"number": "143",
+			"network": {
+				"ip": "",
+				"mac": "0e:ef:9d:7c:ec:83",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500084": {
+			"number": "144",
+			"network": {
+				"ip": "",
+				"mac": "3a:0f:20:c8:53:3f",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500091": {
+			"number": "151",
+			"network": {
+				"ip": "",
+				"mac": "7a:8e:44:f2:85:50",
+				"ssid": "G07-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500092": {
+			"number": "152",
+			"network": {
+				"ip": "",
+				"mac": "26:af:ca:23:6a:65",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500093": {
+			"number": "153",
+			"network": {
+				"ip": "",
+				"mac": "c6:6a:b3:93:77:20",
+				"ssid": "G07-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500085": {
+			"number": "145",
+			"network": {
+				"ip": "",
+				"mac": "f6:59:a1:d5:5d:a5",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500086": {
+			"number": "146",
+			"network": {
+				"ip": "",
+				"mac": "00:08:22:2c:58:fc",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500087": {
+			"number": "147",
+			"network": {
+				"ip": "",
+				"mac": "c2:87:b0:7d:23:3f",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500094": {
+			"number": "154",
+			"network": {
+				"ip": "",
+				"mac": "ce:6b:92:eb:30:41",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500095": {
+			"number": "155",
+			"network": {
+				"ip": "",
+				"mac": "42:87:cb:90:b8:87",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500096": {
+			"number": "156",
+			"network": {
+				"ip": "",
+				"mac": "52:dd:2d:97:77:83",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500097": {
+			"number": "157",
+			"network": {
+				"ip": "",
+				"mac": "5e:1d:2f:d6:d1:f3",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500098": {
+			"number": "158",
+			"network": {
+				"ip": "",
+				"mac": "7e:33:1f:9d:67:6f",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500099": {
+			"number": "159",
+			"network": {
+				"ip": "",
+				"mac": "86:b2:d0:cc:4e:6d",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500088": {
+			"number": "148",
+			"network": {
+				"ip": "",
+				"mac": "42:21:32:b9:22:bc",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500089": {
+			"number": "149",
+			"network": {
+				"ip": "",
+				"mac": "ea:58:ee:a7:21:f0",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500090": {
+			"number": "150",
+			"network": {
+				"ip": "192.168.107.203/24",
+				"mac": "4e:dc:11:b3:6c:4f",
+				"ssid": "G07-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500100": {
+			"number": "160",
+			"network": {
+				"ip": "",
+				"mac": "6a:b2:2e:c3:ae:f4",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500102": {
+			"number": "162",
+			"network": {
+				"ip": "",
+				"mac": "ca:8f:26:47:ca:1b",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500103": {
+			"number": "163",
+			"network": {
+				"ip": "",
+				"mac": "f2:7e:cb:7c:e3:3a",
+				"ssid": "G06-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500104": {
+			"number": "164",
+			"network": {
+				"ip": "",
+				"mac": "36:91:73:10:62:23",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500105": {
+			"number": "165",
+			"network": {
+				"ip": "",
+				"mac": "a2:76:9d:b7:43:59",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500106": {
+			"number": "166",
+			"network": {
+				"ip": "",
+				"mac": "12:fb:09:06:cc:8d",
+				"ssid": "G07-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500107": {
+			"number": "167",
+			"network": {
+				"ip": "",
+				"mac": "8a:e1:96:75:e2:45",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500108": {
+			"number": "168",
+			"network": {
+				"ip": "",
+				"mac": "a2:88:1c:56:a5:df",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500109": {
+			"number": "169",
+			"network": {
+				"ip": "",
+				"mac": "5e:d0:20:99:11:93",
+				"ssid": "G06-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500110": {
+			"number": "170",
+			"network": {
+				"ip": "",
+				"mac": "ea:a4:e8:98:b1:1e",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500111": {
+			"number": "171",
+			"network": {
+				"ip": "",
+				"mac": "4e:c4:22:27:b0:e3",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500112": {
+			"number": "172",
+			"network": {
+				"ip": "",
+				"mac": "2a:ad:d3:9f:f1:6e",
+				"ssid": "G07-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500113": {
+			"number": "173",
+			"network": {
+				"ip": "",
+				"mac": "06:75:05:32:b2:89",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500114": {
+			"number": "174",
+			"network": {
+				"ip": "",
+				"mac": "2e:69:22:7e:84:26",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500115": {
+			"number": "175",
+			"network": {
+				"ip": "",
+				"mac": "d6:36:29:80:5d:4c",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500116": {
+			"number": "176",
+			"network": {
+				"ip": "",
+				"mac": "ae:39:d2:d1:b5:00",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500117": {
+			"number": "177",
+			"network": {
+				"ip": "",
+				"mac": "c2:81:78:d3:51:db",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500118": {
+			"number": "178",
+			"network": {
+				"ip": "",
+				"mac": "72:34:1b:84:ba:21",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500119": {
+			"number": "179",
+			"network": {
+				"ip": "",
+				"mac": "ae:94:8d:be:e0:b0",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500120": {
+			"number": "180",
+			"network": {
+				"ip": "",
+				"mac": "fa:44:10:f3:43:f6",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500101": {
+			"number": "161",
+			"network": {
+				"ip": "",
+				"mac": "2e:5b:ac:d3:bd:a5",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500121": {
+			"number": "181",
+			"network": {
+				"ip": "192.168.103.185/24",
+				"mac": "06:2e:71:c8:ae:46",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500122": {
+			"number": "182",
+			"network": {
+				"ip": "192.168.103.20/24",
+				"mac": "a2:4e:9a:52:45:b8",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500123": {
+			"number": "183",
+			"network": {
+				"ip": "192.168.103.88/24",
+				"mac": "2a:e0:55:ec:9d:7e",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500124": {
+			"number": "184",
+			"network": {
+				"ip": "192.168.104.230/24",
+				"mac": "22:d3:96:97:85:3b",
+				"ssid": "G04-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500125": {
+			"number": "185",
+			"network": {
+				"ip": "192.168.103.164/24",
+				"mac": "9a:2c:be:a1:ac:57",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500126": {
+			"number": "186",
+			"network": {
+				"ip": "192.168.108.166/24",
+				"mac": "aa:22:6f:70:73:07",
+				"ssid": "G08-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500127": {
+			"number": "187",
+			"network": {
+				"ip": "192.168.108.21/24",
+				"mac": "6a:95:77:bb:cb:3b",
+				"ssid": "G08-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500128": {
+			"number": "188",
+			"network": {
+				"ip": "192.168.101.112/24",
+				"mac": "12:05:27:26:e7:a5",
+				"ssid": "G01-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500129": {
+			"number": "189",
+			"network": {
+				"ip": "192.168.102.213/24",
+				"mac": "1e:ad:03:f5:f1:df",
+				"ssid": "G02-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500130": {
+			"number": "190",
+			"network": {
+				"ip": "192.168.103.156/24",
+				"mac": "1a:22:6c:bb:c5:f7",
+				"ssid": "G03-ACH",
+				"wifiOn": true
+			}
+		},
+		"K3RN0MT676500131": {
+			"number": "191",
+			"network": {
+				"ip": "",
+				"mac": "06:32:ef:8c:c3:0e",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500132": {
+			"number": "192",
+			"network": {
+				"ip": "",
+				"mac": "6a:5c:0a:9c:79:6c",
+				"ssid": "G04-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500133": {
+			"number": "193",
+			"network": {
+				"ip": "",
+				"mac": "e2:33:8a:05:e8:1f",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500134": {
+			"number": "194",
+			"network": {
+				"ip": "",
+				"mac": "62:c1:10:5d:19:fd",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500135": {
+			"number": "195",
+			"network": {
+				"ip": "",
+				"mac": "16:ce:e7:87:6e:8e",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500136": {
+			"number": "196",
+			"network": {
+				"ip": "",
+				"mac": "da:c0:6e:91:72:b2",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500137": {
+			"number": "197",
+			"network": {
+				"ip": "",
+				"mac": "46:1a:22:7c:fd:df",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500138": {
+			"number": "198",
+			"network": {
+				"ip": "",
+				"mac": "ca:27:0e:24:27:91",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500139": {
+			"number": "199",
+			"network": {
+				"ip": "",
+				"mac": "ba:93:19:07:3f:0c",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500140": {
+			"number": "200",
+			"network": {
+				"ip": "",
+				"mac": "7e:01:51:a0:c9:38",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500141": {
+			"number": "201",
+			"network": {
+				"ip": "",
+				"mac": "66:78:ca:e2:c7:5a",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500142": {
+			"number": "202",
+			"network": {
+				"ip": "",
+				"mac": "ee:21:90:27:0f:5e",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500143": {
+			"number": "203",
+			"network": {
+				"ip": "",
+				"mac": "ce:1a:b4:3c:71:4a",
+				"ssid": "G06-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500144": {
+			"number": "204",
+			"network": {
+				"ip": "",
+				"mac": "0e:77:c8:84:40:dd",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500146": {
+			"number": "206",
+			"network": {
+				"ip": "",
+				"mac": "7e:f4:a6:39:3e:b4",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500147": {
+			"number": "207",
+			"network": {
+				"ip": "",
+				"mac": "d2:63:ba:84:af:78",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500148": {
+			"number": "208",
+			"network": {
+				"ip": "",
+				"mac": "62:7c:c9:12:12:c5",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500149": {
+			"number": "209",
+			"network": {
+				"ip": "",
+				"mac": "7e:73:ee:29:40:25",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500150": {
+			"number": "210",
+			"network": {
+				"ip": "",
+				"mac": "7a:fd:d5:4a:d7:be",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500151": {
+			"number": "211",
+			"network": {
+				"ip": "",
+				"mac": "ce:62:34:9b:6b:fc",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500152": {
+			"number": "212",
 			"network": {
 				"ip": "",
 				"mac": "",
 				"wifiOn": false
 			}
 		},
-		"192.168.0.104:5555": {
-			"number": "01"
+		"K3RN0MT676500153": {
+			"number": "213",
+			"network": {
+				"ip": "",
+				"mac": "56:2d:27:6b:96:6d",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500154": {
+			"number": "214",
+			"network": {
+				"ip": "",
+				"mac": "e2:be:62:c2:96:c3",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500155": {
+			"number": "215",
+			"network": {
+				"ip": "",
+				"mac": "4e:02:c4:f4:0b:91",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500156": {
+			"number": "216",
+			"network": {
+				"ip": "",
+				"mac": "56:70:20:43:7e:1d",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500157": {
+			"number": "217",
+			"network": {
+				"ip": "",
+				"mac": "e2:50:4d:e0:90:74",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500158": {
+			"number": "218",
+			"network": {
+				"ip": "",
+				"mac": "7e:47:a6:9e:79:a7",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500159": {
+			"number": "219",
+			"network": {
+				"ip": "",
+				"mac": "4a:af:4e:75:ec:38",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500160": {
+			"number": "220",
+			"network": {
+				"ip": "",
+				"mac": "ee:96:3f:79:df:98",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500145": {
+			"number": "205",
+			"network": {
+				"ip": "",
+				"mac": "6a:ca:84:ee:e2:79",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500161": {
+			"number": "221",
+			"network": {
+				"ip": "",
+				"mac": "7e:40:76:aa:13:a6",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500162": {
+			"number": "222",
+			"network": {
+				"ip": "",
+				"mac": "e2:d3:d1:06:02:db",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500163": {
+			"number": "223",
+			"network": {
+				"ip": "",
+				"mac": "36:b9:d8:43:fa:ec",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500164": {
+			"number": "224",
+			"network": {
+				"ip": "",
+				"mac": "c2:39:ae:05:a4:f0",
+				"ssid": "G06-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500165": {
+			"number": "225",
+			"network": {
+				"ip": "",
+				"mac": "b2:b9:10:21:cf:21",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500166": {
+			"number": "226",
+			"network": {
+				"ip": "",
+				"mac": "8e:47:3e:8a:bb:fc",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500167": {
+			"number": "227",
+			"network": {
+				"ip": "",
+				"mac": "62:a1:10:23:92:c0",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500168": {
+			"number": "228",
+			"network": {
+				"ip": "",
+				"mac": "3e:6e:a2:3a:78:41",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500169": {
+			"number": "229",
+			"network": {
+				"ip": "",
+				"mac": "6a:8a:5a:4d:d8:8c",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500170": {
+			"number": "230",
+			"network": {
+				"ip": "",
+				"mac": "ce:65:c4:80:90:6f",
+				"ssid": "G06-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500171": {
+			"number": "231",
+			"network": {
+				"ip": "",
+				"mac": "7a:65:bf:97:ff:d1",
+				"ssid": "G06-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500172": {
+			"number": "232",
+			"network": {
+				"ip": "",
+				"mac": "3e:98:1c:34:84:46",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500173": {
+			"number": "233",
+			"network": {
+				"ip": "",
+				"mac": "7a:3b:e3:48:6a:06",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500174": {
+			"number": "234",
+			"network": {
+				"ip": "",
+				"mac": "be:e0:53:69:96:6e",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500175": {
+			"number": "235",
+			"network": {
+				"ip": "",
+				"mac": "6e:5a:a0:2b:2b:70",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500176": {
+			"number": "236",
+			"network": {
+				"ip": "",
+				"mac": "e2:3e:42:46:bb:8e",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500177": {
+			"number": "237",
+			"network": {
+				"ip": "",
+				"mac": "fe:8e:80:f4:a6:78",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500178": {
+			"number": "238",
+			"network": {
+				"ip": "",
+				"mac": "76:cb:32:53:44:72",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500179": {
+			"number": "239",
+			"network": {
+				"ip": "",
+				"mac": "ee:f5:e7:0c:93:75",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500180": {
+			"number": "240",
+			"network": {
+				"ip": "",
+				"mac": "8a:ff:ef:3c:04:d0",
+				"ssid": "G02-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500181": {
+			"number": "241",
+			"network": {
+				"ip": "",
+				"mac": "ca:4c:17:a0:1d:52",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500182": {
+			"number": "242",
+			"network": {
+				"ip": "",
+				"mac": "22:8b:c2:c5:7a:4b",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500183": {
+			"number": "243",
+			"network": {
+				"ip": "",
+				"mac": "42:34:2c:a3:bf:07",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500184": {
+			"number": "244",
+			"network": {
+				"ip": "",
+				"mac": "66:74:da:d4:e4:43",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500185": {
+			"number": "245",
+			"network": {
+				"ip": "",
+				"mac": "06:3a:34:79:a8:f0",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500186": {
+			"number": "246",
+			"network": {
+				"ip": "",
+				"mac": "66:f9:91:00:3e:68",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500187": {
+			"number": "247",
+			"network": {
+				"ip": "",
+				"mac": "",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500188": {
+			"number": "248",
+			"network": {
+				"ip": "",
+				"mac": "8a:ce:5e:87:88:cb",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500189": {
+			"number": "249",
+			"network": {
+				"ip": "",
+				"mac": "6e:5e:4d:6f:08:f7",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500190": {
+			"number": "250",
+			"network": {
+				"ip": "",
+				"mac": "6a:60:1d:1c:9a:ab",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500191": {
+			"number": "251",
+			"network": {
+				"ip": "",
+				"mac": "5a:43:ba:b5:6d:66",
+				"ssid": "G05-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500192": {
+			"number": "252",
+			"network": {
+				"ip": "",
+				"mac": "72:f2:40:dc:5e:f2",
+				"ssid": "G08-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500193": {
+			"number": "253",
+			"network": {
+				"ip": "",
+				"mac": "4a:18:1c:06:9b:01",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500194": {
+			"number": "254",
+			"network": {
+				"ip": "",
+				"mac": "92:55:e8:61:3d:87",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500195": {
+			"number": "255",
+			"network": {
+				"ip": "",
+				"mac": "66:03:62:63:01:0c",
+				"ssid": "G03-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500196": {
+			"number": "256",
+			"network": {
+				"ip": "",
+				"mac": "ba:cf:1f:aa:a6:d4",
+				"ssid": "G01-ACH",
+				"wifiOn": false
+			}
+		},
+		"K3RN0MT676500197": {
+			"number": "257",
+			"network": {
+				"ip": "",
+				"mac": "7a:26:66:f2:6d:97",
+				"ssid": "G06-ACH",
+				"wifiOn": false
+			}
 		}
 	}
 }

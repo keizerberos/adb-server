@@ -1,0 +1,17 @@
+{
+	"tiktok_like_x3_c": {
+		"name": "Me gusta en 3 cuentas(Test b)",
+		"group":"TikTok",
+      	"type":"task",
+		"description": "<i class=\"bi bi-tiktok\"></i> Tiktok - \"Me gusta\" - 3 cuentas (Test b)",
+		"params": {
+			"link": "https://www.tiktok.com/@alisonquispelaura/video/7502860649257569591",
+			"accounts":[]
+		},
+		"functions": {
+			"link": "tkurl"
+		},
+		"start": "tk_x3c_open_apk",
+		"end": "tk_x3c_home"
+	}
+}

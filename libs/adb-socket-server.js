@@ -141,7 +141,7 @@ class AdbSocketServer {
 		});
 		fastServer.get("/screens",(req,res)=>{
 			console.log("req.query.screenId",req.query.screenId);
-			const screenId = req.query.screenId;
+			const screenId = req.query.screenId.replaceAll(":","_");
 			console.log("path",__dirname + '/../screens/'+screenId+'.png');
 			const imagePath = path.join(__dirname, '/../screens/'+screenId+'.png');
 			res.sendFile(imagePath);

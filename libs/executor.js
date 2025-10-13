@@ -213,7 +213,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 		return;
 	}
 
-	console.log("currentAction.preDelay", nodeAction, currentAction.preDelay);
+	console.log("executeNode currentAction.preDelay actionIndex", nodeAction, currentAction.preDelay, actionIndex);
 	setTimeout(() => {
 
 		devicesActions[deviceId]['progress']['completed'].push(nodeAction);
@@ -250,7 +250,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 				command.data[k] = replaceParams(params, command.data[k]);
 			})
 
-			console.log("executeNode.command", command);
+			//console.log("executeNode.command", command);
 			//myWebSocket.send(JSON.stringify(command));
 			events['send'].forEach(fn => fn(command));
 			currentAction.loop++;
@@ -402,9 +402,8 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 				state: true,
 				cbSuccess: async(img,bimg) => {
 					console.log("reading");
-					const textImg = await ocr(bimg);
-					console.log("OCR all");
-					console.log(textImg);
+					
+					//console.log(textImg);
 					const constStates = Object.keys(params).map(k=>k+" = params['"+k+"']");
 					let resultGlobal = true;
 					let x = -1;
@@ -414,22 +413,50 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 					console.log("constStates:");
 					console.log(constStates.join(";\n"));
 					eval(constStates.join(";"));
-					currentAction.trigger.forEach(async (trigger,i) => {	
+					//currentAction.trigger.forEach(async (trigger,i) => {	
+					for(let i = 0; i < currentAction.trigger.length;i++){
+						const trigger = currentAction.trigger[i];
 						let result = true;					
-						xm = trigger.crop[2]-trigger.crop[0];
-						ym = trigger.crop[3]-trigger.crop[1];
-						const blobCrop = await getBlobCrop(img,trigger.crop);
-						const text = await ocr(blobCrop);
+						xm = Math.round(trigger.crop[0]+trigger.crop[2]/2);
+						ym = Math.round(trigger.crop[1]+trigger.crop[3]/2);
+						const blobCrop = getBlobCrop(img,trigger.crop);
+						const text = (await ocr(blobCrop)).trim();
 						console.log("text",text);
+						console.log("trigger.pre.join",trigger.pre.join(";"));
 						eval(trigger.pre.join(";"));
+						console.log("----x,y", x,y);
 						result = eval(trigger.result);
 						if ( !result )
 							resultGlobal=false;
-					});
+					}
+					//});
 					console.log("accounts",params);
 					console.log("resultGlobal",resultGlobal);
+
+					console.log("xm,ym", xm, ym);
+
+					console.log("x,y", x, y);
 					if (resultGlobal){						
 						console.log(deviceId +" executeNode.reader true");
+
+						let command = JSON.parse(JSON.stringify(currentAction.command));
+						if (command != null) {
+							let tempParams = {
+								x: x, y: y, xm:xm, ym:ym
+								, deviceId: deviceId
+							}
+							command.devices = replaceParams(tempParams, command.devices);
+							Object.keys(command.data).forEach(k => {
+								command.data[k] = replaceParams(params, command.data[k]);
+							})
+							Object.keys(command.data).forEach(k => {
+								command.data[k] = replaceParams(tempParams, command.data[k]);
+							})
+							console.log("executeNode.command", command);
+							//									myWebSocket.send(JSON.stringify(command));
+							events['send'].forEach(fn => fn(command));
+						}
+
 						currentAction.loop++;
 						setTimeout(() => {
 							executeNode(currentAction, 0, deviceId, params,
@@ -453,6 +480,8 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 									});
 							}, currentAction.postDelay);
 					}
+
+					
 				},
 				cbFail: () => {
 					let data = {
@@ -510,7 +539,6 @@ function ocr(blob){
 	})
 }
 function getBlobCrop(img, crop){
-	return new Promise( (resolve,reject) => {
 		const x = crop[0];
 		const y = crop[1];
 		const w = crop[2];
@@ -521,11 +549,7 @@ function getBlobCrop(img, crop){
 		outputcanvas.height = h;
 		canvasctx.drawImage(img, x, y, w, h, 0, 0, w, h);
 		const image = canvasctx.getImageData(0, 0, w, h);
-		resolve(outputcanvas.toBuffer('image/png'));
-		/*outputcanvas.toBlob((blob) => {
-			resolve(blob)	
-		}, 'image/png');*/
-	});
+		return outputcanvas.toBuffer('image/png');
 }
 function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, cbSuccess, cbFail) {
 	//console.log("androidActions[actionId]",androidActions[actionId]);
@@ -559,7 +583,7 @@ function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, 
 			//myWebSocket.send(JSON.stringify(command));
 			events['send'].forEach(fn => fn(command));
 		} else if (action.type == "pattern") {
-			//neeer start with a pattern, but...
+			//never start with a pattern, but...
 			console.log("executeGraph.pattern test", JSON.stringify(action.command));
 		}
 		console.log("executeGraph.action.postDelay", action.postDelay);
@@ -743,8 +767,9 @@ function executeTasks(tasks, callback) {
 	};
 	executor();
 }
-function clearScreens(serial){
+function clearScreens(serialFullName){
     var files = [];
+	const serial = serialFullName.replaceAll(":","_");
 	const pathScreens = __dirname+"/../screens/";
 	//console.log("clearScreens",__dirname+"/"+pathScreens);
     fs.readdir(pathScreens, function(err,list){
@@ -765,8 +790,9 @@ class Executor {
 
 	}
 	/** Register Screen for progress */
-	regScreen(id,img){		
+	async regScreen(id,img){		
 		const pathScreens = "screens/";
+		const serial = id.replaceAll(":","_");
 		if (devicesActions[id]==undefined) return;
 		if (devicesActions[id]['progress']==undefined) return;
 		
@@ -777,7 +803,10 @@ class Executor {
 			devicesActions[id]['progress']['screens'][actionIdCurrent] = [];
 		devicesActions[id]['progress']['screens'][actionIdCurrent].push(screenUid);
 		//screensCache[screenUid] = img;
-		fs.writeFileSync(pathScreens+id+'-'+timestamp+'.png', img)
+		ocr(img).then(text=>{
+			fs.writeFileSync(pathScreens+serial+'-'+timestamp+'.txt', text);
+		});
+		fs.writeFileSync(pathScreens+serial+'-'+timestamp+'.png', img)
 	}
 	screen(id, bimg) {
 		this.regScreen(id,bimg);

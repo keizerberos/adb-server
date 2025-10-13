@@ -89,7 +89,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 650 918"
+            "command":"input tap 650 981"
          }
       },
       "order":0,
@@ -462,7 +462,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 648 914"
+            "command":"input tap 650 981"
          }
       },
       "order":0,
@@ -721,7 +721,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 648 914"
+            "command":"input tap 650 981"
          }
       },
       "order":0,

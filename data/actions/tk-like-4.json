@@ -1,5 +1,5 @@
 {
-   "tk_x3b_open_apk":{
+   "tk_x3c_open_apk":{
       "name":"START_APK",
       "desc":"Open apk",
       "trigger":[
@@ -9,23 +9,75 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"am start -n com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity"
+            "command":"am start -a android.intent.action.VIEW -d {link} com.zhiliaoapp.musically"
          }
       },
       "order":0,
       "type":"static",
       "preDelay":2000,
-      "postDelay":5500,
+      "postDelay":10500,
       "maxLoop":10,
       "loop":0,
       "maxTry":5,
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3b_click"
+         "tk_x3c_tap"
       ]
    },
-   "tk_x3b_click":{
+   "tk_x3c_tap":{
+      "name":"TK_LIVE_LIKE",
+      "desc":"tiktok Live send like",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"\"input tap 324 521 & sleep 0.1; input tap 324 521\""
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":200,
+      "postDelay":4000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":500,
+      "next":[
+         "tk_x3c_back"
+      ]
+   },
+   "tk_x3c_back":{
+      "name":"BACK",
+      "desc":"Back page",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input keyevent 4"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":2000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_x3c_click"
+      ]
+   },
+   "tk_x3c_click":{
       "name":"CLICK_PROFILE",
       "desc":"Click profile",
       "trigger":[
@@ -48,10 +100,10 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3b2_click"
+         "tk_x3c2_click"
       ]
    },
-   "tk_x3b2_click":{
+   "tk_x3c2_click":{
       "name":"CLICK_PROFILE_2",
       "desc":"Click profile 2",
       "trigger":[
@@ -74,10 +126,10 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3b_reader","tk_x3b_home"
+         "tk_x3c_reader","tk_x3c_home"
       ]
    },
-   "tk_x3b_reader":{
+   "tk_x3c_reader":{
       "name":"TK_READ_1",
       "desc":"tiktok read",
       "trigger":[
@@ -134,36 +186,10 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "tk_x3b_click"
+         "tk_x3c_open_apk"
       ]
    },
-   "tk_x3b_back":{
-      "name":"BACK",
-      "desc":"Back page",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"input keyevent 4"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":2000,
-      "postDelay":8000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":1,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "tk_x3b_click"
-      ]
-   },
-   "tk_x3b_home":{
+   "tk_x3c_home":{
       "name":"HOME",
       "desc":"Back to home",
       "trigger":[

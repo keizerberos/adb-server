@@ -74,7 +74,52 @@
       "try":0,
       "timeout":5000,
       "next":[		
-         "fbvcc2_like_pre2_3"
+         "fbvcc2_text_pat1","fbvcc2_text_pat1","fbvcc2_text_pat1","fbvcc2_like_pre2_3"
+      ]
+   },
+   "fbvcc2_text_pat1":{
+      "name":"PATTERN",
+      "desc":"Find comment text",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"pattern_fb_comment_text1",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{devices}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap {wm} {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":400,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "fbvcc2_action_4aa"
       ]
    },
    "fbvcc2_like_pre2_3":{
@@ -87,7 +132,33 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 330 1450"
+            "command":"input tap 666 1124"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[		
+         "fbvcc2_like_pre2_3b"
+      ]
+   },
+   "fbvcc2_like_pre2_3b":{
+      "name":"tap like",
+      "desc":"tap like",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 360 1449"
          }
       },
       "order":0,
@@ -582,7 +653,52 @@
       "try":0,
       "timeout":5000,
       "next":[		
-         "fbvcc2_like2_pre2_3"
+         "fbvcc2_text2_pat1","fbvcc2_text2_pat1","fbvcc2_text2_pat1","fbvcc2_like2_pre2_3"
+      ]
+   },
+   "fbvcc2_text2_pat1":{
+      "name":"PATTERN",
+      "desc":"Find comment text",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"pattern_fb_comment_text1",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{devices}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap {wm} {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":400,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "fbvcc2_action2_4aa"
       ]
    },
    "fbvcc2_like2_pre2_3":{
@@ -595,7 +711,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 330 1450"
+            "command":"input tap 666 1124"
          }
       },
       "order":0,
@@ -608,7 +724,33 @@
       "try":0,
       "timeout":5000,
       "next":[		
-         "fbvcc2_action2_4aa"
+         "fbvcc2_like2_pre2_3b"
+      ]
+   },
+   "fbvcc2_like2_pre2_3b":{
+      "name":"tap like",
+      "desc":"tap like",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 360 1449"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[		
+         "fbvcc2_action2_4a"
       ]
    },
    "fbvcc2_action2_4aa":{
@@ -1093,10 +1235,55 @@
       "try":0,
       "timeout":5000,
       "next":[		
-         "fbvcc2_action2_3_b_x3_pre2"
+         "fbvcc2_text3_pat1","fbvcc2_text3_pat1","fbvcc2_text3_pat1","fbvcc2_like3_pre2_3"
       ]
    },
-   "fbvcc2_action2_3_b_x3_pre2":{
+   "fbvcc2_text3_pat1":{
+      "name":"PATTERN",
+      "desc":"Find comment text",
+      "trigger":[
+         {
+            "type":"pattern",
+            "pattern":"pattern_fb_comment_text1",
+            "condition":true,
+            "cmd":{
+               "action":"Screen",
+               "devices":"{devices}",
+               "data":{
+                  "savePath":"{screen_path}"
+               }
+            },
+            "result":{
+               "x":-1,
+               "y":-1,
+               "w":-1,
+               "h":-1,
+               "wm":-1,
+               "hm":-1
+            }
+         }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap {wm} {hm}"
+         }
+      },
+      "order":0,
+      "type":"pattern",
+      "preDelay":400,
+      "postDelay":2000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "fbvcc2_action2_4aa_x3"
+      ]
+   },
+   "fbvcc2_like3_pre2_3":{
       "name":"tap like",
       "desc":"tap like",
       "trigger":[
@@ -1106,7 +1293,33 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 330 1450"
+            "command":"input tap 666 1124"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[		
+         "fbvcc2_like3_pre2_3b"
+      ]
+   },
+   "fbvcc2_like3_pre2_3b":{
+      "name":"tap like",
+      "desc":"tap like",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 360 1449"
          }
       },
       "order":0,
