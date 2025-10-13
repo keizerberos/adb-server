@@ -1,3 +1,4 @@
 node_modules
 logs
 screens/*.png
+screens/*.txt
