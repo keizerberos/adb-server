@@ -197,7 +197,7 @@ function findPattern(ctx, ctx1, canvas, pattern, first, crop) {
 	}
 }
 function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
-	
+	console.log("executeNode init");
 	if (action == null) { cbSuccess(); return; }
 	if (action.next == null) { cbSuccess(); return; }
 	let nodeAction = action.next[actionIndex];
@@ -213,7 +213,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 		return;
 	}
 
-	console.log("executeNode currentAction.preDelay actionIndex", nodeAction, currentAction.preDelay, actionIndex);
+	console.log("executeNode currentAction.preDelay actionIndex currentAction.loop", nodeAction, currentAction.preDelay, actionIndex,currentAction.loop);
 	setTimeout(() => {
 
 		devicesActions[deviceId]['progress']['completed'].push(nodeAction);
@@ -563,45 +563,51 @@ function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, 
 	if (config != null){
 		timeExecute = action.preDelay + (config.offset * 1000 * ii);
 	}	
-	
+	timeExecute = Math.round(timeExecute);
+	console.log("executeGraph.action.timeExecute", timeExecute);
+	let sended = false;
 	setTimeout(() => {
-		if (action.type == "static") {
-			//$(".act-" + deviceId).html(action.name + "<br> " + action.desc);
-			devicesActions[deviceId]['progress']['completed'].push(actionId);
-			devicesActions[deviceId]['progress']['current'] = actionId;
-			events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
-			let command = JSON.parse(JSON.stringify(action.command));
-			let tempParams = {
-				deviceId: deviceId
-			}
-
-			command.devices = replaceParams(tempParams, command.devices);
-			Object.keys(command.data).forEach(k => {
-				command.data[k] = replaceParams(params, command.data[k]);
-			});
-			console.log("executeGraph.command", command);
-			//myWebSocket.send(JSON.stringify(command));
-			events['send'].forEach(fn => fn(command));
-		} else if (action.type == "pattern") {
-			//never start with a pattern, but...
-			console.log("executeGraph.pattern test", JSON.stringify(action.command));
-		}
-		console.log("executeGraph.action.postDelay", action.postDelay);
-		setTimeout(() => {
-			executeNode(action, 0, deviceId, params,
-				() => {					
-					devicesActions[deviceId]['progress']['state'] = 'ended';
-					events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
-					cbSuccess();
-				},
-				() => {					
-					devicesActions[deviceId]['progress']['state'] = 'ended';
-					devicesActions[deviceId]['progress']['fail'] = true;
-					events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
-					cbFail();
+		if (!sended){
+			sended =true;
+			if (action.type == "static") {
+				//$(".act-" + deviceId).html(action.name + "<br> " + action.desc);
+				devicesActions[deviceId]['progress']['completed'].push(actionId);
+				devicesActions[deviceId]['progress']['current'] = actionId;
+				events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
+				let command = JSON.parse(JSON.stringify(action.command));
+				let tempParams = {
+					deviceId: deviceId
 				}
-			)
-		}, action.postDelay);
+
+				command.devices = replaceParams(tempParams, command.devices);
+				Object.keys(command.data).forEach(k => {
+					command.data[k] = replaceParams(params, command.data[k]);
+				});
+				console.log("executeGraph.command", command);
+				//myWebSocket.send(JSON.stringify(command));
+				events['send'].forEach(fn => fn(command));
+			} else if (action.type == "pattern") {
+				//never start with a pattern, but...
+				console.log("executeGraph.pattern test", JSON.stringify(action.command));
+			}
+			console.log("executeGraph.action.postDelay", action.postDelay);
+			setTimeout(() => {
+				console.log("executeGraph starting send executeNode");
+				executeNode(action, 0, deviceId, params,
+					() => {					
+						devicesActions[deviceId]['progress']['state'] = 'ended';
+						events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
+						cbSuccess();
+					},
+					() => {					
+						devicesActions[deviceId]['progress']['state'] = 'ended';
+						devicesActions[deviceId]['progress']['fail'] = true;
+						events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
+						cbFail();
+					}
+				)
+			}, action.postDelay);
+		}
 	}, timeExecute);
 }
 function executeTask(devices, task) {

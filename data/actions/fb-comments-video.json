@@ -1,4 +1,30 @@
-{
+{  
+   "fbvcc2_prep_action0_1":{
+      "name":"PREPARE IME",
+      "desc":"prepare keyboard",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"\"ime enable com.android.adbkeyboard/.AdbIME & sleep 1; ime set com.android.adbkeyboard/.AdbIME\""
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":5000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "fbvcc2_action0_1"
+      ]
+   },
    "fbvcc2_action0_1":{
       "name":"STOP_APK",
       "desc":"Stop apk",
@@ -119,7 +145,7 @@
       "try":0,
       "timeout":5000,
       "next":[
-         "fbvcc2_action_4aa"
+         "fbvcc2_action_4"
       ]
    },
    "fbvcc2_like_pre2_3":{
@@ -132,7 +158,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 666 1124"
+            "command":"input tap 633 1120"
          }
       },
       "order":0,
@@ -171,64 +197,12 @@
       "try":0,
       "timeout":5000,
       "next":[		
-         "fbvcc2_action_4aa"
-      ]
-   },
-   "fbvcc2_action_4aa":{
-      "name":"CLEAR_TEXT",
-      "desc":"Clear input text",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"am broadcast -a ADB_CLEAR_TEXT"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":500,
-      "postDelay":1000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
-         "fbvcc2_action_4a"
-      ]
-   },
-   "fbvcc2_action_4a":{
-      "name":"INPUT_TEXT",
-      "desc":"Input comment",
-      "trigger":[
-         
-      ],
-      "command":{
-         "action":"adb",
-         "devices":"{deviceId}",
-         "data":{
-            "command":"am broadcast -a ADB_INPUT_TEXT --es msg '{comment}'"
-         }
-      },
-      "order":0,
-      "type":"static",
-      "preDelay":500,
-      "postDelay":2000,
-      "maxLoop":10,
-      "loop":0,
-      "maxTry":10,
-      "try":0,
-      "timeout":5000,
-      "next":[
          "fbvcc2_action_4"
       ]
-   },
+   },   
    "fbvcc2_action_4":{
-      "name":"INPUT_BACK",
-      "desc":"Close input box",
+      "name":"INPUT_TEXT",
+      "desc":"Input text",
       "trigger":[
          
       ],
@@ -236,7 +210,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"am broadcast -a ADB_EDITOR_CODE --ei code 5"
+            "command":"\"am broadcast -a ADB_CLEAR_TEXT & sleep 2; am broadcast -a ADB_INPUT_TEXT --es msg '{comment}' & sleep 2; am broadcast -a ADB_EDITOR_CODE --ei code 5\""
          }
       },
       "order":0,
@@ -711,7 +685,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 666 1124"
+            "command":"input tap 633 1120"
          }
       },
       "order":0,
@@ -1293,7 +1267,7 @@
          "action":"adb",
          "devices":"{deviceId}",
          "data":{
-            "command":"input tap 666 1124"
+            "command":"input tap 633 1120"
          }
       },
       "order":0,

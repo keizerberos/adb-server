@@ -18226,5 +18226,748 @@
 			720,
 			1612
 		]
+	},
+	"pattern_fb_comment_text1": {
+		"type": "bw",
+		"dataUrl": "data:image/png;base64,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",
+		"patterns": [
+			{
+				"x": 21,
+				"y": 3,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 65,
+				"y": 3,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 109,
+				"y": 3,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 153,
+				"y": 3,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 197,
+				"y": 3,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 241,
+				"y": 3,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 285,
+				"y": 3,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 329,
+				"y": 3,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 373,
+				"y": 3,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 21,
+				"y": 11,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					0,
+					0,
+					0
+				],
+				"s": 6
+			},
+			{
+				"x": 65,
+				"y": 11,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 109,
+				"y": 11,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 153,
+				"y": 11,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 197,
+				"y": 11,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 241,
+				"y": 11,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 285,
+				"y": 11,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 329,
+				"y": 11,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 373,
+				"y": 11,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 21,
+				"y": 19,
+				"m": [
+					255,
+					255,
+					0,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 8
+			},
+			{
+				"x": 65,
+				"y": 19,
+				"m": [
+					255,
+					255,
+					255,
+					0,
+					255,
+					255,
+					0,
+					0,
+					255
+				],
+				"s": 6
+			},
+			{
+				"x": 109,
+				"y": 19,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 153,
+				"y": 19,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 197,
+				"y": 19,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 241,
+				"y": 19,
+				"m": [
+					0,
+					0,
+					255,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"s": 1
+			},
+			{
+				"x": 285,
+				"y": 19,
+				"m": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					255,
+					255,
+					255
+				],
+				"s": 3
+			},
+			{
+				"x": 329,
+				"y": 19,
+				"m": [
+					255,
+					255,
+					255,
+					0,
+					0,
+					255,
+					0,
+					0,
+					0
+				],
+				"s": 4
+			},
+			{
+				"x": 373,
+				"y": 19,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 21,
+				"y": 27,
+				"m": [
+					255,
+					255,
+					255,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"s": 3
+			},
+			{
+				"x": 65,
+				"y": 27,
+				"m": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					0
+				],
+				"s": 0
+			},
+			{
+				"x": 109,
+				"y": 27,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 153,
+				"y": 27,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 197,
+				"y": 27,
+				"m": [
+					0,
+					0,
+					255,
+					0,
+					0,
+					255,
+					0,
+					0,
+					255
+				],
+				"s": 3
+			},
+			{
+				"x": 241,
+				"y": 27,
+				"m": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					255,
+					255,
+					255
+				],
+				"s": 3
+			},
+			{
+				"x": 285,
+				"y": 27,
+				"m": [
+					0,
+					0,
+					0,
+					0,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 5
+			},
+			{
+				"x": 329,
+				"y": 27,
+				"m": [
+					255,
+					255,
+					0,
+					255,
+					255,
+					0,
+					255,
+					255,
+					0
+				],
+				"s": 6
+			},
+			{
+				"x": 373,
+				"y": 27,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 21,
+				"y": 35,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 65,
+				"y": 35,
+				"m": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					255,
+					255,
+					255
+				],
+				"s": 3
+			},
+			{
+				"x": 109,
+				"y": 35,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 153,
+				"y": 35,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 197,
+				"y": 35,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			},
+			{
+				"x": 241,
+				"y": 35,
+				"m": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 4
+			},
+			{
+				"x": 285,
+				"y": 35,
+				"m": [
+					0,
+					0,
+					0,
+					0,
+					0,
+					0,
+					255,
+					255,
+					255
+				],
+				"s": 3
+			},
+			{
+				"x": 329,
+				"y": 35,
+				"m": [
+					0,
+					0,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 7
+			},
+			{
+				"x": 373,
+				"y": 35,
+				"m": [
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255,
+					255
+				],
+				"s": 9
+			}
+		],
+		"sum": 326,
+		"size": 3,
+		"pos": [
+			0,
+			0,
+			406,
+			46
+		],
+		"scale": 1,
+		"cellSize": 9,
+		"umbral": 90,
+		"rectCrop": [
+			14,
+			1405,
+			696,
+			195
+		]
 	}
 }
