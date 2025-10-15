@@ -1,5 +1,7 @@
 const { Logger } = require('atx-logger');
-const { createCanvas, loadImage } = require('canvas');
+//const { createCanvas, loadImage } = require('canvas');
+const process = require('process');
+const {Canvas, loadImage} = require('skia-canvas');
 const tesseract = require ("node-tesseract-ocr");
 const fs = require('fs');
 const e = require('cors');
@@ -289,9 +291,12 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 						currentAction.trigger.forEach(trigger => {
 							const pattern = androidPattern[trigger.pattern];
 							//console.log(pattern);
-							let outputcanvas = createCanvas(720, 1612);
+							/*let outputcanvas = createCanvas(720, 1612);
 							let outputcanvasP = createCanvas(720, 1612);
-							let outputcanvasF = createCanvas(720, 1612);
+							let outputcanvasF = createCanvas(720, 1612);*/
+							let outputcanvas = new Canvas(720, 1612);
+							let outputcanvasP = new Canvas(720, 1612);
+							let outputcanvasF = new Canvas(720, 1612);
 							outputcanvas.width = 720;
 							outputcanvas.height = 1612;
 							outputcanvasP.width = 720;
@@ -543,7 +548,8 @@ function getBlobCrop(img, crop){
 		const y = crop[1];
 		const w = crop[2];
 		const h = crop[3];
-		const outputcanvas = createCanvas(w,h);
+		//const outputcanvas = createCanvas(w,h);
+		const outputcanvas = new Canvas(w,h);
 		const canvasctx = outputcanvas.getContext("2d");
 		outputcanvas.width = w;
 		outputcanvas.height = h;
@@ -646,7 +652,7 @@ function executeTask(devices, task) {
 
 			devicesActions[d.serial]['progress']['state'] = 'ended';
 			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			if (countEnded >= devices.length) {
+			if (countEnded == devices.length) {
 				console.log("all ended")
 				countEnded = 0;
 				signalStop = false;
@@ -659,8 +665,6 @@ function executeTask(devices, task) {
 function executeTaskBatch(devices, params, task, cbEnd) {
 	let tasks = [];
 
-	
-	devicesActions = {};
 	console.log("params", params);
 	let countEnded = 0;
 	devices.forEach((d, ii) => {
@@ -681,7 +685,7 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 
 			devicesActions[d.serial]['progress']['state'] = 'ended';
 			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			if (countEnded >= devices.length) {				
+			if (countEnded == devices.length) {				
 				console.log("all ended")
 				countEnded = 0;
 				signalStop = false;
@@ -693,7 +697,7 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 
 			devicesActions[d.serial]['progress']['state'] = 'ended';
 			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			if (countEnded >= devices.length) {				
+			if (countEnded == devices.length) {				
 				console.log("all ended with fails")
 				countEnded = 0;
 				signalStop = false;
@@ -705,6 +709,8 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 function resumeTask(devices, task) {
 	let tasks = [];
 	let params = {};
+	
+	devicesActions = {};
 
 	task.paramsArray.forEach(param => {
 		if(Array.isArray(param.value)){			
@@ -738,7 +744,7 @@ function resumeTask(devices, task) {
 
 			devicesActions[d.serial]['progress']['state'] = 'ended';
 			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			if (countEnded >= devices.length) {
+			if (countEnded == devices.length) {
 				console.log("all ended")
 				countEnded = 0;
 				signalStop = false;
@@ -791,6 +797,12 @@ function clearScreens(serialFullName){
         }
     });
 }
+function formatBytes(bytes) {
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  if (bytes === 0) return '0 Byte';
+  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+  return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+}
 class Executor {
 	constructor() {
 
@@ -809,9 +821,9 @@ class Executor {
 			devicesActions[id]['progress']['screens'][actionIdCurrent] = [];
 		devicesActions[id]['progress']['screens'][actionIdCurrent].push(screenUid);
 		//screensCache[screenUid] = img;
-		ocr(img).then(text=>{
+		/*ocr(img).then(text=>{
 			fs.writeFileSync(pathScreens+serial+'-'+timestamp+'.txt', text);
-		});
+		});*/
 		fs.writeFileSync(pathScreens+serial+'-'+timestamp+'.png', img)
 	}
 	screen(id, bimg) {
@@ -820,6 +832,11 @@ class Executor {
 			return;
 		}
 		if (bimg.length > 0) {
+				console.log("bimg.length",bimg.length);
+				
+  				const memory = process.memoryUsage();
+				console.log('Memory Usage:');
+				console.log(`  RSS (Resident Set Size): ${formatBytes(memory.rss)}`);
 			try {
 				loadImage(bimg).then((img) => {
 					eventNodes.forEach((e, i) => {
@@ -829,6 +846,18 @@ class Executor {
 							eventNodes.splice(i, 1);
 						}
 					});
+				}).catch(err=>{
+					console.log("---- ERROR LOADING IMAGE---- ");
+					let data = {
+						"action": "Screen",
+						"devices": id,
+						"data": {
+							"savePath": "{screen_path}"
+						}
+					};
+					if ( eventNodes.find(e=>e.deviceId == id )!=undefined ) {
+						events['send'].forEach(fn => fn(data));
+					}
 				});
 			} catch (e) {
 				console.log("executor.screen ERROR",e);
@@ -882,6 +911,8 @@ class Executor {
 	startTaskBatch(_devices, task) {
 		eventNodes = [];
 		signalStop = false;
+	
+		devicesActions = {};
 		let batchs = [];
 		let params = [];
 		console.log("building batch");

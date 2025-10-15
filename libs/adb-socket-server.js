@@ -140,9 +140,9 @@ class AdbSocketServer {
 			res.send(JSON.stringify(patternsData));
 		});
 		fastServer.get("/screens",(req,res)=>{
-			console.log("req.query.screenId",req.query.screenId);
+			//console.log("req.query.screenId",req.query.screenId);
 			const screenId = req.query.screenId.replaceAll(":","_");
-			console.log("path",__dirname + '/../screens/'+screenId+'.png');
+			//console.log("path",__dirname + '/../screens/'+screenId+'.png');
 			const imagePath = path.join(__dirname, '/../screens/'+screenId+'.png');
 			res.sendFile(imagePath);
 		});
@@ -185,7 +185,7 @@ class AdbSocketServer {
 			res.send(JSON.stringify('{"response":"ok}'));
 		});		
 		
-		const io = new Server(httpServer, {
+		const io = new Server(httpServer, {			
 			cors: {
 				origin: "*",
 				methods: ["GET", "POST"],
@@ -541,8 +541,8 @@ class AdbSocketServer {
 	startServerCluster(clients, clusters, devices) {
 		const httpCluster = createServer();
 		const ioCluster = new Server(httpCluster, {
-			pingInterval: 4800, 
-			pingTimeout: 8500,
+			pingInterval: 94800, 
+			pingTimeout: 98500,
 			maxHttpBufferSize: 1e8 ,
 			forceNew: true,
 			cors: {

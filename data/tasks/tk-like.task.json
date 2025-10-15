@@ -1,8 +1,8 @@
 {
 	"tiktok_like_x3": {
 		"name": "Me gusta en 3 cuentas",
-		"group":"TikTok",
-      	"type":"task",
+		"group": "Configuraciones",
+		"type": "config",
 		"description": "<i class=\"bi bi-tiktok\"></i> Tiktok - \"Me gusta\" - 3 cuentas",
 		"params": {
 			"link": "https://www.tiktok.com/@alisonquispelaura/video/7502860649257569591"
