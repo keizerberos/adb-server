@@ -424,8 +424,8 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 						let result = true;					
 						xm = Math.round(trigger.crop[0]+trigger.crop[2]/2);
 						ym = Math.round(trigger.crop[1]+trigger.crop[3]/2);
-						const blobCrop = getBlobCrop(img,trigger.crop);
-						const text = (await ocr(blobCrop)).trim();
+						const blobCrop = await getBlobCrop(img, trigger.crop);
+						const text = ( await ocr( blobCrop)).trim();
 						console.log("text",text);
 						console.log("trigger.pre.join",trigger.pre.join(";"));
 						eval(trigger.pre.join(";"));
