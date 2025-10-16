@@ -178,6 +178,7 @@
       },
       "order":0,
       "type":"reader",
+      "getScreen":true,
       "preDelay":200,
       "postDelay":12000,
       "maxLoop":10,

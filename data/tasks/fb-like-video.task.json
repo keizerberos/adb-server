@@ -8,9 +8,29 @@
          "link":"fburl"
       },
       "params":{
-         "link":"https://www.facebook.com/watch?v=1735879630466204"
+         "link":"https://www.facebook.com/reel/1429130074805616",
+         "counter":[]
       },
       "start":"fbv1_like_1",
-      "end":"fbv1_like_c_5_x3"
+      "end":"fbv1_like_c_5_x3",
+      "nextMatrix":{
+         "fbv1_like_1": [ "fbv1_like_2"],
+         "fbv1_like_2": [ "aa1_prevent", "fbv1_like_pre_3" ],
+         "fbv1_like_pre_3": [  "fbv1_like_3_blue", "fbv1_like_3" , "fbv1_like_5"],
+         "fbv1_like_3": [  "fbv1_like_5"],
+         "fbv1_like_3_blue": [  "fbv1_like_5"],
+         "fbv1_like_5": [  "fbv1_like_5a"],
+         "fbv1_like_5a": [  "fbv1_like_acc_1"],
+         "fbv1_like_acc_1": [  "fbv1_xlike_a_2"],
+         "fbv1_xlike_a_2": [  "fbv1_xlike_a_3", "fbv1_xlike_a_3", "fbv1_xlike_a_3"],
+         "fbv1_xlike_a_3": [  "fbv1_xlike_a_4","fbv1_like_c_5_x3"],
+         "fbv1_xlike_a_4": [  "fbv1_like_c_2x"],
+         "fbv1_like_c_2x": [  "fbv1_like_1"],
+         "fbv1_like_c_5_x3": []
+      },
+      "scriptMatrix":{
+         "fbv1_xlike_a_4": {"post":" counter.push('data') ", "result": " counter.length<3 "},
+         "aa1_prevent": {"pre":" if(x>-1) sendCommand(command)"}
+      }
    }
 }

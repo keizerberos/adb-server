@@ -680,7 +680,11 @@
 			},
 			"clusterId": "qzoYDxWtYQi9iGkVAZP7NW",
 			"checked": true,
-			"selected": 1
+			"selected": 1,
+			"resolution": {
+				"size": "576x1280\n720x1612",
+				"density": "Physical density: 240\nOverride density: 320"
+			}
 		},
 		"YBZ2466LMCC3003798": {
 			"model": "ZTE",
@@ -695,6 +699,10 @@
 				"mac": "de:cb:ad:5e:ec:2d",
 				"ssid": "G08-ACH",
 				"wifiOn": true
+			},
+			"resolution": {
+				"size": "576x1280\n720x1612",
+				"density": "Physical density: 240\nOverride density: 320"
 			}
 		},
 		"YBZ2466LMCC3003861": {
@@ -710,7 +718,11 @@
 			},
 			"clusterId": "qzoYDxWtYQi9iGkVAZP7NW",
 			"checked": true,
-			"selected": 1
+			"selected": 1,
+			"resolution": {
+				"size": "576x1280\n720x1612",
+				"density": "Physical density: 240\nOverride density: 320"
+			}
 		},
 		"YBZ2466LMCC3008273": {
 			"model": "ZTE",
@@ -725,6 +737,10 @@
 				"mac": "86:2f:ef:c7:6c:2a",
 				"ssid": "G08-ACH",
 				"wifiOn": true
+			},
+			"resolution": {
+				"size": "576x1280\n720x1612",
+				"density": "Physical density: 240\nOverride density: 320"
 			}
 		},
 		"YBZ2466LMGC3006458": {
@@ -759,6 +775,10 @@
 				"mac": "76:97:53:12:c1:1d",
 				"ssid": "G07-ACH",
 				"wifiOn": true
+			},
+			"resolution": {
+				"size": "576x1280\n720x1612",
+				"density": "Physical density: 240\nOverride density: 320"
 			}
 		},
 		"YBZ2466LMGC3008410": {
@@ -774,6 +794,10 @@
 				"mac": "7a:f5:14:aa:3a:9a",
 				"ssid": "G07-ACH",
 				"wifiOn": true
+			},
+			"resolution": {
+				"size": "576x1280\n720x1612",
+				"density": "Physical density: 240\nOverride density: 320"
 			}
 		},
 		"YBZ2466LMGC3008831": {
@@ -789,6 +813,10 @@
 				"mac": "52:2e:ee:86:87:2d",
 				"ssid": "G01-ACH",
 				"wifiOn": true
+			},
+			"resolution": {
+				"size": "576x1280\n720x1612",
+				"density": "Physical density: 240\nOverride density: 320"
 			}
 		},
 		"K3RN0MT676500001": {
