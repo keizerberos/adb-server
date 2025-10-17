@@ -15,7 +15,7 @@
       "end":"fbv1_like_c_5_x3",
       "nextMatrix":{
          "fbv1_like_1": [ "fbv1_like_2"],
-         "fbv1_like_2": [ "aa1_prevent", "fbv1_like_pre_3" ],
+         "fbv1_like_2": [ "fbv1_like_pre_3" ],
          "fbv1_like_pre_3": [  "fbv1_like_3_blue", "fbv1_like_3" , "fbv1_like_5"],
          "fbv1_like_3": [  "fbv1_like_5"],
          "fbv1_like_3_blue": [  "fbv1_like_5"],
@@ -29,8 +29,7 @@
          "fbv1_like_c_5_x3": []
       },
       "scriptMatrix":{
-         "fbv1_xlike_a_4": {"post":" counter.push('data') ", "result": " counter.length<3 "},
-         "aa1_prevent": {"pre":" if(x>-1) sendCommand(command)"}
+         "fbv1_xlike_a_4": {"post":" counter.push('data') ", "result": " counter.length<3 "}
       }
    }
 }

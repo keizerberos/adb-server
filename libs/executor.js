@@ -2,6 +2,9 @@ const { Logger } = require('atx-logger');
 //const { createCanvas, loadImage } = require('canvas');
 const process = require('process');
 const {Canvas, loadImage} = require('skia-canvas');
+const {bwImage,findPattern} = require('./adb-patterns');
+//const {findPatternCrow,cropFromFast,countRow,findPatternHsv,getPatternHsv,cropFromHsv,cropFromHsvNoFilter,rgbToHsvImage,hsvImage,compareHsv,getPixel,rgb2hsv2,rgb2hsv_hsl,rgb2hsv} = require('./adb-patternshsv');
+const {findPatternHsv,rgbToHsvImage} = require('./adb-patternshsv');
 //const tesseract = require ("node-tesseract-ocr");
 const AdbOcr = require('./adb-ocr');
 const fs = require('fs');
@@ -80,132 +83,12 @@ function replaceParams(params, str) {
 	});
 	return str;
 }
-function bwImage(ctx1, canvas1, ctx2, canvas2, umbral) {
-	var imgData = ctx1.getImageData(0, 0, canvas1.width, canvas1.height);
-	canvas2.width = canvas1.width;
-	canvas2.height = canvas1.height;
-	var d = imgData.data;
-	for (var i = 0; i < d.length; i += 4) {
-		var med = (d[i] + d[i + 1] + d[i + 2]) / 3;
-		d[i] = d[i + 1] = d[i + 2] = med > umbral ? 0 : 255;
-	}
-	// redraw the new computed image
-	ctx2.putImageData(imgData, 0, 0);
-}
-function pathPattern(d, i, w, h, pattern, cellsize) {
-	_ss1 = pattern.patterns.length;
-	_ox = pattern.patterns[0].x;
-	_oy = pattern.patterns[0].y;
-	_s1 = 0;
-	for (ii = 0; ii < pattern.patterns.length; ii++) {
-		//for(iii = 0 ; iii < pattern.patterns[ii].m.length; iii++){
-		_off1 = i + ((pattern.patterns[ii].x - _ox - 1) + (pattern.patterns[ii].y - _oy - 1) * w) * 4;//0
-		_off2 = i + ((pattern.patterns[ii].x - _ox + 2) + (pattern.patterns[ii].y - _oy - 1) * w) * 4;//2
-		_off3 = i + ((pattern.patterns[ii].x - _ox + 1) + (pattern.patterns[ii].y - _oy + 1) * w) * 4;//4
-		_off4 = i + ((pattern.patterns[ii].x - _ox - 1) + (pattern.patterns[ii].y - _oy) + 2 * w) * 4;//5
-		_off5 = i + ((pattern.patterns[ii].x - _ox + 2) + (pattern.patterns[ii].y - _oy) + 2 * w) * 4;//7
-		//if (d[_off1] == pattern.patterns[ii].m[iii]) _s1++;
-		if (d[_off3] == pattern.patterns[ii].m[4]
-			/*		 && d[_off1] == pattern.patterns[ii].m[0] 
-					 && d[_off2] == pattern.patterns[ii].m[2] 
-					 && d[_off4] == pattern.patterns[ii].m[5] 
-					 && d[_off5] == pattern.patterns[ii].m[7] */
-			//d[_off3] == pattern.patterns[ii].m[2] && */
-			//d[_off4] == pattern.patterns[ii].m[3] 
-		) _s1++;
-		//else return -1;
-
-		//_ss1++;
-		//}			
-	}
-	//if (_s1 >0) console.log("equalp",pattern);
-	//if (_s1 > 0 && _s1 == _ss1) return 1;
-	/*for icons*/
-	if (_s1 > 0 && _s1 >= _ss1) return _s1;
-	/*for others*/
-	//if (_s1 > 0 && _s1+pattern.cellSize >= _ss1 ) return _s1;
-	return -1;
-}
-function findPattern(ctx, ctx1, canvas, pattern, first, crop) {
-
-	ctx1.clearRect(0, 0, canvas.width, canvas.height);
-	var id = ctx.getImageData(0, 0, canvas.width, canvas.height);
-	if (crop == null) {
-		id = ctx.getImageData(0, 0, canvas.width, canvas.height);
-	} else {
-		id = ctx.getImageData(crop[0], crop[1], crop[2], crop[3]);
-	}
-	var d = id.data;
-	var jump = 0;
-	var off = 0;
-	let ww = -1;
-	let hh = -1;
-	if (crop == null) {
-		ww = canvas.width;
-		hh = canvas.height;
-	} else {
-		ww = crop[2];
-		hh = crop[3];
-	}
-	var ofx = -1;
-	var ofy = -1;
-	var ow = -1;
-	var oh = -1;
-	var owm = -1;
-	var ohm = -1;
-	var finded = [];
-
-	for (var i = 0; i < d.length; i += 4) {
-		if (d[i] == 254) continue;
-		if (first && ow > 0) { console.log("break"); break; }
-		jump = pathPattern(d, i, ww, hh, pattern)
-		if (jump > 0) {
-			console.log("equal", jump, i);
-
-			_ox = pattern.patterns[0].x;
-			_oy = pattern.patterns[0].y;
-			ofx = ((i / 4 - _ox) % ww);
-			ofy = ((i / 4 - _ox) - ofx) / ww + 2;
-			ow = pattern.pos[2];
-			oh = pattern.pos[3];
-			owm = Math.round(ow / 2);
-			ohm = Math.round(oh / 2);
-			for (ii = 2; ii < pattern.pos[3] + 2; ii++) {
-				for (iii = 0; iii < pattern.pos[2]; iii++) {
-					off = i + ((iii - _ox) + (ii - _oy) * ww) * 4;
-					d[off] = 254;
-				}
-			}
-		}/*else if (d[i]!=254){				
-				d[i] = 0;
-				d[i+1] = 0;
-				d[i+2] = 0;
-			}*/
-	}
-	for (var i = 0; i < d.length; i += 4)
-		if (d[i] != 254) {
-			d[i] = 0;
-			d[i + 1] = 0;
-			d[i + 2] = 0;
-		}
-	console.log("ok");
-	if (crop == null) {
-		ctx1.putImageData(id, 0, 0);
-		return [ofx, ofy, ow, oh, owm, ohm]
-	} else {
-		ctx1.putImageData(id, crop[0], crop[1]);
-		if (ofx == -1)
-			return [ofx, ofy, ow, oh, owm, ohm]
-		else
-			return [crop[0] + ofx, crop[1] + ofy, ow, oh, owm, ohm]
-	}
-}
 function sendCommand(command){
 	events['send'].forEach(fn => fn(command));
 }
-function updateParams(command,params){
-	Object.keys(command.data).forEach(k => {
-		command.data[k] = replaceParams(params, command.data[k]);
+function updateParams(data,params){
+	Object.keys(data).forEach(k => {
+		data[k] = replaceParams(params, data[k]);
 	})
 }
 function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
@@ -277,13 +160,10 @@ async function doStaticTask(currentAction, nodeAction, action, actionIndex, devi
 	if (currentAction.result!=undefined) eval(currentAction.result);
 	if (result){
 		if (currentAction.post!=undefined) eval(currentAction.post);
-		//console.log("executeNode.cmd",JSON.stringify(currentAction.command));
-		Object.keys(command.data).forEach(k => {
-			command.data[k] = replaceParams(tempParams, command.data[k]);
-		})
-		Object.keys(command.data).forEach(k => {
-			command.data[k] = replaceParams(params, command.data[k]);
-		})
+		//console.log("executeNode.cmd",JSON.stringify(currentAction.command));		
+		
+		updateParams(command.data,params);
+		updateParams(command.data,tempParams);
 		sendCommand(command);
 		currentAction.loop++;
 		console.log("currentAction.postDelay", currentAction.postDelay);
@@ -340,8 +220,14 @@ async function doPatternTask(currentAction, nodeAction, action, actionIndex, dev
 					let canvasctxP = outputcanvasP.getContext("2d");
 					let canvasctxF = outputcanvasF.getContext("2d");
 					canvasctx.drawImage(img, 0, 0);
-					bwImage(canvasctx, outputcanvas, canvasctxP, outputcanvasP, pattern.umbral);
-					let [ox, oy, ow, oh, owm, ohm] = findPattern(canvasctxP, canvasctxF, outputcanvasF, pattern, true, pattern.rectCrop);
+					let [ox, oy, ow, oh, owm, ohm] = [-1,-1,-1,-1,-1,-1];
+					if (pattern.type=='hsv'){
+						rgbToHsvImage(this.canvasctx,this.outputcanvas,this.canvasctxP,this.outputcanvasP);
+						[ox,oy,ow,oh,owm,ohm] = findPatternHsv(this.canvasctx,this.canvasctxF,this.outputcanvasF,pattern,false,pattern.rectCrop);
+					}else{
+						bwImage(canvasctx, outputcanvas, canvasctxP, outputcanvasP, pattern.umbral);
+						[ox, oy, ow, oh, owm, ohm] = findPattern(canvasctxP, canvasctxF, outputcanvasF, pattern, true, pattern.rectCrop);
+					}
 					console.log("ox,oy,ow,oh,owm,ohm", [ox, oy, ow, oh, owm, ohm]);
 					//if ((ox>0 && currentAction.condition)||(!currentAction.condition&&ox<0)){
 										
@@ -358,8 +244,8 @@ async function doPatternTask(currentAction, nodeAction, action, actionIndex, dev
 								, deviceId: deviceId
 							}
 							command.devices = replaceParams(tempParams, command.devices);
-							updateParams(command,params);
-							updateParams(command,tempParams);
+							updateParams(command.data, params);
+							updateParams(command.data, tempParams);
 							console.log("executeNode.command", command);
 							sendCommand(command);
 						}
@@ -494,7 +380,6 @@ async function doReader(currentAction, nodeAction, action, actionIndex, deviceId
 	console.log("reading");
 	const constStates = Object.keys(params).map(k=>k+" = params['"+k+"']");
 	let resultGlobal = true;
-	let command = JSON.parse(JSON.stringify(currentAction.command));
 	let x = -1;
 	let y = -1;
 	let xm = -1;
@@ -505,6 +390,21 @@ async function doReader(currentAction, nodeAction, action, actionIndex, deviceId
 	//currentAction.trigger.forEach(async (trigger,i) => {	
 	for(let i = 0; i < currentAction.trigger.length;i++){
 		const trigger = currentAction.trigger[i];
+		const send = (shellString)=>{
+			//console.log(" pre send ");
+			const command = JSON.parse(JSON.stringify(currentAction.command));
+			command.data.command = shellString;		
+
+			let tempParams = {
+				x: x, y: y, xm:xm, ym:ym
+				, deviceId: deviceId
+			}	
+			command.devices = replaceParams(tempParams, command.devices);	
+			updateParams(command.data,params);
+			updateParams(command.data,tempParams);
+			//console.log(" pre send command",command);
+			sendCommand(command);
+		}
 		let result = true;					
 		xm = Math.round(trigger.crop[0]+trigger.crop[2]/2);
 		ym = Math.round(trigger.crop[1]+trigger.crop[3]/2);
@@ -512,6 +412,7 @@ async function doReader(currentAction, nodeAction, action, actionIndex, deviceId
 		const text = ( await adbocr.readFromBuffer( blobCrop)).trim();
 		console.log("text",text);
 		//console.log("trigger.pre.join",trigger.pre.join(";"));
+		
 		if(trigger.pre!=undefined) eval(trigger.pre.join(";"));
 		console.log("----x,y", x,y);
 		result = eval(trigger.result);
@@ -533,12 +434,13 @@ async function doReader(currentAction, nodeAction, action, actionIndex, deviceId
 		if (currentAction.post!=undefined) eval(currentAction.post);
 		console.log(deviceId +" executeNode.reader true");
 
+		let command = JSON.parse(JSON.stringify(currentAction.command));
+		command.devices = replaceParams(tempParams, command.devices);		
 		if (command != null) {
 			let tempParams = {
 				x: x, y: y, xm:xm, ym:ym
 				, deviceId: deviceId
-			}
-			command.devices = replaceParams(tempParams, command.devices);			
+			}	
 			updateParams(command,params);
 			updateParams(command,tempParams);
 			sendCommand(command);
@@ -697,6 +599,7 @@ function executeTask(devices, task) {
 			devicesActions[d.serial]['progress']['state'] = 'ended';
 			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 			if (countEnded == devices.length) {
+				console.log("params",params);
 				console.log("all ended")
 				countEnded = 0;
 				signalStop = false;
@@ -1046,4 +949,4 @@ class Executor {
 	}
 }
 
-module.exports = { Executor, genPlant, replaceParams, bwImage, pathPattern, findPattern, executeNode, executeGraph, executeTask, executeTasks }
+module.exports = { Executor, genPlant, replaceParams, executeNode, executeGraph, executeTask, executeTasks }

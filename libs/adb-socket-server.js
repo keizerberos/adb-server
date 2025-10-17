@@ -335,7 +335,6 @@ class AdbSocketServer {
 					}
 				});
 				socket.on("readOcr", async (b64string)=>{
-					console.log("b64string",b64string);
 					const data = Buffer.from(b64string.replace("data:image/png;base64,",""), 'base64'); 
 					this.executor.ocr(data).then(text=>{
 						socket.emit("readOcr.result",text);

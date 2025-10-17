@@ -1,0 +1,17 @@
+{
+   "facebook_t1_video_like":{
+      "name":"Me gusta en 3 cuentas (Reel) test",
+		"group": "Facebook",
+		"type": "task",
+      "description":"<i class=\"bi bi-facebook\"></i> Facebook - \"Me gusta\" - 3 cuentas (Reel) test",
+      "functions":{
+         "link":"fburl"
+      },
+      "params":{
+         "link":"https://www.facebook.com/reel/1429130074805616",
+         "counter":[]
+      },
+      "start":"fbv1_t1_like_pre_3",
+      "end":"fbv1_t1_end"
+   }
+}
