@@ -36,6 +36,8 @@ function ddelete(array, id, val) {
 		array.splice(array.indexOf(el), 1);
 }
 function scanTasksFolder() {
+	tasks = {};
+	actions = {};
 	fs.readdirSync(taskPath).forEach((file) => {
    		let base = taskPath + '/' + file;
 		if (!fs.statSync(base).isDirectory()) {
@@ -106,12 +108,66 @@ class AdbSocketServer {
 		saveProgrammed=true;		
 	}
 	savePatterns(){		
-		fs.writeFile('./data/patterns.json',JSON.stringify(patternsData, null, '\t'),'utf8', (err)=>{
+		return new Promise((res,rej)=>{
+			fs.writeFile('./data/patterns.json',JSON.stringify(patternsData, null, '\t'),'utf8', (err)=>{
+				if (err) {
+					console.error('patterns.new Error writing file:', err);
+					rej();
+					return;
+				}
+				console.log('patterns.new written successfully!');
+				res();
+			});
+		});
+	}
+	saveTasks(task,idTask){		
+		fs.writeFile(`./data/tasks/${idTask}-task.json`,JSON.stringify(task, null, '\t'),'utf8', (err)=>{
 			if (err) {
-				console.error('patterns.new Error writing file:', err);
+				console.error('task.new Error writing file:', err);
 				return;
 			}
-			console.log('patterns.new written successfully!');
+			console.log('task.new written successfully!');
+		});
+		scanTasksFolder();
+	}
+	saveActions(actions,idTask){		
+		return new Promise((res,rej)=>{
+			fs.writeFile(`./data/actions/${idTask}.json`,JSON.stringify(actions, null, '\t'),'utf8', (err)=>{
+				if (err) {
+					console.error('actions.new Error writing file:', err);
+					rej();
+					return;
+				}
+				console.log('actions.new written successfully!');
+			});
+			res();
+		})
+	}
+	deleteTask(idTask){		
+		return new Promise((res,rej)=>{
+			if (fs.existsSync(`./data/tasks/${idTask}-task.json`)){
+				fs.unlink(`./data/tasks/${idTask}-task.json`, (err)=>{
+					if (err) {
+						console.error('task.new Error deleting file:', err);
+						rej(err);
+						return;
+					}
+					console.log('task deleted successfully!');
+					if (fs.existsSync(`./data/actions/${idTask}.json`)){
+						fs.unlink(`./data/actions/${idTask}.json`, (err)=>{
+							if (err) {
+								console.error('task.new Error deleting file:', err);								
+								rej(err);
+								return;
+							}
+							console.log('task deleted successfully!');
+							res();
+						});
+					}		
+				});				
+			}else{
+				res();
+			}
 		});
 	}
 	startServer(clients, clusters, devices) {
@@ -181,7 +237,55 @@ class AdbSocketServer {
 				return;
 			}
 			patternsData[name] = data;
-			this.savePatterns(patternsData);
+			this.savePatterns(patternsData).then(()=>{				
+				clients.forEach(client=>{
+					client.socket.emit("tasks", tasks);
+					client.socket.emit("patterns", patternsData);
+				});
+				self.executor.setPatterns(patternsData);
+			});
+			res.send(JSON.stringify('{"response":"ok}'));
+		});		
+		fastServer.post("/tasks.upload",(req,res)=>{			
+    		const data = req.body.data;
+			const id = req.body.id;
+			Log.i("fastServer.post tasks_upload" );
+			//Log.o(data);
+			if (patternsData[id] !=undefined){		// ya existe			
+				res.send(JSON.stringify('{"response":"name exist}'));	
+				return;
+			}
+			this.saveTasks(data,id);
+			res.send(JSON.stringify('{"response":"ok}'));						
+		});		
+		fastServer.post("/actions.upload",(req,res)=>{		
+    		const data = req.body.data;
+			const id = req.body.id;
+			Log.i("fastServer.post actions_upload" );			
+			this.saveActions(data,id).then(()=>{
+				scanTasksFolder();
+				self.drawProgressForm();
+				clients.forEach(client=>{
+					client.socket.emit("tasks", tasks);
+					client.socket.emit("actions", actions);
+				});				
+				self.executor.setActions(actions);
+			});
+			
+			res.send(JSON.stringify('{"response":"ok}'));
+		});	
+		fastServer.post("/task.delete",(req,res)=>{    		
+			const id = req.body.id;
+			Log.i("fastServer.post task deleted "+id );			
+			this.deleteTask(id).then(()=>{
+				scanTasksFolder();
+				self.drawProgressForm();
+				clients.forEach(client=>{
+					client.socket.emit("tasks", tasks);
+					client.socket.emit("actions", actions);
+				});
+				self.executor.setActions(actions);
+			});
 			res.send(JSON.stringify('{"response":"ok}'));
 		});		
 		
