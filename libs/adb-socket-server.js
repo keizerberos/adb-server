@@ -7,7 +7,8 @@ const WebSocket	= require('ws');
 const {Executor,genPlant} = require("./executor.js");
 const short = require('short-uuid');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
+const { Console } = require('console');
 let devicesData = JSON.parse(fs.readFileSync('./data/devices.json', 'utf8'));
 let actionsData = JSON.parse(fs.readFileSync('./data/actions.json', 'utf8'));
 let patternsData = JSON.parse(fs.readFileSync('./data/patterns.json', 'utf8'));
@@ -38,26 +39,44 @@ function ddelete(array, id, val) {
 function scanTasksFolder() {
 	tasks = {};
 	actions = {};
-	fs.readdirSync(taskPath).forEach((file) => {
+	//fs.readdirSync(taskPath).forEach(async (file) => {
+	const listTask = fs.readdirSync(taskPath);
+	for(let i = 0; i < listTask.length; i++){
+		const file = listTask[i] ;
    		let base = taskPath + '/' + file;
 		if (!fs.statSync(base).isDirectory()) {
 			console.log("base",base);
 			const content = fs.readFileSync(base, 'utf8');
 			if (content=='') return;
 			const task =  JSON.parse(content);
-			Object.keys(task).forEach(k=>tasks[k] = task[k]);			
+			const lob = Object.keys(task);
+			for (let i = 0; i < lob.length; i++){
+				const k = lob[i];
+				tasks[k] = task[k]
+			}
 		}
-	});
-	fs.readdirSync(actionsPath).forEach((file) => {
+	}
+	//});
+	//fs.readdirSync(actionsPath).forEach(async (file) => {
+	const listAction = fs.readdirSync(actionsPath);
+	for(let i = 0; i < listAction.length; i++){
+		const file = listAction[i] ;
    		let base = actionsPath + '/' + file;
 		if (!fs.statSync(base).isDirectory()) {
 			console.log("base",base);
 			const content = fs.readFileSync(base, 'utf8');
 			if (content=='') return;
 			const action =  JSON.parse(content);
-			Object.keys(action).forEach(k=>actions[k] = action[k]);	
+			//Object.keys(action).forEach(k=>actions[k] = action[k]);	
+			
+			const lob = Object.keys(action);
+			for (let i = 0; i < lob.length; i++){
+				const k = lob[i];
+				actions[k] = action[k];
+			}
 		}
-	});
+	}
+	//});
 	//console.log("tasks",tasks)
 	//console.log("actions",actions)
 }
@@ -88,10 +107,14 @@ class AdbSocketServer {
 	}
 	//UI
 	drawProgressForm(){		
-		Object.keys(tasks).forEach(k => {
+		const taskList = Object.keys(tasks);
+		for (let i = 0; i< taskList.length ; i++){
+			const k = taskList[i];
 			tasks[k]['progressPath'] = genPlant(tasks[k]);
+			console.log("tasks[k]['progressPath'] = ", k , tasks[k]['progressPath'].length);
 			//console.log("progressPath",tasks[k]['progressPath']);
-		});
+		};
+		console.log("drawing progress");
 	}
 	saveDevices(){
 		if(saveProgrammed) return;
@@ -121,14 +144,17 @@ class AdbSocketServer {
 		});
 	}
 	saveTasks(task,idTask){		
-		fs.writeFile(`./data/tasks/${idTask}-task.json`,JSON.stringify(task, null, '\t'),'utf8', (err)=>{
-			if (err) {
-				console.error('task.new Error writing file:', err);
-				return;
-			}
-			console.log('task.new written successfully!');
-		});
-		scanTasksFolder();
+		return new Promise((res,rej)=>{
+			fs.writeFile(`./data/tasks/${idTask}-task.json`,JSON.stringify(task, null, '\t'),'utf8', (err)=>{
+				if (err) {
+					console.error('task.new Error writing file:', err);
+					rej();
+					return;
+				}
+				console.log('task.new written successfully!');
+				res();
+			});
+		})
 	}
 	saveActions(actions,idTask){		
 		return new Promise((res,rej)=>{
@@ -139,8 +165,8 @@ class AdbSocketServer {
 					return;
 				}
 				console.log('actions.new written successfully!');
+				res();
 			});
-			res();
 		})
 	}
 	deleteTask(idTask){		
@@ -185,8 +211,22 @@ class AdbSocketServer {
 		});
 		fastServer.get("/actions",(req,res)=>{
 			const task = tasks[req.query.taskId];
+			console.log("loading actions");
 			const actionsData = {};
-			task.progressPath.forEach(p=> actionsData[p.id] = actions[p.id]);
+			if (fs.existsSync(`./data/action/${req.query.taskId}.json`)){
+				const content = fs.readFileSync(`./data/action/${req.query.taskId}.json`, 'utf8');
+				if (content!='') {
+					const action =  JSON.parse(content);
+					const lob = Object.keys(action);
+					for (let i = 0; i < lob.length; i++){
+						const k = lob[i];
+						actionsData[k] = action[k];
+					}
+				}else
+					task.progressPath.forEach(p=> actionsData[p.id] = actions[p.id]);
+			}else{
+				task.progressPath.forEach(p=> actionsData[p.id] = actions[p.id]);
+			}
 			res.setHeader('Content-Type', 'application/json');
 			res.send(JSON.stringify(actionsData));
 		});
@@ -232,10 +272,11 @@ class AdbSocketServer {
 			const name = req.body.name;
 			Log.i("fastServer.post pattern_upload" );
 			//Log.o(data);
-			if (patternsData[name] !=undefined){
+			/*if (patternsData[name] !=undefined){
+				patternsData[name] = data;
 				res.send(JSON.stringify('{"response":"name exist}'));	
 				return;
-			}
+			}*/
 			patternsData[name] = data;
 			this.savePatterns(patternsData).then(()=>{				
 				clients.forEach(client=>{
@@ -255,8 +296,9 @@ class AdbSocketServer {
 				res.send(JSON.stringify('{"response":"name exist}'));	
 				return;
 			}
-			this.saveTasks(data,id);
-			res.send(JSON.stringify('{"response":"ok}'));						
+			this.saveTasks(data,id).then(()=>{
+				res.send(JSON.stringify('{"response":"ok}'));
+			});		
 		});		
 		fastServer.post("/actions.upload",(req,res)=>{		
     		const data = req.body.data;
@@ -264,12 +306,13 @@ class AdbSocketServer {
 			Log.i("fastServer.post actions_upload" );			
 			this.saveActions(data,id).then(()=>{
 				scanTasksFolder();
+				self.executor.setActions(actions);
 				self.drawProgressForm();
-				clients.forEach(client=>{
+				for(let i=0; i<clients.length;i++){
+					const client = clients[i];
 					client.socket.emit("tasks", tasks);
 					client.socket.emit("actions", actions);
-				});				
-				self.executor.setActions(actions);
+				};
 			});
 			
 			res.send(JSON.stringify('{"response":"ok}'));
@@ -279,12 +322,12 @@ class AdbSocketServer {
 			Log.i("fastServer.post task deleted "+id );			
 			this.deleteTask(id).then(()=>{
 				scanTasksFolder();
+				self.executor.setActions(actions);
 				self.drawProgressForm();
 				clients.forEach(client=>{
 					client.socket.emit("tasks", tasks);
 					client.socket.emit("actions", actions);
 				});
-				self.executor.setActions(actions);
 			});
 			res.send(JSON.stringify('{"response":"ok}'));
 		});		

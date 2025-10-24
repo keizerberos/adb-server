@@ -1,0 +1,15 @@
+{
+	"bbf780f5": {
+		"id": "bbf780f5",
+		"name": "Facbook Reaccion \"Me encanta\" (Post)",
+		"description": " Facbook Reaccion \"Me encanta\" (Post)",
+		"start": "bbf780f5-7952",
+		"end": "bbf780f5-3c46",
+		"group": "Facebook Reacciones",
+		"type": "task",
+		"params": {
+			"link": "https://www.facebook.com/MUNDOIOSAC/posts/pfbid0213Hqyg49tVNtxkhs68XMC24CHnLbK1y6XAxiEquj6SRgDhjzGg36iVjzrg3gBbbyl"
+		},
+		"function": {}
+	}
+}

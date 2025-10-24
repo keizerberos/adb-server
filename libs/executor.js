@@ -59,7 +59,7 @@ function genPlant(action) {
 function replaceParams(params, str) {
 	Object.keys(params).forEach(k => {
 		if (!(typeof params[k] == 'object'))
-			str = str.replace("{" + k + "}", params[k])
+			str = str.replaceAll("{" + k + "}", params[k])
 		else {
 			//console.log("k",k);
 			if (Array.isArray(params[k])) {
@@ -67,12 +67,12 @@ function replaceParams(params, str) {
 			}else if (params[k].random) {
 				//console.log("Math.round(params[k].data.length*Math.random())",Math.round(params[k].data.length*Math.random()));
 				//console.log("str",str);
-				str = str.replace("{" + k + "}", params[k].data[Math.round((params[k].data.length - 1) * Math.random())])
+				str = str.replaceAll("{" + k + "}", params[k].data[Math.round((params[k].data.length - 1) * Math.random())])
 				//console.log("bstr",str);
 			} else {
 				if (params[k].index == undefined) params[k].index = 0;
 				let strTemp = str;
-				str = str.replace("{" + k + "}", params[k].data[params[k].index]);
+				str = str.replaceAll("{" + k + "}", params[k].data[params[k].index]);
 				console.log("params[k].index", k, params[k].index);
 				if (str != strTemp)
 					params[k].index++;
@@ -222,8 +222,8 @@ async function doPatternTask(currentAction, nodeAction, action, actionIndex, dev
 					canvasctx.drawImage(img, 0, 0);
 					let [ox, oy, ow, oh, owm, ohm] = [-1,-1,-1,-1,-1,-1];
 					if (pattern.type=='hsv'){
-						rgbToHsvImage(this.canvasctx,this.outputcanvas,this.canvasctxP,this.outputcanvasP);
-						[ox,oy,ow,oh,owm,ohm] = findPatternHsv(this.canvasctx,this.canvasctxF,this.outputcanvasF,pattern,false,pattern.rectCrop);
+						rgbToHsvImage(canvasctx,outputcanvas,canvasctxP,outputcanvasP);
+						[ox,oy,ow,oh,owm,ohm] = findPatternHsv(canvasctx,canvasctxF,outputcanvasF,pattern,pattern.rectCrop);
 					}else{
 						bwImage(canvasctx, outputcanvas, canvasctxP, outputcanvasP, pattern.umbral);
 						[ox, oy, ow, oh, owm, ohm] = findPattern(canvasctxP, canvasctxF, outputcanvasF, pattern, true, pattern.rectCrop);
@@ -506,6 +506,8 @@ function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, 
 	//console.log("androidActions[actionId]",androidActions[actionId]);
 	let action = devicesActions[deviceId][actionId];
 	if (actionId == null) { cbSuccess(); return; }
+	console.log("--devicesActions[deviceId]--",devicesActions[deviceId]);
+	console.log("--action--",action);
 	console.log("pre ejecutando comando ");
 	console.log("executeGraph.action.actionId", actionId);
 	console.log("executeGraph.action.preDelay", action.preDelay);
@@ -885,7 +887,9 @@ class Executor {
 	}
 	setActions(_nodeActions) {
 		nodeActions = _nodeActions;
-	}
+		console.log("Executor.setActions","setted actions");
+	}		
+	
 	setPatterns(_patterns) {
 		androidPattern = _patterns;
 	}

@@ -22,8 +22,8 @@
 
       return [
       Math.round(h * 360),
-      PatternhsvService.percentRoundFn(s * 100),
-      PatternhsvService.percentRoundFn(v * 100), a];
+      percentRoundFn(s * 100),
+      percentRoundFn(v * 100), a];
   }
   function rgb2hsv_tmp(r, g, b, a) {
     let rabs, gabs, babs, rr, gg, bb, h, s, v, diff, diffc, percentRoundFn;
@@ -138,8 +138,8 @@
     canvas2.height = canvas1.height;
     var d = imgData.data;
     for (var i = 0; i < d.length; i += 4) {
-      let hsv = PatternhsvService.rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]);
-      if (PatternhsvService.compareHsv(hsv, hsv2, tol)) {
+      let hsv = rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]);
+      if (compareHsv(hsv, hsv2, tol)) {
         d[i] = d[i + 1] = d[i + 2] = 255;
       }
       else
@@ -153,7 +153,7 @@
     canvas2.height = canvas1.height;
     var d = imgData.data;
     for (var i = 0; i < d.length; i += 4) {
-      let hsv = PatternhsvService.rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]);
+      let hsv = rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]);
       d[i+0]=hsv[0]*0.70;
       d[i+1]=hsv[1]*2.5;
       d[i+2]=hsv[2]*2.5;
@@ -172,7 +172,7 @@
     let sum = 0;
     var d = imgData.data;
     for (var i = 0; i < d.length; i += 4) {
-        let hsv = PatternhsvService.rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]);
+        let hsv = rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]);
         d[i+0]=hsv[0]*0.70;
         d[i+1]=hsv[1]*2.5;
         d[i+2]=hsv[2]*2.5;
@@ -198,8 +198,8 @@
     let sum = 0;
     var d = imgData.data;
     for (var i = 0; i < d.length; i += 4) {
-      let hsv = PatternhsvService.rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]);
-      if (PatternhsvService.compareHsv(hsv, hsv2, tol)) {
+      let hsv = rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]);
+      if (compareHsv(hsv, hsv2, tol)) {
         if (dx < x0 || x0 == -1) x0 = dx;
         if (dy < y0 || y0 == -1) y0 = dy;
         if (dx > x1) x1 = dx;
@@ -237,7 +237,7 @@
         var sum = 0;
         var matrix = [];
         for (var i = 0; i < d.length; i += 4)
-          matrix[i / 4] = PatternhsvService.rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]); sum++; sums++;
+          matrix[i / 4] = rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]); sum++; sums++;
 
         blocks.push({
           x: ix * dw + dw / 2 - 1,
@@ -262,7 +262,7 @@
       _off5 = i + ((pattern.patterns[ii].x - _ox + 2) + (pattern.patterns[ii].y - _oy) + 2 * w) * 4;//7
 
       //if (d[_off3] == pattern.patterns[ii].m[4]) _s1++;
-      if (PatternhsvService.compareHsv(PatternhsvService.rgb2hsv(d[_off3], d[_off3 + 1], d[_off3 + 2], d[_off3 + 3]), pattern.patterns[ii].m[4], pattern.tol))
+      if (compareHsv(rgb2hsv(d[_off3], d[_off3 + 1], d[_off3 + 2], d[_off3 + 3]), pattern.patterns[ii].m[4], pattern.tol))
         _s1++;
 
     }
@@ -302,7 +302,7 @@
     for (var i = 0; i < d.length; i += 4) {
       if (d[i] == 254) continue;
       if (first && ow > 0) { /*console.log("break");*/ break; }
-      jump = PatternhsvService.pathPatternHsv(d, i, ww, hh, pattern)
+      jump = pathPatternHsv(d, i, ww, hh, pattern)
       if (jump > 0) {
         //console.log("equal", jump, i);
 
@@ -342,8 +342,8 @@
       if (ofx == -1)
         return [ofx, ofy, ow, oh, owm, ohm];
       else{
-        id = ctx.getImageData(ofx, ofy, ow, oh);
-        ctx1.putImageData(id, ofx, ofy);
+        id = ctx.getImageData(crop[0]+ofx, crop[1]+ofy, ow, oh);
+        ctx1.putImageData(id, crop[0]+ofx, crop[1]+ofy);
         /*ctx1.lineWidth = '4';
         ctx1.strokeStyle = 'green';
         ctx1.beginPath();
@@ -386,7 +386,7 @@
     for (var i = 0; i < d.length; i += 4) {
       if (d[i] == 254) continue;
       if (first && ow > 0) { /*console.log("break");*/ break; }
-      jump = PatternhsvService.pathPatternHsv(d, i, ww, hh, pattern)
+      jump = pathPatternHsv(d, i, ww, hh, pattern)
       if (jump > 0) {
         //console.log("equal", jump, i);
 
@@ -441,8 +441,8 @@
       x0 = ((i / 4) % w) + 1 + crop[0];
       y0 = ((i / 4) - ((i / 4) % w)) / w + 1 + crop[1];
       if (y == y0) {
-        let hsv = PatternhsvService.rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]);
-        if (PatternhsvService.compareHsv(hsv, hsv2, tol))
+        let hsv = rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]);
+        if (compareHsv(hsv, hsv2, tol))
           sum++;
       }
     }
@@ -483,8 +483,8 @@
       x0 = ((i / 4) % w) + 1 + crop[0];
       y0 = ((i / 4) - ((i / 4) % w)) / w + 1 + crop[1];
       if (y == y0) {
-        let hsv = PatternhsvService.rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]);
-        if (PatternhsvService.compareHsv(hsv, hsv2, tol))
+        let hsv = rgb2hsv(d[i], d[i + 1], d[i + 2], d[i + 3]);
+        if (compareHsv(hsv, hsv2, tol))
           sum++;
       }
     }
