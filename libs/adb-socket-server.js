@@ -282,7 +282,7 @@ class AdbSocketServer {
 				clients.forEach(client=>{
 					client.socket.emit("tasks", tasks);
 					client.socket.emit("patterns", patternsData);
-				});
+				});				
 				self.executor.setPatterns(patternsData);
 			});
 			res.send(JSON.stringify('{"response":"ok}'));
@@ -292,10 +292,10 @@ class AdbSocketServer {
 			const id = req.body.id;
 			Log.i("fastServer.post tasks_upload" );
 			//Log.o(data);
-			if (patternsData[id] !=undefined){		// ya existe			
+			/*if (patternsData[id] !=undefined){		// ya existe			
 				res.send(JSON.stringify('{"response":"name exist}'));	
 				return;
-			}
+			}*/
 			this.saveTasks(data,id).then(()=>{
 				res.send(JSON.stringify('{"response":"ok}'));
 			});		

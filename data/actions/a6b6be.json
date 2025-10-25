@@ -1,5 +1,5 @@
 {
-	"bbf780f5-7952": {
+	"a6b6be-1c47": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -21,10 +21,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-30d3"
+			"a6b6be-d9da"
 		]
 	},
-	"bbf780f5-30d3": {
+	"a6b6be-d9da": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -46,11 +46,11 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-6b8d",
-			"bbf780f5-062b"
+			"a6b6be-5e49",
+			"a6b6be-ded4"
 		]
 	},
-	"bbf780f5-6b8d": {
+	"a6b6be-5e49": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -93,10 +93,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-751e"
+			"a6b6be-c71d"
 		]
 	},
-	"bbf780f5-751e": {
+	"a6b6be-c71d": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -106,7 +106,7 @@
 		},
 		"trigger": [
 			{
-				"pattern": "fb_import_hsv_1",
+				"pattern": "fb_entrist_hsv_1",
 				"type": "pattern",
 				"condition": true,
 				"cmd": {
@@ -139,10 +139,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-3c46"
+			"a6b6be-9805"
 		]
 	},
-	"bbf780f5-3c46": {
+	"a6b6be-9805": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -165,7 +165,7 @@
 		"timeout": 5000,
 		"next": []
 	},
-	"bbf780f5-062b": {
+	"a6b6be-ded4": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -187,8 +187,8 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-6b8d",
-			"bbf780f5-062b"
+			"a6b6be-5e49",
+			"a6b6be-ded4"
 		]
 	}
 }

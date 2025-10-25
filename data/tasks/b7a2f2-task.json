@@ -1,10 +1,10 @@
 {
-	"bbf780f5": {
-		"id": "bbf780f5",
-		"name": "Facebook Reaccion \"Me encanta\" (Post)",
-		"description": " Facebook Reaccion \"Me encanta\" (Post)",
-		"start": "bbf780f5-7952",
-		"end": "bbf780f5-3c46",
+	"b7a2f2": {
+		"id": "b7a2f2",
+		"name": "Facebook Reaccion \"Me enoja\" (Post)",
+		"description": " Facebook Reaccion \"Me enoja\" (Post)",
+		"start": "b7a2f2-f2d0",
+		"end": "b7a2f2-2efa",
 		"group": "Facebook Reacciones",
 		"type": "task",
 		"params": {

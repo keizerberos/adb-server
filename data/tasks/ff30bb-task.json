@@ -1,0 +1,15 @@
+{
+	"ff30bb": {
+		"id": "ff30bb",
+		"name": "Facebook Compartir 1 (Post)",
+		"description": "Facebook Compartir 1 (Post)",
+		"start": "ff30bb-8879",
+		"end": "ff30bb-a4b2",
+		"group": "Facebook Compartir",
+		"type": "task",
+		"params": {
+			"link": "https://www.facebook.com/MUNDOIOSAC/posts/pfbid0213Hqyg49tVNtxkhs68XMC24CHnLbK1y6XAxiEquj6SRgDhjzGg36iVjzrg3gBbbyl"
+		},
+		"function": {}
+	}
+}

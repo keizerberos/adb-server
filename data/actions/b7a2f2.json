@@ -1,0 +1,194 @@
+{
+	"b7a2f2-f2d0": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "am force-stop com.facebook.lite"
+			}
+		},
+		"trigger": [],
+		"id": "bbf780f5-7952",
+		"name": "STOP_FB",
+		"desc": "",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 5000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"b7a2f2-5a86"
+		]
+	},
+	"b7a2f2-5a86": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "am start -a android.intent.action.VIEW -d {link}"
+			}
+		},
+		"trigger": [],
+		"id": "bbf780f5-30d3",
+		"name": "OPEN_LINK",
+		"desc": "",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 9000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"b7a2f2-f983",
+			"b7a2f2-0772"
+		]
+	},
+	"b7a2f2-f983": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input swipe {wm} {hm} {wm} {hm} 1000"
+			}
+		},
+		"trigger": [
+			{
+				"pattern": "pattern_1_like",
+				"type": "pattern",
+				"condition": true,
+				"cmd": {
+					"action": "Screen",
+					"devices": "{deviceId}",
+					"data": {
+						"savePath": "{screen_path}"
+					}
+				},
+				"result": {
+					"x": -1,
+					"y": -1,
+					"w": -1,
+					"h": -1,
+					"wm": -1,
+					"hm": -1
+				}
+			}
+		],
+		"id": "bbf780f5-6b8d",
+		"name": "SEARCH_LIKE",
+		"desc": "",
+		"order": 0,
+		"type": "pattern",
+		"preDelay": 1000,
+		"postDelay": 1000,
+		"maxLoop": 5,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"b7a2f2-37b5"
+		]
+	},
+	"b7a2f2-37b5": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap {wm} {hm}"
+			}
+		},
+		"trigger": [
+			{
+				"pattern": "fb_enoja_hsv_1",
+				"type": "pattern",
+				"condition": true,
+				"cmd": {
+					"action": "Screen",
+					"devices": "{deviceId}",
+					"data": {
+						"savePath": "{screen_path}"
+					}
+				},
+				"result": {
+					"x": -1,
+					"y": -1,
+					"w": -1,
+					"h": -1,
+					"wm": -1,
+					"hm": -1
+				}
+			}
+		],
+		"id": "bbf780f5-751e",
+		"name": "TAP_ICON",
+		"desc": "",
+		"order": 0,
+		"type": "pattern",
+		"preDelay": 1000,
+		"postDelay": 1000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"b7a2f2-2efa"
+		]
+	},
+	"b7a2f2-2efa": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "am force-stop com.facebook.lite"
+			}
+		},
+		"trigger": [],
+		"id": "bbf780f5-3c46",
+		"name": "STOP_FB2",
+		"desc": "",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 1000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": []
+	},
+	"b7a2f2-0772": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input swipe 300 1000 300 500"
+			}
+		},
+		"trigger": [],
+		"id": "bbf780f5-062b",
+		"name": "SWIPE",
+		"desc": "",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 1000,
+		"maxLoop": 5,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"b7a2f2-f983",
+			"b7a2f2-0772"
+		]
+	}
+}
