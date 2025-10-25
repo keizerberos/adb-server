@@ -10,7 +10,7 @@
 		"trigger": [],
 		"id": "bbf780f5-7952",
 		"name": "STOP_FB",
-		"desc": "",
+		"desc": "STOP_FB",
 		"order": 0,
 		"type": "static",
 		"preDelay": 1000,
@@ -35,7 +35,7 @@
 		"trigger": [],
 		"id": "bbf780f5-30d3",
 		"name": "OPEN_LINK",
-		"desc": "",
+		"desc": "OPEN_LINK",
 		"order": 0,
 		"type": "static",
 		"preDelay": 1000,
@@ -46,8 +46,34 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"ff30bb-e94f",
-			"ff30bb-1ad8"
+			"ff30bb-1ad8",
+			"ff30bb-e94f"
+		]
+	},
+	"ff30bb-e94f": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input swipe 300 1000 300 500"
+			}
+		},
+		"trigger": [],
+		"id": "bbf780f5-062b",
+		"name": "SWIPE",
+		"desc": "SWIPE",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 1000,
+		"maxLoop": 5,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"ff30bb-1ad8",
+			"ff30bb-e94f"
 		]
 	},
 	"ff30bb-1ad8": {
@@ -82,7 +108,7 @@
 		],
 		"id": "bbf780f5-751e",
 		"name": "TAP_SHARE_ICON",
-		"desc": "",
+		"desc": "TAP_SHARE_ICON",
 		"order": 0,
 		"type": "pattern",
 		"preDelay": 1000,
@@ -117,7 +143,7 @@
 		],
 		"id": "1ceaf8-5a20",
 		"name": "CLICK_SHARE_TEXT",
-		"desc": "",
+		"desc": "CLICK_SHARE_TEXT",
 		"order": 0,
 		"type": "pattern",
 		"preDelay": 1000,
@@ -142,7 +168,7 @@
 		"trigger": [],
 		"id": "1ceaf8-5a20",
 		"name": "CLICK_SHARE_BUTTON",
-		"desc": "",
+		"desc": "CLICK_SHARE_BUTTON",
 		"order": 0,
 		"type": "static",
 		"preDelay": 1000,
@@ -167,7 +193,7 @@
 		"trigger": [],
 		"id": "bbf780f5-3c46",
 		"name": "STOP_FB2",
-		"desc": "",
+		"desc": "STOP_FB2",
 		"order": 0,
 		"type": "static",
 		"preDelay": 1000,
@@ -178,31 +204,5 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": []
-	},
-	"ff30bb-e94f": {
-		"command": {
-			"action": "adb",
-			"devices": "{deviceId}",
-			"data": {
-				"command": "input swipe 300 1000 300 500"
-			}
-		},
-		"trigger": [],
-		"id": "bbf780f5-062b",
-		"name": "SWIPE",
-		"desc": "",
-		"order": 0,
-		"type": "static",
-		"preDelay": 1000,
-		"postDelay": 1000,
-		"maxLoop": 5,
-		"loop": 0,
-		"maxTry": 1,
-		"try": 0,
-		"timeout": 5000,
-		"next": [
-			"ff30bb-e94f",
-			"ff30bb-1ad8"
-		]
 	}
 }
