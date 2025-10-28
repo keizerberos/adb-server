@@ -1,0 +1,15 @@
+{
+	"a279d8": {
+		"id": "a279d8",
+		"name": "Facebook Compartir (Post) X3",
+		"description": "Facebook Compartir (Post) X3",
+		"start": "a279d8-1ec0",
+		"end": "a279d8-e9ae",
+		"group": "Facebook Compartir",
+		"type": "task",
+		"params": {
+			"link": "https://www.facebook.com/MUNDOIOSAC/posts/pfbid0213Hqyg49tVNtxkhs68XMC24CHnLbK1y6XAxiEquj6SRgDhjzGg36iVjzrg3gBbbyl"
+		},
+		"function": {}
+	}
+}

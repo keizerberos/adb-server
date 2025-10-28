@@ -213,8 +213,8 @@ class AdbSocketServer {
 			const task = tasks[req.query.taskId];
 			console.log("loading actions");
 			const actionsData = {};
-			if (fs.existsSync(`./data/action/${req.query.taskId}.json`)){
-				const content = fs.readFileSync(`./data/action/${req.query.taskId}.json`, 'utf8');
+			if (fs.existsSync(`./data/actions/${req.query.taskId}.json`)){
+				const content = fs.readFileSync(`./data/actions/${req.query.taskId}.json`, 'utf8');
 				if (content!='') {
 					const action =  JSON.parse(content);
 					const lob = Object.keys(action);
@@ -224,6 +224,7 @@ class AdbSocketServer {
 					}
 				}else
 					task.progressPath.forEach(p=> actionsData[p.id] = actions[p.id]);
+				console.log("loading action from file");
 			}else{
 				task.progressPath.forEach(p=> actionsData[p.id] = actions[p.id]);
 			}

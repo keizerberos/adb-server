@@ -1,5 +1,5 @@
 {
-	"fdbf71-81e5": {
+	"92b333-3923": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -21,10 +21,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"fdbf71-64b2"
+			"92b333-ce81"
 		]
 	},
-	"fdbf71-64b2": {
+	"92b333-ce81": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -46,11 +46,11 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"fdbf71-f0fb",
-			"fdbf71-affc"
+			"92b333-d1e6",
+			"92b333-4aa3"
 		]
 	},
-	"fdbf71-f0fb": {
+	"92b333-d1e6": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -93,10 +93,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"fdbf71-5943"
+			"92b333-bbe6"
 		]
 	},
-	"fdbf71-5943": {
+	"92b333-bbe6": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -106,7 +106,7 @@
 		},
 		"trigger": [
 			{
-				"pattern": "fb_asombra_hsv_1",
+				"pattern": "fb_divierte_hsv_1",
 				"type": "pattern",
 				"condition": true,
 				"cmd": {
@@ -139,10 +139,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"fdbf71-c457"
+			"92b333-d291"
 		]
 	},
-	"fdbf71-c457": {
+	"92b333-d291": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -165,7 +165,7 @@
 		"timeout": 5000,
 		"next": []
 	},
-	"fdbf71-affc": {
+	"92b333-4aa3": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -187,8 +187,8 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"fdbf71-f0fb",
-			"fdbf71-affc"
+			"92b333-d1e6",
+			"92b333-4aa3"
 		]
 	}
 }

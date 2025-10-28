@@ -1,5 +1,5 @@
 {
-	"bbf780f5-7952": {
+	"02426d-3ef5": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -21,10 +21,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-30d3"
+			"02426d-3472"
 		]
 	},
-	"bbf780f5-30d3": {
+	"02426d-3472": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -46,11 +46,11 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-6b8d",
-			"bbf780f5-062b"
+			"02426d-b596",
+			"02426d-5518"
 		]
 	},
-	"bbf780f5-6b8d": {
+	"02426d-b596": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -93,10 +93,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-751e"
+			"02426d-6af6"
 		]
 	},
-	"bbf780f5-751e": {
+	"02426d-6af6": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -106,7 +106,7 @@
 		},
 		"trigger": [
 			{
-				"pattern": "fb_encant_hsv_1",
+				"pattern": "fb_divierte_hsv_1",
 				"type": "pattern",
 				"condition": true,
 				"cmd": {
@@ -139,10 +139,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-3c46"
+			"02426d-2212"
 		]
 	},
-	"bbf780f5-3c46": {
+	"02426d-2212": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -164,10 +164,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-8d5b"
+			"92b333-34aa"
 		]
 	},
-	"bbf780f5-062b": {
+	"02426d-5518": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -189,11 +189,11 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-6b8d",
-			"bbf780f5-062b"
+			"02426d-b596",
+			"02426d-5518"
 		]
 	},
-	"bbf780f5-8d5b": {
+	"92b333-34aa": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -215,11 +215,11 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-e6be"
+			"92b333-257d"
 		],
 		"beforeLoop": "a279d8-e9ae"
 	},
-	"bbf780f5-e6be": {
+	"92b333-257d": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -234,21 +234,21 @@
 		"order": 0,
 		"type": "static",
 		"preDelay": 1000,
-		"postDelay": 4000,
+		"postDelay": 2000,
 		"maxLoop": 10,
 		"loop": 0,
 		"maxTry": 1,
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-7feb",
-			"bbf780f5-7feb",
-			"bbf780f5-7feb",
-			"bbf780f5-7feb",
-			"bbf780f5-7feb"
+			"92b333-9a36",
+			"92b333-9a36",
+			"92b333-9a36",
+			"92b333-9a36",
+			"92b333-9a36"
 		]
 	},
-	"bbf780f5-7feb": {
+	"92b333-9a36": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -291,11 +291,11 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-3451",
-			"bbf780f5-8cc8"
+			"92b333-60cc",
+			"92b333-1c9e"
 		]
 	},
-	"bbf780f5-3451": {
+	"92b333-60cc": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -327,11 +327,11 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-ed69"
+			"92b333-e277"
 		],
 		"getScreen": true
 	},
-	"bbf780f5-ed69": {
+	"92b333-e277": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -353,10 +353,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-7952"
+			"02426d-3ef5"
 		]
 	},
-	"bbf780f5-8cc8": {
+	"92b333-1c9e": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -378,10 +378,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"bbf780f5-7952"
+			"02426d-3ef5"
 		]
 	},
-	"bbf780f5-7ad7": {
+	"92b333-b2e1": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",

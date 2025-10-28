@@ -1,5 +1,5 @@
 {
-	"fdbf71-81e5": {
+	"961129-654c": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -21,10 +21,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"fdbf71-64b2"
+			"961129-4aec"
 		]
 	},
-	"fdbf71-64b2": {
+	"961129-4aec": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -46,11 +46,11 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"fdbf71-f0fb",
-			"fdbf71-affc"
+			"961129-0716",
+			"961129-86a6"
 		]
 	},
-	"fdbf71-f0fb": {
+	"961129-0716": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -93,10 +93,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"fdbf71-5943"
+			"961129-b6bf"
 		]
 	},
-	"fdbf71-5943": {
+	"961129-b6bf": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -106,7 +106,7 @@
 		},
 		"trigger": [
 			{
-				"pattern": "fb_asombra_hsv_1",
+				"pattern": "fb_encant_hsv_1",
 				"type": "pattern",
 				"condition": true,
 				"cmd": {
@@ -139,10 +139,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"fdbf71-c457"
+			"961129-b511"
 		]
 	},
-	"fdbf71-c457": {
+	"961129-b511": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -165,7 +165,7 @@
 		"timeout": 5000,
 		"next": []
 	},
-	"fdbf71-affc": {
+	"961129-86a6": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -187,8 +187,8 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"fdbf71-f0fb",
-			"fdbf71-affc"
+			"961129-0716",
+			"961129-86a6"
 		]
 	}
 }

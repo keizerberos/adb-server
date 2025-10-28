@@ -1,0 +1,15 @@
+{
+	"e46221": {
+		"id": "e46221",
+		"name": "Facebook Reaccion \"Me encanta\" (Post) x3",
+		"description": " Facebook Reaccion \"Me encanta\" (Post) x3",
+		"start": "e46221-a17f",
+		"end": "e46221-51d1",
+		"group": "Facebook Reacciones",
+		"type": "task",
+		"params": {
+			"link": "https://www.facebook.com/MUNDOIOSAC/posts/pfbid0213Hqyg49tVNtxkhs68XMC24CHnLbK1y6XAxiEquj6SRgDhjzGg36iVjzrg3gBbbyl"
+		},
+		"functions": {}
+	}
+}

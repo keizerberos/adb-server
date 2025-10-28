@@ -88,6 +88,7 @@ function sendCommand(command){
 }
 function updateParams(data,params){
 	Object.keys(data).forEach(k => {
+		if(data[k]==undefined) return;
 		data[k] = replaceParams(params, data[k]);
 	})
 }
@@ -144,8 +145,10 @@ async function doStaticTask(currentAction, nodeAction, action, actionIndex, devi
 		let beforeLoop = devicesActions[deviceId][currentAction.beforeLoop];
 		console.log("executeNode is max loop", true);
 		if ( beforeLoop == undefined){
+			console.log("no have beforeLoop ", currentAction.beforeLoop);
 			cbFail();
 		}else{							
+			console.log("have beforeLoop ", currentAction.beforeLoop);
 			setTimeout(() => {
 				executeNode(beforeLoop, 0, deviceId, params, cbSuccess, cbFail);
 			}, currentAction.postDelay);
@@ -222,13 +225,13 @@ async function doPatternTask(currentAction, nodeAction, action, actionIndex, dev
 					canvasctx.drawImage(img, 0, 0);
 					let [ox, oy, ow, oh, owm, ohm] = [-1,-1,-1,-1,-1,-1];
 					if (pattern.type=='hsv'){
-						rgbToHsvImage(canvasctx,outputcanvas,canvasctxP,outputcanvasP);
-						[ox,oy,ow,oh,owm,ohm] = findPatternHsv(canvasctx,canvasctxF,outputcanvasF,pattern,pattern.rectCrop);
+						//rgbToHsvImage(canvasctx,outputcanvas,canvasctxP,outputcanvasP);
+						[ox,oy,ow,oh,owm,ohm] = findPatternHsv(canvasctx,canvasctxF ,outputcanvasF, pattern, true, pattern.rectCrop);
 					}else{
 						bwImage(canvasctx, outputcanvas, canvasctxP, outputcanvasP, pattern.umbral);
 						[ox, oy, ow, oh, owm, ohm] = findPattern(canvasctxP, canvasctxF, outputcanvasF, pattern, true, pattern.rectCrop);
 					}
-					console.log("ox,oy,ow,oh,owm,ohm", [ox, oy, ow, oh, owm, ohm]);
+					console.log("ox,oy,ow,oh,owm,ohm",trigger.pattern, [ox, oy, ow, oh, owm, ohm]);
 					//if ((ox>0 && currentAction.condition)||(!currentAction.condition&&ox<0)){
 										
 					if (currentAction.pre!=undefined) eval(currentAction.pre);
@@ -371,8 +374,8 @@ async function doReaderTaskNewScreen(currentAction, nodeAction, action, actionIn
 }
 async function doReaderTaskLastScreen(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail){
 	console.log("doReaderTaskLastScreen reading start");		
-	const bimg = devicesActions[id]['blobLastScreen'] ;	
-	const img =  devicesActions[id]['imageDataLastScreen'] ;
+	const bimg = devicesActions[deviceId]['blobLastScreen'] ;	
+	const img =  devicesActions[deviceId]['imageDataLastScreen'] ;
 	
 	doReader(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail, bimg, img);
 }
@@ -434,16 +437,16 @@ async function doReader(currentAction, nodeAction, action, actionIndex, deviceId
 		if (currentAction.post!=undefined) eval(currentAction.post);
 		console.log(deviceId +" executeNode.reader true");
 
-		let command = JSON.parse(JSON.stringify(currentAction.command));
-		command.devices = replaceParams(tempParams, command.devices);		
+		const command = JSON.parse(JSON.stringify(currentAction.command));
 		if (command != null) {
 			let tempParams = {
 				x: x, y: y, xm:xm, ym:ym
 				, deviceId: deviceId
 			}	
-			updateParams(command,params);
-			updateParams(command,tempParams);
-			sendCommand(command);
+			command.devices = replaceParams(tempParams, command.devices);	
+			updateParams(command.data,params);
+			updateParams(command.data,tempParams);
+			sendCommand(command);	
 		}
 
 		currentAction.loop++;
@@ -816,16 +819,16 @@ class Executor {
 				console.log(`  RSS (Resident Set Size): ${formatBytes(memory.rss)}`);
 			try {
 				loadImage(bimg).then(async (img) => {
-					const text = await adbocr.readFromBuffer(bimg);
+					/*const text = await adbocr.readFromBuffer(bimg);
 					
 					const actionIdCurrent = devicesActions[id]['progress']['current'];
 					if (devicesActions[id]['progress']['texts'][actionIdCurrent]==undefined)
 						devicesActions[id]['progress']['texts'][actionIdCurrent] = [];
-					devicesActions[id]['progress']['texts'][actionIdCurrent].push(text);					
+					devicesActions[id]['progress']['texts'][actionIdCurrent].push(text);					*/
 					devicesActions[id]['blobLastScreen'] = bimg;
 					devicesActions[id]['imageDataLastScreen'] = img;
 					
-					console.log('\t\t\t\t\tReading Text:',text)
+					//console.log('\t\t\t\t\tReading Text:',text)
 
 					eventNodes.forEach((e, i) => {
 						if (e.deviceId == id) {
