@@ -1,0 +1,18 @@
+{
+	"4ed348": {
+		"id": "4ed348",
+		"name": "tiktok LIKE x3",
+		"description": "tiktok LIKE  x3",
+		"start": "4ed348-98bc",
+		"end": "4ed348-8638",
+		"group": "TikTok x3",
+		"type": "task",
+		"params": {
+			"link": "https://www.tiktok.com/@sunny.amigurumi/video/7583752093329100044",
+			"accounts": []
+		},
+		"functions": {
+			"link": "tkurl"
+		}
+	}
+}

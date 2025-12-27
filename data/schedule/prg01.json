@@ -1,0 +1,54 @@
+{
+	"name":"",
+	"group":"",
+	"startDate": "16/12/2025",
+	"startTime": "14:30",
+	"frequency": "1,5",
+	"useFrequency":true,
+	"enabled":true,
+	"params":{
+		
+	},
+	"tasks":{
+		"aabbccdd-eeff":{
+			"devices" : "01-250",
+			"task": {		
+				"id": "9a3bd0",
+				"name": "Desbloquear, Cerrar Apks, IME, pantalla, Wifi",
+				"description": "Desbloquear, Cerrar Apks, IME, pantalla, Wifi",
+				"start": "9a3bd0-8ed8",
+				"end": "9a3bd0-83c4",
+				"group": "Preparación",
+				"type": "task",
+				"params": {
+					"credentials": "-e ssid G01-ACH -e password 9r4nj45-2k25\n-e ssid G02-ACH -e password 9r4nj45-2k25\n-e ssid G03-ACH -e password 9r4nj45-2k25\n-e ssid G04-ACH -e password 9r4nj45-2k25\n-e ssid G05-ACH -e password 9r4nj45-2k25\n-e ssid G06-ACH -e password 9r4nj45-2k25"
+				},
+				"functions": {}	
+			},
+			"next" : ["bbccddee-ffgg"],
+			"predelay": 2000,
+			"postdelay": 1000,
+			"duration" : "04:20",
+			"params": {
+				"credentials" : "{}"
+			},
+			"config": {
+				"offset": 5,
+				"isBatch": false,
+				"batch": {
+					"quantity": 0,
+					"explicit": false,
+					"offset": 5,
+					"groupsText": "",
+					"groups": []
+				}
+			}
+		},
+		"bbccddee-ffgg":{
+			
+		}
+	},
+	"results":{
+
+	}
+}

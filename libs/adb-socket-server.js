@@ -12,6 +12,7 @@ const { Console } = require('console');
 let devicesData = JSON.parse(fs.readFileSync('./data/devices.json', 'utf8'));
 let actionsData = JSON.parse(fs.readFileSync('./data/actions.json', 'utf8'));
 let patternsData = JSON.parse(fs.readFileSync('./data/patterns.json', 'utf8'));
+let networksData = JSON.parse(fs.readFileSync('./data/networks.json', 'utf8'));
 
 let tasks = {};
 let actions = {};
@@ -31,6 +32,18 @@ function dget(array, id, val) {
 	const el = array.find(d => d[id] == val);
 	return el;
 }
+function oget(obj, id, val) {	
+	const el = Object.keys(obj).find(k => obj[k][id] == val);
+	if (el==null)
+		return null
+	return obj[el];
+}
+function objUpdate(oldObj, newObj){
+	Object.keys(newObj).forEach(k=>{
+		oldObj[k] = newObj[k];
+	});
+}
+
 function ddelete(array, id, val) {
 	const el = array.find(d => d[id] == val);
 	if (el != null)
@@ -80,6 +93,17 @@ function scanTasksFolder() {
 	//console.log("tasks",tasks)
 	//console.log("actions",actions)
 }
+function getOffs(devicesObj, devices){
+	const devicesAll = Object.keys(devicesObj).map(k=>{ devicesObj[k]['serial']=k; return devicesObj[k]; });
+	//console.log("devicesAll",devicesAll);
+	const devicesOff = [];
+	devicesAll.forEach(device=>{
+		const finded = devices.find(d=>d.serial == device.serial);
+		if (finded == null)
+			devicesOff.push(device);
+	});
+	return devicesOff;
+}
 const ClientType = Object.freeze({
   PROGRESS: 0,
   DASHBOARD: 1,
@@ -115,6 +139,19 @@ class AdbSocketServer {
 			//console.log("progressPath",tasks[k]['progressPath']);
 		};
 		console.log("drawing progress");
+	}
+	saveNetworks(){
+		return new Promise((res,rej)=>{
+			fs.writeFile('./data/networks.json',JSON.stringify(networksData, null, '\t'),'utf8', (err)=>{
+				if (err) {
+					console.error('networks.save Error writing file:', err);
+					rej();
+					return;
+				}
+				console.log('networks.save written successfully!');
+				res();
+			});
+		});
 	}
 	saveDevices(){
 		if(saveProgrammed) return;
@@ -195,6 +232,31 @@ class AdbSocketServer {
 				res();
 			}
 		});
+	}
+	addPing(device, ping){
+		const t = Date.now();
+		if (device.records==undefined){
+			device.records = {};
+		}
+		if (device.records.ping==undefined){
+			device.records.ping = [];
+		}
+		device.records.ping.push({ms:ping.avg,t:t});
+	}
+	setConfig(device, name, value){
+		if (device.config==undefined){
+			device.config = {};
+		}
+		device.config[name] = value
+	}
+	addConfigArray(device, name, value){
+		if (device.config==undefined){
+			device.config = {};
+		}
+		if (device.config[name]==undefined){
+			device.config[name] = [];
+		}
+		device.config[name].push(value);
 	}
 	startServer(clients, clusters, devices) {
 		const self = this;
@@ -408,7 +470,7 @@ class AdbSocketServer {
 			updateDevicesRemote(devicesList);
 			let devicesRemoteUnique = [];
 			let devicesRemote = [];
-			console.log("devicesList.after", devicesList);
+			//console.log("devicesList.after", devicesList);
 			clientDisconnected.devices.forEach(deviceSerial => {
 				if (devicesList[deviceSerial] !=undefined) {
 					devicesList[deviceSerial].count = devicesList[deviceSerial].count - 1;
@@ -418,8 +480,8 @@ class AdbSocketServer {
 					devicesRemote.push(devicesList[deviceSerial]);
 				}
 			});
-			console.log("devicesList.before", devicesList);
-			console.log("devicesRemoteUnique", devicesRemoteUnique);
+			//console.log("devicesList.before", devicesList);
+			//console.log("devicesRemoteUnique", devicesRemoteUnique);
 			devicesRemoteUnique.forEach(device=>{
 				clients.forEach(client => client.socket.emit("device.noremote", {serial:device.serial}));
 				wsLowQuality(device.serial);
@@ -461,7 +523,47 @@ class AdbSocketServer {
 				socket.emit("tasks", tasks);
 				socket.emit("actions", actions);
 				socket.emit("devices", devices);
-
+				socket.emit("networks", networksData);
+				socket.emit("devices.all", devicesData.devicesAssign);
+				socket.emit("devices.off", getOffs(devicesData.devicesAssign, devices));
+				socket.on("networks.save", (network)=>{
+					const existNetwork = oget(networksData,'uuid',network.uuid);
+					if (existNetwork==undefined){
+						networksData[network.uuid] = network;
+					}else{		
+						console.log("updating");
+						objUpdate(existNetwork, network);
+					}
+					self.saveNetworks().then(()=>{
+						clients.forEach(client => client.socket.emit("networks", networksData));							
+					});
+				});
+				socket.on("networks.delete", (network)=>{
+					const existNetwork = oget(networksData,'uuid',network.uuid);
+					if (existNetwork!=undefined){
+						delete networksData[network.uuid];						
+						self.saveNetworks().then(()=>{
+							clients.forEach(client => client.socket.emit("networks", networksData));							
+						});
+					}
+				});
+				socket.on("device.save", (data)=>{
+					const device = devices.find(d=>d.serial==data.serial);	
+					if(device!=undefined){
+						this.setConfig(device,data.name,data.value);
+						objUpdate(device, data);
+						objUpdate(devicesData.devicesAssign[data.serial] , data);
+						this.saveDevices();
+						clients.forEach(client => client.socket.emit("device.update", device));						
+					}
+				});				
+				socket.on("device.config.set", (data)=>{
+					const device = devices.find(d=>d.serial==data.serial);	
+					if(device!=undefined){
+						this.setConfig(device,data.name,data.value);
+						this.saveDevices();
+					}
+				});				
 				socket.on("window.update", (data)=>{
 					Log.i("window.update");
 					Log.o(data);
@@ -606,6 +708,12 @@ class AdbSocketServer {
 						cluster.socket.emit("install.gni", data);
 					}
 				});
+				socket.on("cluster.commands", (data) => {
+					Log.i("cluster.commands");
+					Log.o(data);				
+					const cluster = dget(clusters, 'uuid', data.clusterId);
+					cluster.socket.emit("cluster.commands", data);
+				});
 				socket.on("tethering.start", (data) => {
 					Log.i("tethering.start");
 					Log.o(data);				
@@ -644,6 +752,14 @@ class AdbSocketServer {
 					if (device != null) {
 						const cluster = dget(clusters, 'uuid', device.clusterId);
 						cluster.socket.emit("network", data);
+					}
+				});
+				socket.on("device.ping", (data) => {
+					const device = dget(devices, 'serial', data.devices);
+					if (device != null) {
+						const cluster = dget(clusters, 'uuid', device.clusterId);
+						if(cluster.socket!=undefined)
+							cluster.socket.emit("ping", data);
 					}
 				});
 				socket.on("device.resolution", (data) => {
@@ -748,7 +864,7 @@ class AdbSocketServer {
 			});
 
 			socket.on("device.connect", (device) => {
-				console.log("device.connect", device)
+				//console.log("device.connect", device)
 				const createdDevice = dget(devices, 'serial', device.serial);
 
 				if (createdDevice == null)
@@ -761,22 +877,56 @@ class AdbSocketServer {
 					device['number'] = -1;
 				device['clusterId'] = uuid;
 				device['clusterAddress'] = cluster.address?.address;
-				const data = {};
 				clients.forEach(client => client.socket.emit("device.connect", device));
 			});
+			socket.on("device.change", (device) => {
+				//console.log("device.change", device)
+				const createdDevice = dget(devices, 'serial', device.serial);
+				if (createdDevice == null)
+					devices.push(device);
+				if (devicesData.devicesAssign[device.serial] != null){
+					device['number'] = devicesData.devicesAssign[device.serial].number;				
+					device['network'] = devicesData.devicesAssign[device.serial].network;
+					device['resolution'] = devicesData.devicesAssign[device.serial].resolution;
+				}else
+					device['number'] = -1;
+				const findDevice = dget(devices, 'serial', device.serial);
+				findDevice['status'] = device.status;
+				findDevice['clusterId'] = uuid;
+				findDevice['clusterAddress'] = cluster.address?.address;
+				clients.forEach(client => client.socket.emit("device.change", findDevice));
+			});
 			socket.on("device.disconnect", (device) => {
-				console.log("devices.disconnect", device)
+				//console.log("devices.disconnect", device)
 				ddelete(devices, 'serial', device.serial);
 				clients.forEach(client => client.socket.emit("device.disconnect", device));
 			});
 			socket.on("device.capture", (data) => {
 				//console.log("device.capture",data.data.length);
-				this.executor.screen(data.serial,data.data);				
+				this.executor.screen(data.serial,data.data,(memory)=>{
+					clients.filter(client=>client.features.capture).forEach(client => client.socket.emit("server.memory", memory));	
+				});
 				clients.filter(client=>client.features.capture).forEach(client => client.socket.emit("device.capture", data));				
+			});			
+			socket.on("device.ping", (data) => {
+				console.log("device.ping",data)
+				clients.forEach(client => client.socket.emit("device.ping", data));		
+				if (devicesData.devicesAssign[data.serial] != null){				
+					devicesData.devicesAssign[data.serial]['ping'] = data.data;
+					this.addPing(devicesData.devicesAssign[data.serial], data.data);
+					this.saveDevices();
+				}
+				const device = devices.find(d=>d.serial==data.serial);	
+				if(device!=null){
+					device['ping'] = data.data;
+					this.addPing(device, data.data);
+					this.saveDevices();
+				}
+				 
 			});
 			socket.on("device.network", (data) => {				
 				clients.forEach(client => client.socket.emit("device.network", data));				
-				
+				/* task:verify bad save */
 				if (devicesData.devicesAssign[data.serial] != null){
 					if (devicesData.devicesAssign[data.serial]['network'] == null){
 						devicesData.devicesAssign[data.serial]['network'] = data.data;						

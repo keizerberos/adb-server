@@ -1,0 +1,20 @@
+{
+	"devicesAssign": {
+		"NBA34BOAC5047046": {
+			"number": "01",
+			"serial": "NBA34BOAC5047046",
+			"config":{
+				"networksPrefer":["6c42d377"],
+				"accounts":[{
+
+				}]
+			},
+			"records":{
+				"ping":[
+					{"ms":100,"t":1766506417},
+					{"ms":234,"t":1766509890}
+				]
+			}
+		}
+	}
+}

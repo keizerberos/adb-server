@@ -257,7 +257,7 @@
     for (ii = 0; ii < pattern.patterns.length; ii++) {
       _off1 = i + ((pattern.patterns[ii].x - _ox - 1) + (pattern.patterns[ii].y - _oy - 1) * w) * 4;//0
       _off2 = i + ((pattern.patterns[ii].x - _ox + 2) + (pattern.patterns[ii].y - _oy - 1) * w) * 4;//2
-      _off3 = i + ((pattern.patterns[ii].x - _ox + 1) + (pattern.patterns[ii].y - _oy + 1) * w) * 4;//4
+      _off3 = i + ((pattern.patterns[ii].x - _ox ) + (pattern.patterns[ii].y - _oy ) * w) * 4;//4
       _off4 = i + ((pattern.patterns[ii].x - _ox - 1) + (pattern.patterns[ii].y - _oy) + 2 * w) * 4;//5
       _off5 = i + ((pattern.patterns[ii].x - _ox + 2) + (pattern.patterns[ii].y - _oy) + 2 * w) * 4;//7
 

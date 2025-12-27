@@ -93,6 +93,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
+			"961129-b6bf",
+			"961129-b6bf",
+			"961129-b6bf",
+			"961129-b6bf",
 			"961129-b6bf"
 		]
 	},
@@ -106,7 +110,7 @@
 		},
 		"trigger": [
 			{
-				"pattern": "fb_encant_hsv_1",
+				"pattern": "fb_megusta_hsv_1",
 				"type": "pattern",
 				"condition": true,
 				"cmd": {

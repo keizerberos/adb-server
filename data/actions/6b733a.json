@@ -93,6 +93,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
+			"6b733a-3388",
+			"6b733a-3388",
+			"6b733a-3388",
+			"6b733a-3388",
 			"6b733a-3388"
 		]
 	},
@@ -106,7 +110,7 @@
 		},
 		"trigger": [
 			{
-				"pattern": "fb_encant_hsv_1",
+				"pattern": "fb_megusta_hsv_1",
 				"type": "pattern",
 				"condition": true,
 				"cmd": {
@@ -191,7 +195,8 @@
 		"next": [
 			"6b733a-688b",
 			"6b733a-fadb"
-		]
+		],
+		"beforeLoop": "6b733a-700d"
 	},
 	"6b733a-b7ce": {
 		"command": {
@@ -209,7 +214,7 @@
 		"type": "static",
 		"preDelay": 1000,
 		"postDelay": 8000,
-		"maxLoop": 3,
+		"maxLoop": 2,
 		"loop": 0,
 		"maxTry": 1,
 		"try": 0,
@@ -300,18 +305,46 @@
 			"action": "adb",
 			"devices": "{deviceId}",
 			"data": {
-				"command": ""
+				"command": "input tap {x} {y}"
 			}
 		},
 		"trigger": [
 			{
 				"crop": [
-					158,
-					1384,
-					442,
-					62
+					250,
+					1438,
+					244,
+					58
 				],
-				"result": "text.includes('en otra cuenta')"
+				"result": "result",
+				"pre": [
+					"if(text.includes('meta')){",
+					"   result=true",
+					"   x=333",
+					"   y=1335",
+					"}else{",
+					"    x=333",
+					"    y=1407",
+					"}"
+				]
+			},
+			{
+				"crop": [
+					157,
+					1270,
+					474,
+					185
+				],
+				"pre": [
+					"if(text.includes('en otra cuenta')){",
+					"     if(y==1335){",
+					"        y=1213",
+					"     }else{",
+					"       y = 1283",
+					"      }",
+					"}"
+				],
+				"result": "result"
 			}
 		],
 		"id": "a279d8-9421",
@@ -327,34 +360,9 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"6b733a-4637"
+			"6b733a-1dd2"
 		],
 		"getScreen": true
-	},
-	"6b733a-4637": {
-		"command": {
-			"action": "adb",
-			"devices": "{deviceId}",
-			"data": {
-				"command": "input tap 332 1278"
-			}
-		},
-		"trigger": [],
-		"id": "a279d8-1384",
-		"name": "CH_INI_CLICK_NEXT",
-		"desc": "CH_INI_CLICK_NEXT",
-		"order": 0,
-		"type": "static",
-		"preDelay": 1000,
-		"postDelay": 4000,
-		"maxLoop": 10,
-		"loop": 0,
-		"maxTry": 1,
-		"try": 0,
-		"timeout": 5000,
-		"next": [
-			"6b733a-1dd2"
-		]
 	},
 	"6b733a-4c22": {
 		"command": {

@@ -319,18 +319,46 @@
 			"action": "adb",
 			"devices": "{deviceId}",
 			"data": {
-				"command": ""
+				"command": "input tap {x} {y}"
 			}
 		},
 		"trigger": [
 			{
 				"crop": [
-					158,
-					1384,
-					442,
-					62
+					250,
+					1438,
+					244,
+					58
 				],
-				"result": "text.includes('en otra cuenta')"
+				"result": "result",
+				"pre": [
+					"if(text.includes('meta')){",
+					"   result=true",
+					"   x=333",
+					"   y=1335",
+					"}else{",
+					"    x=333",
+					"    y=1407",
+					"}"
+				]
+			},
+			{
+				"crop": [
+					157,
+					1270,
+					474,
+					185
+				],
+				"pre": [
+					"if(text.includes('en otra cuenta')){",
+					"     if(y==1335){",
+					"        y=1213",
+					"     }else{",
+					"       y = 1283",
+					"      }",
+					"}"
+				],
+				"result": "result"
 			}
 		],
 		"id": "a279d8-9421",

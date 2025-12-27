@@ -1,0 +1,15 @@
+{
+	"8a0d02": {
+		"id": "8a0d02",
+		"name": "Configurar Wifi",
+		"description": "Configurar Wifi",
+		"start": "8a0d02-c3c8",
+		"end": "9a3bd0-852a",
+		"group": "Preparación",
+		"type": "task",
+		"params": {
+			"credentials": "-e ssid G01-ACH -e password 9r4nj45-2k25\n-e ssid G02-ACH -e password 9r4nj45-2k25\n-e ssid G03-ACH -e password 9r4nj45-2k25\n-e ssid G04-ACH -e password 9r4nj45-2k25\n-e ssid G05-ACH -e password 9r4nj45-2k25\n-e ssid G06-ACH -e password 9r4nj45-2k25"
+		},
+		"functions": {}
+	}
+}

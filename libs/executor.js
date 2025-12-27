@@ -98,6 +98,8 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 	if (action.next == null) { cbSuccess(); return; }
 	const nodeAction = action.next[actionIndex];
 	if (nodeAction == null || nodeAction == undefined) { cbSuccess(); return; }
+	
+	if (devicesActions[deviceId] == null ) { cbFail(); return; }
 	const currentAction = devicesActions[deviceId][nodeAction];
 	if (currentAction == null) { cbFail(); return; }
 
@@ -106,6 +108,11 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 		devicesActions[deviceId]['progress']['current'] = nodeAction;	
 		devicesActions[deviceId]['progress']['state'] = 'ended';
 		events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
+		
+		devicesActions[deviceId]['progress'] = null;
+		devicesActions[deviceId]['params'] = null;
+		devicesActions[deviceId] = null;
+		delete devicesActions[deviceId];
 		return;
 	}
 
@@ -115,7 +122,6 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 	}, currentAction.preDelay);
 }
 /*
-
 	if (currentAction.try >= currentAction.maxTry){
 		let beforeLoop = devicesActions[deviceId][currentAction.beforeLoop];
 		executeNode(beforeLoop,0,deviceId,params,cbSuccess,cbFail);
@@ -128,6 +134,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 	}*/
 
 async function doPreTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail){
+	if ( devicesActions[deviceId] == undefined) {cbFail(); return;}
 	devicesActions[deviceId]['progress']['completed'].push(nodeAction);
 	devicesActions[deviceId]['progress']['current'] = nodeAction;
 	events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
@@ -295,6 +302,12 @@ async function doPatternTask(currentAction, nodeAction, action, actionIndex, dev
 			events['send'].forEach(fn => fn(command));
 			//myWebSocket.send(JSON.stringify(data));
 		},
+		cbError: () => {
+			//BAD SCREEN
+			
+				cbFail();
+			//myWebSocket.send(JSON.stringify(data));
+		},
 	});
 	setTimeout(() => {
 		if (eventNodes.find(d => d.deviceId == deviceId) != undefined) {
@@ -344,7 +357,7 @@ async function doReaderTaskNewScreen(currentAction, nodeAction, action, actionIn
 					"savePath": "{screen_path}"
 				}
 			};
-			events['send'].forEach(fn => fn(command));
+			events['send'].forEach(fn => fn(data));
 		}
 	});
 	
@@ -551,14 +564,19 @@ function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, 
 				console.log("executeGraph starting send executeNode");
 				executeNode(action, 0, deviceId, params,
 					() => {					
-						devicesActions[deviceId]['progress']['state'] = 'ended';
-						events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
+						
+						if (devicesActions[deviceId]!=undefined){
+							devicesActions[deviceId]['progress']['state'] = 'ended';
+							events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
+						}
 						cbSuccess();
 					},
 					() => {					
-						devicesActions[deviceId]['progress']['state'] = 'ended';
-						devicesActions[deviceId]['progress']['fail'] = true;
-						events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
+						if (devicesActions[deviceId]!=undefined){
+							devicesActions[deviceId]['progress']['state'] = 'ended';
+							devicesActions[deviceId]['progress']['fail'] = true;						
+							events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
+						}
 						cbFail();
 					}
 				)
@@ -603,13 +621,21 @@ function executeTask(devices, task) {
 
 			devicesActions[d.serial]['progress']['state'] = 'ended';
 			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			if (countEnded == devices.length) {
+			devicesActions[d.serial]['progress'] = null;
+			devicesActions[d.serial]['params'] = null;
+			devicesActions[d.serial] = null;
+			delete devicesActions[d.serial];
+			if ((countEnded ) == devices.length) {
 				console.log("params",params);
-				console.log("all ended")
+				console.log("[executeTask] all ended ")
 				countEnded = 0;
 				signalStop = false;
 			}
 		}, () => {
+			devicesActions[d.serial]['progress'] = null;
+			devicesActions[d.serial]['params'] = null;
+			devicesActions[d.serial] = null;
+			delete devicesActions[d.serial];
 			console.log("executeTask:executeGraph.incomplete")
 		});
 	});
@@ -638,8 +664,12 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 
 			devicesActions[d.serial]['progress']['state'] = 'ended';
 			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			if (countEnded == devices.length) {				
-				console.log("all ended")
+			devicesActions[d.serial]['progress'] = null;
+			devicesActions[d.serial]['params'] = null;
+			devicesActions[d.serial] = null;
+			delete devicesActions[d.serial];
+			if ((countEnded) == devices.length) {				
+				console.log("[executeTaskBatch] all ended")
 				countEnded = 0;
 				signalStop = false;
 				cbEnd();
@@ -648,9 +678,15 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 			countEnded++;
 			console.log("executeTask:executeGraph.incomplete")
 
-			devicesActions[d.serial]['progress']['state'] = 'ended';
-			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			if (countEnded == devices.length) {				
+			if ((countEnded) == devices.length) {
+				devicesActions[d.serial]['progress']['state'] = 'ended';
+				events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+				devicesActions[d.serial]['progress'] = null;
+				devicesActions[d.serial]['params'] = null;
+				devicesActions[d.serial] = null;
+				delete devicesActions[d.serial];
+			}
+			if ((countEnded) == devices.length) {				
 				console.log("all ended with fails")
 				countEnded = 0;
 				signalStop = false;
@@ -698,12 +734,20 @@ function resumeTask(devices, task) {
 
 			devicesActions[d.serial]['progress']['state'] = 'ended';
 			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			if (countEnded == devices.length) {
+			devicesActions[d.serial]['progress'] = null;
+			devicesActions[d.serial]['params'] = null;
+			devicesActions[d.serial] = null;
+			delete devicesActions[d.serial];
+			if ((countEnded ) == devices.length) {
 				console.log("all ended")
 				countEnded = 0;
 				signalStop = false;
 			}
 		}, () => {
+			devicesActions[d.serial]['progress'] = null;
+			devicesActions[d.serial]['params'] = null;
+			devicesActions[d.serial] = null;
+			delete devicesActions[d.serial];
 			console.log("executeTask:executeGraph.incomplete")
 		});
 	});
@@ -774,6 +818,12 @@ function formatBytes(bytes) {
   const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
   return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
+function cleanVar(variable){
+	Object.keys(variable).forEach(k=>{
+		variable[k] = null;
+		delete variable[k];
+	});
+}
 class Executor {
 	constructor() {
 	}
@@ -805,7 +855,7 @@ class Executor {
 		fs.writeFileSync(pathScreens+serial+'-'+timestamp+'.png', img);
 		return pathScreens+serial+'-'+timestamp+'.png', img;
 	}
-	screen(id, bimg) {
+	screen(id, bimg, reportCB) {
 		
 		const imgPath = this.regScreen(id,bimg);
 		if ( eventNodes.find(e=>e.deviceId == id )==undefined ) {
@@ -817,8 +867,14 @@ class Executor {
   				const memory = process.memoryUsage();
 				console.log('Memory Usage:');
 				console.log(`  RSS (Resident Set Size): ${formatBytes(memory.rss)}`);
+				if (reportCB!=null)
+					reportCB(memory);
 			try {
 				loadImage(bimg).then(async (img) => {
+					if(img==undefined) {
+						
+						return;
+					}
 					/*const text = await adbocr.readFromBuffer(bimg);
 					
 					const actionIdCurrent = devicesActions[id]['progress']['current'];
@@ -827,7 +883,7 @@ class Executor {
 					devicesActions[id]['progress']['texts'][actionIdCurrent].push(text);					*/
 					devicesActions[id]['blobLastScreen'] = bimg;
 					devicesActions[id]['imageDataLastScreen'] = img;
-					
+					devicesActions[id]['reimage'] = 0;
 					//console.log('\t\t\t\t\tReading Text:',text)
 
 					eventNodes.forEach((e, i) => {
@@ -837,6 +893,8 @@ class Executor {
 							eventNodes.splice(i, 1);
 						}
 					});
+					bimg = null;
+					img = null;
 				}).catch(err=>{
 					console.log("---- ERROR LOADING IMAGE---- ",err);
 					let data = {
@@ -862,6 +920,30 @@ class Executor {
 				events['send'].forEach(fn => fn(data));
 			}
 		} else {
+			if(devicesActions[id]==null) { 
+				eventNodes.forEach((e, i) => {
+						if (e.deviceId == id) {
+							console.log("event fail", e);
+							e.cbFail();
+							eventNodes.splice(i, 1);
+						}
+					});
+				return;
+			}
+			if(devicesActions[id]['reimage']==undefined || devicesActions[id]['reimage']>10) devicesActions[id]['reimage'] = 0;
+			devicesActions[id]['reimage'] ++;
+			console.log("screen try lengh=0:",devicesActions[id]['reimage']);
+			if (devicesActions[id]['reimage']>10){		
+				eventNodes.forEach((e, i) => {
+					if (e.deviceId == id) {
+						console.error("event fail");
+						e.cbError();
+						eventNodes.splice(i, 1);
+					}
+				});
+				bimg = null;
+				return;
+			}
 			console.log("executor.screen img.length = 0");
 			let data = {
 				"action": "Screen",
@@ -938,10 +1020,10 @@ class Executor {
 		});
 		console.log("starting batch executor");
 		let batchExecutor = (index)=>{
-			if (batchs[index]==undefined) {console.log("ending batch");return};
+			if (batchs[index]==undefined) {console.log("ending all batch"); batchs=null; cleanVar(_devices);cleanVar(task); return};
 			console.log("start batch " + index + " of " +batchs.length);
 			batchs[index](()=>{
-				console.log("ended batch " + index);
+				console.log("ended batch " + index);				
 				batchExecutor(index+1);
 			});
 		};

@@ -1,0 +1,931 @@
+{
+	"d4ba5b-7d17": {
+		"name": "CH_BACK",
+		"desc": "Back page to profile",
+		"trigger": [],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input keyevent 4"
+			}
+		},
+		"order": 0,
+		"type": "static",
+		"preDelay": 2000,
+		"postDelay": 3000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-b46a"
+		]
+	},
+	"d4ba5b-14db": {
+		"name": "CH_BACK_2",
+		"desc": "Back page",
+		"trigger": [],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input keyevent 4 & sleep 2; input keyevent 4 "
+			}
+		},
+		"order": 0,
+		"type": "static",
+		"preDelay": 2000,
+		"postDelay": 2000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-7f75"
+		]
+	},
+	"d4ba5b-b46a": {
+		"name": "CH_CLICK_PROFILE",
+		"desc": "Click profile",
+		"trigger": [],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap 648 1461"
+			}
+		},
+		"order": 0,
+		"type": "static",
+		"preDelay": 2000,
+		"postDelay": 4000,
+		"maxLoop": 3,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-c399",
+			"d4ba5b-32b9"
+		],
+		"beforeLoop": "d4ba5b-0090"
+	},
+	"d4ba5b-5d94": {
+		"name": "CH_TK_READ_1",
+		"desc": "tiktok read",
+		"trigger": [
+			{
+				"crop": [
+					153,
+					957,
+					444,
+					60
+				],
+				"pre": [
+					"if (!accounts.includes(text)&&text!=''){",
+					"   accounts.push(text)",
+					"   result=true",
+					"}"
+				],
+				"result": "result",
+				"post": []
+			},
+			{
+				"crop": [
+					153,
+					1100,
+					444,
+					60
+				],
+				"pre": [
+					"if (!accounts.includes(text)&&x==-1&&text!=''){",
+					"   accounts.push(text)",
+					"   x=xm",
+					"   y=ym",
+					"}"
+				],
+				"result": "result",
+				"post": []
+			},
+			{
+				"crop": [
+					153,
+					1260,
+					444,
+					60
+				],
+				"pre": [
+					"if (!accounts.includes(text)&&x==-1&&text!=''){",
+					"   accounts.push(text)",
+					"   x=xm",
+					"   y=ym",
+					"}",
+					"if(x==-1) result = false"
+				],
+				"result": "result",
+				"post": []
+			}
+		],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap {x} {y}"
+			}
+		},
+		"order": 0,
+		"type": "reader",
+		"getScreen": true,
+		"preDelay": 1800,
+		"postDelay": 15000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 10,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-14db"
+		]
+	},
+	"d4ba5b-0090": {
+		"name": "CH_HOME",
+		"desc": "Back to home",
+		"trigger": [],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input keyevent 3"
+			}
+		},
+		"order": 0,
+		"type": "static",
+		"preDelay": 4000,
+		"postDelay": 1000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": []
+	},
+	"d4ba5b-7f75": {
+		"name": "START_APK",
+		"desc": "Start apk",
+		"trigger": [],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "am start -a android.intent.action.VIEW -d {link} com.zhiliaoapp.musically"
+			}
+		},
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 9500,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-8791",
+			"d4ba5b-030d",
+			"d4ba5b-1f1e",
+			"d4ba5b-030d",
+			"d4ba5b-1f1e",
+			"d4ba5b-030d",
+			"d4ba5b-1f1e",
+			"d4ba5b-030d",
+			"d4ba5b-1f1e",
+			"d4ba5b-030d",
+			"d4ba5b-1f1e",
+			"d4ba5b-030d",
+			"d4ba5b-1f1e"
+		],
+		"beforeLoop": "d4ba5b-08b3"
+	},
+	"d4ba5b-030d": {
+		"name": "PATTERN_COMMENT",
+		"desc": "Finding comment icon",
+		"trigger": [
+			{
+				"type": "pattern",
+				"pattern": "pattern_tk1_comment",
+				"condition": true,
+				"cmd": {
+					"action": "Screen",
+					"devices": "{deviceId}",
+					"data": {
+						"savePath": "{screen_path}"
+					}
+				},
+				"result": {
+					"x": -1,
+					"y": -1,
+					"w": -1,
+					"h": -1,
+					"wm": -1,
+					"hm": -1
+				}
+			}
+		],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap {wm} {hm}"
+			}
+		},
+		"order": 0,
+		"type": "pattern",
+		"preDelay": 1400,
+		"postDelay": 4000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 10,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-8166"
+		],
+		"beforeLoop": "tk03_tap"
+	},
+	"d4ba5b-1f1e": {
+		"name": "PATTERN_COMMENT_u241",
+		"desc": "Finding comment icon 241",
+		"trigger": [
+			{
+				"type": "pattern",
+				"pattern": "pattern_tk1_comment_u241",
+				"condition": true,
+				"cmd": {
+					"action": "Screen",
+					"devices": "{deviceId}",
+					"data": {
+						"savePath": "{screen_path}"
+					}
+				},
+				"result": {
+					"x": -1,
+					"y": -1,
+					"w": -1,
+					"h": -1,
+					"wm": -1,
+					"hm": -1
+				}
+			}
+		],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap {wm} {hm}"
+			}
+		},
+		"order": 0,
+		"type": "pattern",
+		"preDelay": 1400,
+		"postDelay": 4000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 10,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-8166"
+		],
+		"beforeLoop": "tk03_tap"
+	},
+	"d4ba5b-8166": {
+		"name": "CLICK",
+		"desc": "CLICK",
+		"trigger": [],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap 180 1459"
+			}
+		},
+		"order": 0,
+		"type": "static",
+		"preDelay": 1500,
+		"postDelay": 3000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 10,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-2e9a"
+		]
+	},
+	"d4ba5b-2e9a": {
+		"name": "INPUT_TEXT",
+		"desc": "Input comment",
+		"trigger": [],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "\"am broadcast -a ADB_CLEAR_TEXT & sleep 1; am broadcast -a ADB_INPUT_TEXT --es msg '{comment}' & sleep 2; am broadcast -a ADB_EDITOR_CODE --ei code 5\""
+			}
+		},
+		"order": 0,
+		"type": "static",
+		"preDelay": 1500,
+		"postDelay": 2000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 10,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-b78b",
+			"d4ba5b-5569",
+			"d4ba5b-7b37",
+			"d4ba5b-b78b",
+			"d4ba5b-5569",
+			"d4ba5b-7b37",
+			"d4ba5b-b78b",
+			"d4ba5b-5569",
+			"d4ba5b-7b37",
+			"d4ba5b-b78b",
+			"d4ba5b-5569",
+			"d4ba5b-7b37",
+			"d4ba5b-15c6"
+		]
+	},
+	"d4ba5b-b78b": {
+		"name": "PATTERN_SEND",
+		"desc": "Find pattern send icon",
+		"trigger": [
+			{
+				"type": "pattern",
+				"pattern": "pattern_tk1_send",
+				"condition": true,
+				"cmd": {
+					"action": "Screen",
+					"devices": "{deviceId}",
+					"data": {
+						"savePath": "{screen_path}"
+					}
+				},
+				"result": {
+					"x": -1,
+					"y": -1,
+					"w": -1,
+					"h": -1,
+					"wm": -1,
+					"hm": -1
+				}
+			}
+		],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap {wm} {hm}"
+			}
+		},
+		"order": 0,
+		"type": "pattern",
+		"preDelay": 1400,
+		"postDelay": 5000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 10,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-7d17"
+		],
+		"beforeLoop": "tk03_home"
+	},
+	"d4ba5b-5569": {
+		"name": "PATTERN_SEND2",
+		"desc": "Find pattern send icon 2",
+		"trigger": [
+			{
+				"type": "pattern",
+				"pattern": "pattern_tk1_send",
+				"condition": true,
+				"cmd": {
+					"action": "Screen",
+					"devices": "{deviceId}",
+					"data": {
+						"savePath": "{screen_path}"
+					}
+				},
+				"result": {
+					"x": -1,
+					"y": -1,
+					"w": -1,
+					"h": -1,
+					"wm": -1,
+					"hm": -1
+				}
+			}
+		],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap {wm} {hm}"
+			}
+		},
+		"order": 0,
+		"type": "pattern",
+		"preDelay": 1400,
+		"postDelay": 5000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 10,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-7d17"
+		],
+		"beforeLoop": "tk03_home"
+	},
+	"d4ba5b-7b37": {
+		"name": "PATTERN_SEND3",
+		"desc": "Find pattern send icon 3",
+		"trigger": [
+			{
+				"type": "pattern",
+				"pattern": "pattern_tk1_send_hsv_2",
+				"condition": true,
+				"cmd": {
+					"action": "Screen",
+					"devices": "{deviceId}",
+					"data": {
+						"savePath": "{screen_path}"
+					}
+				},
+				"result": {
+					"x": -1,
+					"y": -1,
+					"w": -1,
+					"h": -1,
+					"wm": -1,
+					"hm": -1
+				}
+			}
+		],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap {wm} {hm}"
+			}
+		},
+		"order": 0,
+		"type": "pattern",
+		"preDelay": 1400,
+		"postDelay": 5000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 10,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-7d17"
+		],
+		"beforeLoop": "tk03_home"
+	},
+	"d4ba5b-32b9": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap 350 {hm}"
+			}
+		},
+		"trigger": [
+			{
+				"pattern": "tk_edit_icon_hsv",
+				"type": "pattern",
+				"condition": true,
+				"cmd": {
+					"action": "Screen",
+					"devices": "{deviceId}",
+					"data": {
+						"savePath": "{screen_path}"
+					}
+				},
+				"result": {
+					"x": -1,
+					"y": -1,
+					"w": -1,
+					"h": -1,
+					"wm": -1,
+					"hm": -1
+				}
+			}
+		],
+		"id": "d4ba5b-32b9",
+		"name": "CH_EDIT_ICON",
+		"desc": "edit icon",
+		"order": 0,
+		"type": "pattern",
+		"preDelay": 1400,
+		"postDelay": 2800,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 10,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-5d94",
+			"d4ba5b-5d94",
+			"d4ba5b-0090"
+		]
+	},
+	"d4ba5b-c399": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap {x} {y}"
+			}
+		},"trigger": [
+			{
+				"crop": [
+					85,
+					530,
+					496,
+					134
+				],
+				"result": "result",
+				"pre": [
+					"if (text.includes('historial')){",
+					"  x=350",
+					"  y=1407",
+					"  result = true",
+					"}"
+				]
+			},
+			{
+				"crop": [
+					122,
+					914,
+					179,
+					50
+				],
+				"result": "result",
+				"pre": [
+					"if (text.includes('permitir')){",
+					"  x=241",
+					"  y=945",
+					"  result = true",
+					"}"
+				]
+			},
+			{
+				"crop": [
+					72,
+					832,
+					529,
+					222
+				],
+				"result": "result",
+				"pre": [
+					"if (text.includes('istorial')){",
+					"  x=660",
+					"  y=486",
+					"  result = true",
+					"}"
+				]
+			},
+			{
+				"crop": [
+					116,
+					904,
+					185,
+					60
+				],
+				"result": "result",
+				"pre": [
+					"if (text.includes('permitir')){",
+					"  x=232",
+					"  y=942",
+					"  result = true",
+					"}"
+				]
+			},
+			{
+				"crop": [
+					0,
+					0,
+					720,
+					1612
+				],
+				"pre": [
+					"if (text.includes('permitir')){",
+					"  x=230",
+					"  y=1095",
+					"  result = true",
+					"}"
+				],
+				"result": "result"
+			},
+			{
+				"crop": [
+					122,
+					914,
+					179,
+					50
+				],
+				"result": "result",
+				"pre": [
+					"if (text.includes('actualizar')){",
+					"  x=350",
+					"  y=1024",
+					"  result = true",
+					"}"
+				]
+			},
+			{
+				"crop": [
+					215,
+					1382,
+					251,
+					40
+				],
+				"result": "(x>0)",
+				"pre": [
+					"if (text.includes('interesa')){",
+					"  x=370",
+					"  y=1405",
+					"  result = true",
+					"}"
+				]
+			}
+		],
+		"id": "d4ba5b-c399",
+		"name": "CH_CLOSE_MODALS",
+		"desc": "closing modals",
+		"order": 0,
+		"type": "reader",
+		"preDelay": 1800,
+		"postDelay": 2000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 10,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-32b9"
+		],
+		"getScreen": true
+	},
+	"d4ba5b-8791": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap {x} {y}"
+			}
+		},
+		"trigger": [
+			{
+				"crop": [
+					101,
+					350,
+					487,
+					316
+				],
+				"result": "result",
+				"pre": [
+					"if (text.includes('tus amigos')){",
+					"  x=650",
+					"  y=370",
+					"  result = true",
+					"}"
+				]
+			},
+			{
+				"crop": [
+					118,
+					908,
+					194,
+					60
+				],
+				"post": [],
+				"result": "result",
+				"pre": [
+					"if (text.includes('permitir')){",
+					"  x=236",
+					"  y=954",
+					"  result = true",
+					"}"
+				]
+			},
+			{
+				"crop": [
+					153,
+					362,
+					382,
+					69
+				],
+				"post": [],
+				"result": "result",
+				"pre": [
+					"if (text.includes('tus amigos')){",
+					"  x=652",
+					"  y=370",
+					"  result = true",
+					"}"
+				]
+			},
+			{
+				"crop": [
+					163,
+					550,
+					360,
+					91
+				],
+				"result": "result",
+				"pre": [
+					"if (text.includes('correo')){",
+					"  x=221",
+					"  y=1033",
+					"  result = true",
+					"}"
+				]
+			},
+			{
+				"crop": [
+					0,
+					0,
+					720,
+					1612
+				],
+				"pre": [
+					"if (text.includes('actualizar')){",
+					"  x=360",
+					"  y=1024",
+					"  result = true",
+					"}"
+				],
+				"result": "(x>0)"
+			}
+		],
+		"id": "d4ba5b-c399",
+		"name": "MAIN_CLOSE_MODALS",
+		"desc": "closing modals video",
+		"order": 0,
+		"type": "reader",
+		"preDelay": 1800,
+		"postDelay": 2000,
+		"maxLoop": 20,
+		"loop": 0,
+		"maxTry": 10,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-030d",
+			"d4ba5b-1f1e",
+			"d4ba5b-030d",
+			"d4ba5b-1f1e",
+			"d4ba5b-030d",
+			"d4ba5b-1f1e",
+			"d4ba5b-030d",
+			"d4ba5b-1f1e",
+			"d4ba5b-030d",
+			"d4ba5b-1f1e",
+			"d4ba5b-030d",
+			"d4ba5b-1f1e"
+		],
+		"getScreen": true
+	},
+	"d4ba5b-15c6": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": " am force-stop com.zhiliaoapp.musically"
+			}
+		},
+		"trigger": [],
+		"id": "d4ba5b-15c6",
+		"name": "STOP_APK",
+		"desc": "stopping apk",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 1000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-7f75"
+		]
+	},
+	"d4ba5b-08b3": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": " am force-stop com.zhiliaoapp.musically"
+			}
+		},
+		"trigger": [],
+		"id": "d4ba5b-15c6",
+		"name": "STOP_APK_2",
+		"desc": "stooped on loop",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 1000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": []
+	},
+	"d4ba5b-12f4": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "\"dumpsys activity recents | grep -o ' id=[0-9]*.' | grep -o '[0-9]*' | xargs -n 1 am stack remove \""
+			}
+		},
+		"trigger": [],
+		"id": "d4ba5b-12f4",
+		"name": "PREPARE",
+		"desc": "preparando",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 2000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-c7e2"
+		]
+	},
+	"d4ba5b-2eb3": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap 50 228 & sleep 2 ; input keyevent 4 & sleep 1 ; input keyevent 4 & sleep 1 ;  input keyevent 4 "
+			}
+		},
+		"trigger": [],
+		"id": "d4ba5b-2eb3",
+		"name": "PREPARE2",
+		"desc": "start position",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 5000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-7f75"
+		]
+	},
+	"d4ba5b-c7e2": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "am start -a android.intent.action.VIEW -d {link} com.zhiliaoapp.musically"
+			}
+		},
+		"trigger": [],
+		"id": "d4ba5b-c7e2",
+		"name": "PREPARE1",
+		"desc": "pre start",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 8000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"d4ba5b-2eb3"
+		]
+	}
+}

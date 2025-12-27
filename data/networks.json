@@ -1,0 +1,26 @@
+{
+	"6c42d377": {
+		"uuid": "6c42d377",
+		"order": 0,
+		"ssid": "WIFICORP",
+		"type": "WPA",
+		"password": "C0n5rc10-2k18",
+		"enabled": true,
+		"back": "Wifi1"
+	},
+	"6f8b54e4": {
+		"uuid": "6f8b54e4",
+		"order": 0,
+		"ssid": "GHD-01",
+		"type": "WPA",
+		"enabled": true,
+		"password": "6r4nj4-2k25"
+	},
+	"e79f63c5": {
+		"uuid": "e79f63c5",
+		"ssid": "GHD-02",
+		"type": "WPA",
+		"password": "6r4nj4-2k25",
+		"enabled": false
+	}
+}

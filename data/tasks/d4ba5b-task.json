@@ -1,0 +1,19 @@
+{
+	"d4ba5b": {
+		"id": "d4ba5b",
+		"name": "Comentarios en 3 cuentas",
+		"description": "<i class=\"bi bi-tiktok\"></i> Tiktok - \"Comentarios \" - 3 cuentas (Loop)",
+		"start": "d4ba5b-12f4",
+		"end": "d4ba5b-0090",
+		"group": "TikTok x3",
+		"type": "task",
+		"params": {
+			"link": "https://www.tiktok.com/@alisonquispelaura/video/7502860649257569591",
+			"accounts": [],
+			"comment": ""
+		},
+		"functions": {
+			"link": "tkurl"
+		}
+	}
+}
