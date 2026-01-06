@@ -6,7 +6,7 @@
 		"start": "f862aecd-9a13",
 		"end": "f862aecd-0e89",
 		"group": "Preparación",
-		"type": "task",
+		"type": "config",
 		"params": {},
 		"functions": {}
 	}

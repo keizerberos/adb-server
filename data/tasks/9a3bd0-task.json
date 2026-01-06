@@ -6,7 +6,7 @@
 		"start": "9a3bd0-8ed8",
 		"end": "9a3bd0-83c4",
 		"group": "Preparación",
-		"type": "task",
+		"type": "config",
 		"params": {
 			"credentials": "-e ssid G01-ACH -e password 9r4nj45-2k25\n-e ssid G02-ACH -e password 9r4nj45-2k25\n-e ssid G03-ACH -e password 9r4nj45-2k25\n-e ssid G04-ACH -e password 9r4nj45-2k25\n-e ssid G05-ACH -e password 9r4nj45-2k25\n-e ssid G06-ACH -e password 9r4nj45-2k25"
 		},
