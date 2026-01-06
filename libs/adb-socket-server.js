@@ -462,7 +462,8 @@ class AdbSocketServer {
 				socket.send(Buffer.from(str, "hex"));
 				//setTimeout(() => socket.send(self.hexStringToUint8Array("0A00")), 200);
 				setTimeout(() => { socket.close();  }, 600);
-			});			
+			});
+			
 		}
 		let disconnectRemote = (clientDisconnected)=>{
 			let devicesList = getDeviceRemoteList();

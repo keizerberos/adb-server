@@ -1,0 +1,18 @@
+{
+	"2ee63e": {
+		"id": "2ee63e",
+		"name": "denuncia - informacion - perjudicial",
+		"description": "denuncia x 3",
+		"start": "2ee63e-a147",
+		"end": "2ee63e-67de",
+		"group": "TikTok x3",
+		"type": "task",
+		"params": {
+			"link": "https://www.tiktok.com/@sunny.amigurumi/video/7583752093329100044",
+			"accounts": []
+		},
+		"functions": {
+			"link": "tkurl"
+		}
+	}
+}

@@ -1,0 +1,19 @@
+{
+	"0f7c6f": {
+		"id": "0f7c6f",
+		"name": "Comentarios + like",
+		"description": "<i class=\"bi bi-tiktok\"></i> Tiktok - comentarios + like",
+		"start": "0f7c6f-55af",
+		"end": "0f7c6f-0e00",
+		"group": "TikTok x3",
+		"type": "task",
+		"params": {
+			"link": "https://www.tiktok.com/@alisonquispelaura/video/7502860649257569591",
+			"accounts": [],
+			"comment": ""
+		},
+		"functions": {
+			"link": "tkurl"
+		}
+	}
+}
