@@ -414,7 +414,47 @@
 				"ssid": "G05-ACH",
 				"wifiOn": true
 			},
-			"serial": "NBA34BOAC5042619"
+			"serial": "NBA34BOAC5042619",
+			"model": "ZTE",
+			"onlySerial": "NBA34BOAC5042619",
+			"status": "device",
+			"clusterId": "hvaygpHVwU6EFoim5UAbWh",
+			"clusterAddress": "172.20.51.6",
+			"countRemotes": 1,
+			"progress": {
+				"taskId": "c3ce2e05",
+				"path": [
+					{
+						"id": "c3ce2e05-a142",
+						"completed": true,
+						"current": false
+					},
+					{
+						"id": "c3ce2e05-80e7",
+						"completed": true,
+						"current": true
+					}
+				],
+				"state": "ended",
+				"completed": [
+					"c3ce2e05-a142",
+					"c3ce2e05-80e7"
+				],
+				"texts": {},
+				"screens": {
+					"c3ce2e05-a142": [
+						1767810710059
+					]
+				},
+				"current": "c3ce2e05-80e7",
+				"start": "c3ce2e05-a142",
+				"end": "c3ce2e05-80e7",
+				"signalStop": false,
+				"fail": false,
+				"batchIndex": -1
+			},
+			"checked": true,
+			"selected": 1
 		},
 		"NBA34BOAC5042654": {
 			"number": "13",
@@ -1879,7 +1919,196 @@
 				"ssid": "G01-ACH",
 				"wifiOn": true
 			},
-			"serial": "K3RN0MT676500068"
+			"serial": "K3RN0MT676500068",
+			"model": "ZTE",
+			"onlySerial": "K3RN0MT676500068",
+			"status": "device",
+			"clusterId": "hvaygpHVwU6EFoim5UAbWh",
+			"clusterAddress": "172.20.51.6",
+			"countRemotes": 1,
+			"progress": {
+				"taskId": "2ee63e",
+				"path": [
+					{
+						"id": "2ee63e-a147",
+						"completed": true,
+						"current": false
+					},
+					{
+						"id": "2ee63e-3baf",
+						"completed": true,
+						"current": false
+					},
+					{
+						"id": "2ee63e-e3d6",
+						"completed": true,
+						"current": false
+					},
+					{
+						"id": "2ee63e-d807",
+						"completed": true,
+						"current": false
+					},
+					{
+						"id": "2ee63e-736e",
+						"completed": true,
+						"current": false
+					},
+					{
+						"id": "2ee63e-0e77",
+						"completed": true,
+						"current": false
+					},
+					{
+						"id": "2ee63e-a973",
+						"completed": true,
+						"current": false
+					},
+					{
+						"id": "2ee63e-c4b4",
+						"completed": true,
+						"current": false
+					},
+					{
+						"id": "4ed348-e75b",
+						"completed": true,
+						"current": true
+					},
+					{
+						"id": "4ed348-712b",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "4ed348-842d",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "4ed348-b107",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "4ed348-9aac",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "4ed348-da36",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "2ee63e-5a6a",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "2ee63e-0f0a",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "2ee63e-9878",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "2ee63e-5b69",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "2ee63e-aba1",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "2ee63e-72be",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "2ee63e-08cc",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "2ee63e-a274",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "2ee63e-c3d6",
+						"completed": false,
+						"current": false
+					},
+					{
+						"id": "2ee63e-67de",
+						"completed": false,
+						"current": false
+					}
+				],
+				"state": "ended",
+				"completed": [
+					"2ee63e-a147",
+					"2ee63e-3baf",
+					"2ee63e-e3d6",
+					"2ee63e-d807",
+					"2ee63e-736e",
+					"2ee63e-0e77",
+					"2ee63e-a973",
+					"2ee63e-c4b4",
+					"4ed348-e75b",
+					"4ed348-e75b",
+					"4ed348-e75b",
+					"4ed348-e75b",
+					"4ed348-e75b"
+				],
+				"texts": {},
+				"screens": {
+					"2ee63e-a147": [
+						1767807620886
+					],
+					"2ee63e-3baf": [
+						1767807623749
+					],
+					"2ee63e-e3d6": [
+						1767807631441
+					],
+					"2ee63e-d807": [
+						1767807638486
+					],
+					"2ee63e-736e": [
+						1767807640475
+					],
+					"2ee63e-0e77": [
+						1767807650729
+					],
+					"2ee63e-a973": [
+						1767807655550
+					],
+					"2ee63e-c4b4": [
+						1767807668259
+					],
+					"4ed348-e75b": [
+						1767807680773,
+						1767807686784,
+						1767807692849,
+						1767807698749,
+						1767807704482
+					]
+				},
+				"current": "4ed348-e75b",
+				"start": "2ee63e-a147",
+				"end": "2ee63e-67de",
+				"signalStop": false,
+				"fail": false,
+				"batchIndex": -1
+			},
+			"checked": true,
+			"selected": 1
 		},
 		"K3RN0MT676500069": {
 			"number": "129",

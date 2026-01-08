@@ -116,7 +116,7 @@
 					720,
 					1612
 				],
-				"pattern": "fb_share_btn_c5"
+				"pattern": "fb_share_btn_hsv_colormask"
 			}
 		],
 		"id": "1ceaf8-5a20",
@@ -132,7 +132,7 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"a279d8-b917"
+			"a279d8-9ae5"
 		]
 	},
 	"a279d8-b917": {
@@ -145,7 +145,7 @@
 		},
 		"trigger": [
 			{
-				"pattern": "fb_share_btn_c5"
+				"pattern": "fb_share_btn_hsv_colormask"
 			}
 		],
 		"id": "1ceaf8-5a20",
