@@ -95,9 +95,8 @@
 		"next": [
 			"a279d8-8ee9",
 			"a279d8-8ee9",
-			"a279d8-8ee9",
-			"a279d8-8ee9",
-			"a279d8-8ee9"
+			"a279d8-b917",
+			"a279d8-b917"
 		]
 	},
 	"a279d8-8ee9": {
@@ -145,7 +144,7 @@
 		},
 		"trigger": [
 			{
-				"pattern": "fb_share_btn_hsv_colormask"
+				"pattern": "fb_share_icon_bw_ncrop"
 			}
 		],
 		"id": "1ceaf8-5a20",
@@ -153,6 +152,31 @@
 		"desc": "CLICK_SHARE_BUTTON",
 		"order": 0,
 		"type": "pattern",
+		"preDelay": 1400,
+		"postDelay": 3800,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"a279d8-bc20"
+		]
+	},
+	"a279d8-bc20": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap 627 95"
+			}
+		},
+		"trigger": [],
+		"id": "a279d8-bc20",
+		"name": "CLICK_PUBLIC",
+		"desc": "click on publicar",
+		"order": 0,
+		"type": "static",
 		"preDelay": 1400,
 		"postDelay": 3800,
 		"maxLoop": 10,

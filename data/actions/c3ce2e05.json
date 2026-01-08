@@ -137,6 +137,31 @@
 		"maxTry": 1,
 		"try": 0,
 		"timeout": 5000,
+		"next": [
+			"c3ce2e05-9a4e"
+		]
+	},
+	"c3ce2e05-9a4e": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap 294 1214"
+			}
+		},
+		"trigger": [],
+		"id": "c3ce2e05-9a4e",
+		"name": "CLICK_INFO",
+		"desc": "click info",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 1000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
 		"next": []
 	}
 }
