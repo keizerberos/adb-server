@@ -460,7 +460,7 @@
 			"action": "adb",
 			"devices": "{deviceId}",
 			"data": {
-				"command": "\"wm size 720x612 & wm density 320\""
+				"command": "\"wm size 720x1612 & wm density 320\""
 			}
 		},
 		"trigger": [],
