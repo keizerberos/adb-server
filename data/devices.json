@@ -2891,7 +2891,15 @@
 				"ssid": "G01-ACH",
 				"wifiOn": true
 			},
-			"serial": "K3RN0MT676500146"
+			"serial": "K3RN0MT676500146",
+			"model": "ZTE",
+			"onlySerial": "K3RN0MT676500146",
+			"status": "device",
+			"clusterId": "noWsRsn3yNr7NXe7FtMnnL",
+			"clusterAddress": "172.20.60.5",
+			"countRemotes": 0,
+			"checked": true,
+			"selected": 1
 		},
 		"K3RN0MT676500147": {
 			"number": "207",

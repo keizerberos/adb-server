@@ -21,7 +21,7 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"a279d8-775d"
+			"a279d8-1580"
 		]
 	},
 	"a279d8-775d": {
@@ -29,7 +29,7 @@
 			"action": "adb",
 			"devices": "{deviceId}",
 			"data": {
-				"command": "am start -a android.intent.action.VIEW -d {link}"
+				"command": "am start -a android.intent.action.VIEW -d {link} com.facebook.lite"
 			}
 		},
 		"trigger": [],
@@ -454,5 +454,30 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": []
+	},
+	"a279d8-1580": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "\"wm size 720x612 & wm density 320\""
+			}
+		},
+		"trigger": [],
+		"id": "a279d8-1580",
+		"name": "SETUP_SCREEN",
+		"desc": "setup screen size",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 3000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"a279d8-775d"
+		]
 	}
 }
