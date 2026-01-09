@@ -5,8 +5,8 @@
 		"description": "<i class=\"bi bi-tiktok\"></i> Tiktok - \"Me gusta\" - 3 cuentas (Loop)",
 		"start": "169835-7607",
 		"end": "169835-8823",
-		"group": "TikTok x3",
-		"type": "task",
+		"group": "TikTok (test)",
+		"type": "config",
 		"params": {
 			"link": "https://www.tiktok.com/@alisonquispelaura/video/7502860649257569591",
 			"accounts": []

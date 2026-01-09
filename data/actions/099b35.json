@@ -374,7 +374,8 @@
 			"data": {
 				"command": "input tap {x} {y}"
 			}
-		},"trigger": [
+		},
+		"trigger": [
 			{
 				"crop": [
 					85,
