@@ -599,7 +599,7 @@ function executeTask(devices, task) {
 		} else
 			params[param.id] = { random: false, index: 0, data: paramLines };
 	});
-	devicesActions = {};
+	//devicesActions = {}; //TEST MULTIEXECUTE
 	console.log("params", params);
 	let countEnded = 0;
 	devices.forEach((d, ii) => {
@@ -979,15 +979,15 @@ class Executor {
 		androidPattern = _patterns;
 	}
 	startTask(devices, task) {
-		eventNodes = [];
+		//eventNodes = []; //TEST MULTIEXECUTE
 		signalStop = false;
 		executeTask(devices, task);
 	}
 	startTaskBatch(_devices, task) {
-		eventNodes = [];
+		//eventNodes = []; //TEST MULTIEXECUTE
 		signalStop = false;
 	
-		devicesActions = {};
+		//devicesActions = {};
 		let batchs = [];
 		let params = [];
 		console.log("building batch");
