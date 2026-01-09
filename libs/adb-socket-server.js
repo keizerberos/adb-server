@@ -564,6 +564,13 @@ class AdbSocketServer {
 						this.saveDevices();
 					}
 				});				
+				socket.on("remote.message", (data)=>{
+					//console.log("remote.message", data);
+					const parentClient = clients.find(c=>data.parentUid==c.uuid);
+					if (parentClient!=null){
+						parentClient.socket.emit("remote.message",data);
+					}					
+				});
 				socket.on("window.update", (data)=>{
 					Log.i("window.update");
 					Log.o(data);
