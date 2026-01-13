@@ -642,10 +642,12 @@ function executeTask(devices, task) {
 				signalStop = false;
 			}
 		}, () => {
-			devicesActions[d.serial]['progress'] = null;
-			devicesActions[d.serial]['params'] = null;
-			devicesActions[d.serial] = null;
-			delete devicesActions[d.serial];
+			if ((countEnded) == devices.length && devicesActions[d.serial]!=undefined) {
+				devicesActions[d.serial]['progress'] = null;
+				devicesActions[d.serial]['params'] = null;
+				devicesActions[d.serial] = null;
+				delete devicesActions[d.serial];
+			}
 			console.log("executeTask:executeGraph.incomplete")
 		});
 	});
@@ -688,7 +690,7 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 			countEnded++;
 			console.log("executeTask:executeGraph.incomplete")
 
-			if ((countEnded) == devices.length) {
+			if ((countEnded) == devices.length && devicesActions[d.serial]!=undefined) {
 				devicesActions[d.serial]['progress']['state'] = 'ended';
 				events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 				devicesActions[d.serial]['progress'] = null;
@@ -754,10 +756,13 @@ function resumeTask(devices, task) {
 				signalStop = false;
 			}
 		}, () => {
-			devicesActions[d.serial]['progress'] = null;
-			devicesActions[d.serial]['params'] = null;
-			devicesActions[d.serial] = null;
-			delete devicesActions[d.serial];
+			
+			if ((countEnded) == devices.length && devicesActions[d.serial]!=undefined) {
+				devicesActions[d.serial]['progress'] = null;
+				devicesActions[d.serial]['params'] = null;
+				devicesActions[d.serial] = null;
+				delete devicesActions[d.serial];
+			}
 			console.log("executeTask:executeGraph.incomplete")
 		});
 	});
