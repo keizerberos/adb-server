@@ -1,0 +1,354 @@
+{
+	"devices": [],
+	"schedule": {
+		"frecuency": "",
+		"frecuencyArray": [
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false
+		],
+		"repeat": false,
+		"haveEnd": false,
+		"endDate": "06/05/2025 14:00:00",
+		"dateTime": "2026-01-13T00:00",
+		"time": "14:00:00",
+		"enabled": true
+	},
+	"scheduleTask": {
+		"preTasks": [
+			{
+				"uuid": "open_url",
+				"devices": "",
+				"config": {
+					"offset": "6",
+					"isBatch": true,
+					"batch": {
+						"quantity": 0,
+						"explicit": false,
+						"offset": "23",
+						"groupsText": "",
+						"groups": []
+					}
+				},
+				"params": [
+					{
+						"id": "link",
+						"value": " nnnnn",
+						"collapsed": false,
+						"isArray": false
+					}
+				],
+				"task": {
+					"name": "Abrir Url",
+					"group": "Configuraciones",
+					"type": "config",
+					"description": "<i class=\"bi bi-gear\"></i> Abrir Url",
+					"params": {
+						"link": ""
+					},
+					"functions": {
+						"link": "fburl"
+					},
+					"start": "uri_1",
+					"end": "uri_1",
+					"progressPath": [
+						{
+							"id": "uri_1"
+						}
+					],
+					"id": "open_url",
+					"paramsArray": [
+						{
+							"id": "link",
+							"value": "",
+							"collapsed": false,
+							"isArray": false
+						}
+					]
+				}
+			}
+		],
+		"havePreTask": true,
+		"postTasks": [],
+		"havePostTask": false,
+		"preBatchTasks": [
+			{
+				"uuid": "change_keyboard",
+				"devices": "",
+				"config": {
+					"offset": 5,
+					"isBatch": true,
+					"batch": {
+						"quantity": 0,
+						"explicit": false,
+						"offset": 5,
+						"groupsText": "",
+						"groups": []
+					}
+				},
+				"params": [],
+				"task": {
+					"name": "Cambiar Input Media Editor(IME)",
+					"group": "Configuraciones",
+					"type": "config",
+					"description": "<i class=\"bi bi-gear\"></i> Cambiar Input Media Editor (IME)",
+					"params": {},
+					"start": "ime_1",
+					"end": "ime_2",
+					"progressPath": [
+						{
+							"id": "ime_1"
+						},
+						{
+							"id": "ime_2"
+						}
+					],
+					"id": "change_keyboard",
+					"paramsArray": []
+				}
+			},
+			{
+				"uuid": "open_url",
+				"devices": "",
+				"config": {
+					"offset": 5,
+					"isBatch": true,
+					"batch": {
+						"quantity": 0,
+						"explicit": false,
+						"offset": 5,
+						"groupsText": "",
+						"groups": []
+					}
+				},
+				"params": [
+					{
+						"id": "link",
+						"value": " aaaaa",
+						"collapsed": false,
+						"isArray": false
+					}
+				],
+				"task": {
+					"name": "Abrir Url",
+					"group": "Configuraciones",
+					"type": "config",
+					"description": "<i class=\"bi bi-gear\"></i> Abrir Url",
+					"params": {
+						"link": ""
+					},
+					"functions": {
+						"link": "fburl"
+					},
+					"start": "uri_1",
+					"end": "uri_1",
+					"progressPath": [
+						{
+							"id": "uri_1"
+						}
+					],
+					"id": "open_url",
+					"paramsArray": [
+						{
+							"id": "link",
+							"value": "",
+							"collapsed": false,
+							"isArray": false
+						}
+					]
+				}
+			}
+		],
+		"havePreBatchTask": true,
+		"postBatchTasks": [
+			{
+				"uuid": "wifi_change",
+				"devices": "",
+				"config": {
+					"offset": 5,
+					"isBatch": true,
+					"batch": {
+						"quantity": 0,
+						"explicit": false,
+						"offset": 5,
+						"groupsText": "",
+						"groups": []
+					}
+				},
+				"params": [
+					{
+						"id": "ssid",
+						"value": "WIFICORP",
+						"collapsed": false,
+						"isArray": false
+					},
+					{
+						"id": "password_type",
+						"value": "WPA",
+						"collapsed": false,
+						"isArray": false
+					},
+					{
+						"id": "password",
+						"value": "",
+						"collapsed": false,
+						"isArray": false
+					}
+				],
+				"task": {
+					"name": "Cambiar WIFI",
+					"group": "Configuraciones",
+					"type": "config",
+					"description": "<i class='bi bi-gear'></i> Cambiar Wifi",
+					"params": {
+						"ssid": "WIFICORP",
+						"password_type": "WPA",
+						"password": ""
+					},
+					"functions": {},
+					"start": "wifi_action_1",
+					"end": "wifi_action_2",
+					"progressPath": [
+						{
+							"id": "wifi_action_1"
+						},
+						{
+							"id": "wifi_action_2"
+						}
+					],
+					"id": "wifi_change",
+					"paramsArray": [
+						{
+							"id": "ssid",
+							"value": "WIFICORP",
+							"collapsed": false,
+							"isArray": false
+						},
+						{
+							"id": "password_type",
+							"value": "WPA",
+							"collapsed": false,
+							"isArray": false
+						},
+						{
+							"id": "password",
+							"value": "",
+							"collapsed": false,
+							"isArray": false
+						}
+					]
+				}
+			}
+		],
+		"havePostBatchTask": true,
+		"scheduleTasks": [],
+		"haveScheduleTask": false
+	},
+	"task": {
+		"id": "a7d8ea",
+		"name": "tiktok follow x3",
+		"description": "tiktok follow x3",
+		"start": "a7d8ea-29f8",
+		"end": "a7d8ea-2137",
+		"group": "TikTok x3",
+		"type": "task",
+		"params": {
+			"link": "https://www.tiktok.com/@sunny.amigurumi",
+			"accounts": []
+		},
+		"functions": {
+			"link": "tkurl"
+		},
+		"progressPath": [
+			{
+				"id": "a7d8ea-29f8"
+			},
+			{
+				"id": "a7d8ea-30a6"
+			},
+			{
+				"id": "a7d8ea-1909"
+			},
+			{
+				"id": "a7d8ea-5889"
+			},
+			{
+				"id": "a7d8ea-09be"
+			},
+			{
+				"id": "a7d8ea-ee1b"
+			},
+			{
+				"id": "a7d8ea-abda"
+			},
+			{
+				"id": "a7d8ea-e711"
+			},
+			{
+				"id": "a7d8ea-fa78"
+			},
+			{
+				"id": "a7d8ea-ee4c"
+			},
+			{
+				"id": "a7d8ea-5401"
+			},
+			{
+				"id": "a7d8ea-eaf1"
+			},
+			{
+				"id": "a7d8ea-972d"
+			},
+			{
+				"id": "a7d8ea-d8df"
+			},
+			{
+				"id": "a7d8ea-bf05"
+			},
+			{
+				"id": "a7d8ea-1f7f"
+			},
+			{
+				"id": "a7d8ea-b0af"
+			},
+			{
+				"id": "a7d8ea-c19f"
+			},
+			{
+				"id": "a7d8ea-2137"
+			},
+			{
+				"id": "a7d8ea-0cb0"
+			}
+		],
+		"paramsArray": [
+			{
+				"id": "link",
+				"value": "https://www.tiktok.com/@sunny.amigurumi",
+				"collapsed": false,
+				"isArray": false
+			},
+			{
+				"id": "accounts",
+				"value": [],
+				"collapsed": false,
+				"isArray": true
+			}
+		],
+		"config": {
+			"offset": 5,
+			"isBatch": false,
+			"batch": {
+				"quantity": 0,
+				"explicit": false,
+				"offset": 5,
+				"groupsText": "",
+				"groups": []
+			}
+		}
+	}
+}

@@ -9,6 +9,7 @@ const short = require('short-uuid');
 const fs = require('fs');
 const path = require('path');
 const { Console } = require('console');
+const shortUUID = require('short-uuid');
 let devicesData = JSON.parse(fs.readFileSync('./data/devices.json', 'utf8'));
 let actionsData = JSON.parse(fs.readFileSync('./data/actions.json', 'utf8'));
 let patternsData = JSON.parse(fs.readFileSync('./data/patterns.json', 'utf8'));
@@ -23,6 +24,15 @@ let saveProgrammed = false;
 let Log = null;
 let Dbm = null;
 
+function generateShortHexId(length) {
+    let result = '';
+    const characters = '0123456789abcdef';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
 function generateUniqueId(str) {
 	const hash = crypto.createHash('sha256'); // Ysou can choose a different hash algorithm if needed
 	hash.update(str);
@@ -206,6 +216,23 @@ class AdbSocketServer {
 			});
 		})
 	}
+	saveSchedule(schedule){		
+		let id = schedule.id;
+		if (id == null)
+			id = generateShortHexId(6);
+		return new Promise((res,rej)=>{
+			fs.writeFile(`./data/schedule/${id}.json`,JSON.stringify(schedule, null, '\t'),'utf8', (err)=>{
+				if (err) {
+					console.error('schedule.new Error writing file:', err);
+					rej();
+					return;
+				}
+				console.log('schedule.new written successfully!');
+				res();
+			});
+		})
+	}
+	
 	deleteTask(idTask){		
 		return new Promise((res,rej)=>{
 			if (fs.existsSync(`./data/tasks/${idTask}-task.json`)){
@@ -749,6 +776,12 @@ class AdbSocketServer {
 					Log.o(data);
 					this.executor.startTaskBatch(data.devices, data.task);
 				});
+				socket.on("schedule.task", (data) => {
+					Log.i("schedule.task");
+					Log.o(data);
+					this.saveSchedule(data);
+					//this.executor.startTaskBatch(data.devices, data.task);
+				});				
 				socket.on("tasks.resume", (data) => {
 					Log.i("tasks.resume ");
 					Log.o(data);

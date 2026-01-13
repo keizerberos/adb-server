@@ -92,6 +92,16 @@ function updateParams(data,params){
 		data[k] = replaceParams(params, data[k]);
 	})
 }
+
+function clearEventNodes(devices){
+		devices.forEach((device)=>{
+			eventNodes.forEach((e,i)=>{
+				if(e.deviceId == device.serial){
+					eventNodes.splice(i,1);
+				}
+			});
+		});		
+	}
 function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 	console.log("executeNode init");
 	if (action == null) { cbSuccess(); return; }
@@ -980,11 +990,13 @@ class Executor {
 	}
 	startTask(devices, task) {
 		//eventNodes = []; //TEST MULTIEXECUTE
+		clearEventNodes(devices);
 		signalStop = false;
 		executeTask(devices, task);
 	}
 	startTaskBatch(_devices, task) {
 		//eventNodes = []; //TEST MULTIEXECUTE
+		clearEventNodes(_devices);
 		signalStop = false;
 	
 		//devicesActions = {};
@@ -1030,7 +1042,8 @@ class Executor {
 		batchExecutor(0);
 	}
 	resumeTask(devices, task) {
-		eventNodes = [];
+		// eventNodes = [];  // TEST MULTIEXECUTE
+		clearEventNodes(devices);
 		devices.forEach(d=>{
 			devicesActions[d.serial]['progress']['signalStop'] = false;
 		});
