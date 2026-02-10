@@ -161,7 +161,8 @@
 		"postBatchTasks": [],
 		"havePostBatchTask": false,
 		"scheduleTasks": [],
-		"haveScheduleTask": true
+		"haveScheduleTask": true,
+		"executed": true
 	},
 	"task": {
 		"id": "4ed348",
@@ -263,5 +264,6 @@
 			}
 		}
 	},
-	"id": "f21875"
+	"id": "f21875",
+	"state": "running"
 }

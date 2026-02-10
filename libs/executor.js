@@ -1237,7 +1237,7 @@ class Executor {
 			});
 		}
 		const mainTask = schedule.task;
-		const groupMainDevices = getGroupDevices(_devices, schdule.config.groupsText);		
+		const groupMainDevices = getGroupDevices(_devices, schedule.config.groupsText);		
 		let batch = (cb)=>{
 			setTimeout(()=>{
 				self.startTaskBatchEvents(groupMainDevices, mainTask, ()=>{

@@ -97,13 +97,13 @@ class LoginModule{
                 //this.socket.offAny();
             });
             this.socket.on("user.create",(data)=>{
-                console.log("auth",data);
+                console.log("user.create",data);
             });
             this.socket.on("user.update",(data)=>{
-                console.log("auth",data);
+                console.log("user.update",data);
             });
             this.socket.on("user.delete",(data)=>{
-                console.log("auth",data);
+                console.log("user.delete",data);
             });
         }
     }
