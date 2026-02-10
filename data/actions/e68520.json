@@ -231,7 +231,7 @@
 		"desc": "DO_SHARE_ICON",
 		"trigger": [
 			{
-				"pattern": "tk_share_icon_c3_inv10"
+				"pattern": "tk_share_icon_c3_inv12"
 			}
 		],
 		"command": {

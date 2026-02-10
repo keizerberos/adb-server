@@ -1,7 +1,11 @@
 const { LoginModule } = require('./modules/login.module');
+const { FBQuery } = require('./modules/fbquery.module.js');
 const { FastServer } = require('./fast-server');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const { Worker } = require('node:worker_threads');
+
+
 const WebSocket	= require('ws');
 
 const {Executor,genPlant} = require("./executor.js");
@@ -17,13 +21,18 @@ let networksData = JSON.parse(fs.readFileSync('./data/networks.json', 'utf8'));
 
 let tasks = {};
 let actions = {};
+let schedules = {};
 const taskPath = "./data/tasks";
+const schedulePath = "./data/schedules";
 const actionsPath = "./data/actions";
 let saveProgrammed = false;
 
 let Log = null;
 let Dbm = null;
 
+const schedulerWorker = new Worker('./libs/workers/scheduler.worker.js', { 
+    workerData: {	timerEach : 5000, schedulePath:schedulePath }
+});
 function generateShortHexId(length) {
     let result = '';
     const characters = '0123456789abcdef';
@@ -131,6 +140,7 @@ class AdbSocketServer {
 		const clusters = [];
 		this.modules = [];
 		this.loginModule = new LoginModule(Dbm);
+		this.FBQuery = new FBQuery();
 		this.modules.push(this.loginModule);
 		this.startServer(clients, clusters, devices);
 		this.startServerCluster(clients, clusters, devices);
@@ -221,7 +231,7 @@ class AdbSocketServer {
 		if (id == null)
 			id = generateShortHexId(6);
 		return new Promise((res,rej)=>{
-			fs.writeFile(`./data/schedule/${id}.json`,JSON.stringify(schedule, null, '\t'),'utf8', (err)=>{
+			fs.writeFile(`./data/schedules/${id}-schedule.json`,JSON.stringify(schedule, null, '\t'),'utf8', (err)=>{
 				if (err) {
 					console.error('schedule.new Error writing file:', err);
 					rej();
@@ -290,6 +300,21 @@ class AdbSocketServer {
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
 		const httpServer = createServer(fastServer);
 		self.modules.forEach(m=>m.when("startServer.init", {fastServer:fastServer, clients:clients}));
+		/*schedulerWorker.on("message",(message)=>{
+			console.log("worker:",message);
+		});*/
+		schedulerWorker.on("message",(message)=>{
+			//console.log("worker:",message.command);
+			if ( message.command == "schedule.run"){
+				console.info("[execute.schedule.payload]",message.payload.id);
+				self.executor.startTaskSchedule(devices, message.payload);
+			}
+			if ( message.command == "schedule.load"){
+				schedules = message.payload;
+				//console.log("schedules.payload",message.payload);
+			}
+		});
+		
 		fastServer.get("/tasks",(req,res)=>{ 
 			const task = tasks[req.query.id];
 			res.setHeader('Content-Type', 'application/json');
@@ -355,8 +380,20 @@ class AdbSocketServer {
 					cluster.socket.emit("adb", data);
 				}				
 			}
-			res.send(JSON.stringify('{"response":"ok}'));
-		});		
+			res.send(JSON.stringify('{"response":"ok"}'));
+		});
+		fastServer.post("/fbquery",(req,res)=>{
+			res.setHeader('Content-Type', 'application/json');
+			this.FBQuery.url(req.body.url).then(
+				(r)=>{
+					res.send(JSON.stringify(r));
+				}
+			).catch(
+				(e)=>{
+					res.send(JSON.stringify(e));
+				}
+			);
+		});
 		fastServer.post("/pattern.upload",(req,res)=>{			
     		const data = req.body.data;
 			const name = req.body.name;
@@ -779,7 +816,10 @@ class AdbSocketServer {
 				socket.on("schedule.task", (data) => {
 					Log.i("schedule.task");
 					Log.o(data);
-					this.saveSchedule(data);
+					this.saveSchedule(data).then((res)=>{
+						//scanScheduleFolder();
+						schedulerWorker.postMessage({ command: 'schedule.loading', payload: null });
+					});
 					//this.executor.startTaskBatch(data.devices, data.task);
 				});				
 				socket.on("tasks.resume", (data) => {

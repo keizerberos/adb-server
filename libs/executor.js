@@ -126,6 +126,7 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 		return;
 	}
 
+	
 	console.log("executeNode currentAction.preDelay actionIndex currentAction.loop", nodeAction, currentAction.preDelay, actionIndex,currentAction.loop);
 	setTimeout(() => {
 		doPreTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail);
@@ -142,7 +143,28 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 		executeNode(beforeLoop,0,deviceId,params,cbSuccess,cbFail);
 		return;
 	}*/
-
+function getGroupDevices(devicesAll, devicesTxt){
+		let splitGroups = devicesTxt.split(',');//ev.target.value.split(',');
+		let groups = [];
+		splitGroups.forEach((grp) => {
+			let group = [];
+			groups.push(group);
+			if (grp.includes('-')) {
+				let st = parseInt(grp.split('-')[0]);
+				let en = parseInt(grp.split('-')[1]);
+				devicesAll.forEach((device) => {
+					if (parseInt(device.number) >= st && parseInt(device.number) <= en)
+						group.push(device);
+				});
+			} else {
+				let st = parseInt(grp);
+				devicesAll.forEach((device) => {
+					if (parseInt(device.number) == st) group.push(device);
+				});
+			}
+		});
+		return groups; 
+	}
 async function doPreTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail){
 	if ( devicesActions[deviceId] == undefined) {cbFail(); return;}
 	devicesActions[deviceId]['progress']['completed'].push(nodeAction);
@@ -952,7 +974,7 @@ class Executor {
 				eventNodes.forEach((e, i) => {
 					if (e.deviceId == id) {
 						console.error("event fail");
-						e.cbError();
+						if (e.cbError!=null) e.cbError();
 						eventNodes.splice(i, 1);
 					}
 				});
@@ -999,7 +1021,7 @@ class Executor {
 		signalStop = false;
 		executeTask(devices, task);
 	}
-	startTaskBatch(_devices, task) {
+	startTaskBatch(_devices, task, cbEnd) {
 		//eventNodes = []; //TEST MULTIEXECUTE
 		clearEventNodes(_devices);
 		signalStop = false;
@@ -1013,8 +1035,7 @@ class Executor {
 			executeTask(_devices, task);
 			return;
 		}
-		task.paramsArray.forEach(param => {
-				
+		task.paramsArray.forEach(param => {				
 			if(Array.isArray(param.value)){			
 				params[param.id] = param.value;
 				return;
@@ -1025,6 +1046,7 @@ class Executor {
 			} else
 				params[param.id] = { random: false, index: 0, data: paramLines };
 		});
+
 		task.config.batch.groups.forEach(groupDevices=>{
 			let batch = (cb)=>{
 				setTimeout(()=>{
@@ -1035,9 +1057,15 @@ class Executor {
 			};
 			batchs.push(batch);
 		});
+
 		console.log("starting batch executor");
 		let batchExecutor = (index)=>{
-			if (batchs[index]==undefined) {console.log("ending all batch"); batchs=null; cleanVar(_devices);cleanVar(task); return};
+			if (batchs[index]==undefined) {
+					console.log("ending all batch"); 
+					batchs=null; 
+					cleanVar(_devices);cleanVar(task); 
+					if (cbEnd!=null) cbEnd(); 
+					return};
 			console.log("start batch " + index + " of " +batchs.length);
 			batchs[index](()=>{
 				console.log("ended batch " + index);				
@@ -1046,6 +1074,191 @@ class Executor {
 		};
 		batchExecutor(0);
 	}
+	
+	startTaskBatchEvents(_devices, task, cbEnd, preTasks, postTasks) {
+		//eventNodes = []; //TEST MULTIEXECUTE
+		clearEventNodes(_devices);
+		signalStop = false;
+	
+		//devicesActions = {};
+		let batchs = [];
+		let params = [];
+		console.log("building batch");
+
+		if (!task.config.isBatch){
+			executeTask(_devices, task);
+			return;
+		}
+		task.paramsArray.forEach(param => {				
+			if(Array.isArray(param.value)){			
+				params[param.id] = param.value;
+				return;
+			}
+			const paramLines = param.value.split('\n');
+			if (paramLines.length < 2) {
+				params[param.id] = param.value;
+			} else
+				params[param.id] = { random: false, index: 0, data: paramLines };
+		});
+
+		task.config.batch.groups.forEach(groupDevices=>{
+			preTasks.forEach(preTask=>{				
+				batchs.push(preTask);
+			});
+			
+			let batch = (cb)=>{
+				setTimeout(()=>{
+					executeTaskBatch(groupDevices, params, task, ()=>{
+						cb();
+					});
+				},task.config.batch.offset*1000);
+			};
+			batchs.push(batch);
+			
+			postTasks.forEach(postTask=>{				
+				batchs.push(postTask);
+			});
+		});
+		
+		console.log("starting batch executor");
+		let batchExecutor = (index)=>{
+			if (batchs[index]==undefined) {
+					console.log("ending all batch"); 
+					batchs=null; 
+					cleanVar(_devices);cleanVar(task); 
+					if (cbEnd!=null) cbEnd(); 
+					return};
+			console.log("start batch " + index + " of " +batchs.length);
+			batchs[index](()=>{
+				console.log("ended batch " + index);				
+				batchExecutor(index+1);
+			});
+		};
+		batchExecutor(0);
+	}
+	startTaskSchedule(_devices, schedule) {
+		//eventNodes = []; //TEST MULTIEXECUTE
+		const self = this;;
+		clearEventNodes(_devices);
+		signalStop = false;
+	
+		//devicesActions = {};
+		let batchsArray = [];
+		let params = [];
+		console.log("building batch schedule");
+
+		console.log("schedule.scheduleTask.havePreTask", schedule.scheduleTask.havePreTask);
+
+		//ADD PRE TASKS
+		if (schedule.scheduleTask.havePreTask)
+			schedule.scheduleTask.preTasks.forEach(task => {
+				const groupDevices = getGroupDevices(_devices,task.devices);
+				task.config.batch.groups = groupDevices;
+				task.task['paramsArray'] = task.params;
+				task.task['config'] = task.config;
+				task.task['paramsArray'].forEach(param => {					
+					if(Array.isArray(param.value)){			
+						params[param.id] = param.value;
+						return;
+					}
+					const paramLines = param.value.split('\n');
+					if (paramLines.length < 2) {
+						params[param.id] = param.value;
+					} else
+						params[param.id] = { random: false, index: 0, data: paramLines };
+				});
+
+				let batch = (cb)=>{
+					setTimeout(()=>{
+						self.startTaskBatch(groupDevices, task.task, ()=>{
+							cb();
+						});
+					},5000);
+				};
+				batchsArray.push(batch);
+			});
+
+		//ADD PRE BATCH TASKS
+		const batchsPreArray = [];		
+		const batchsPostArray = [];
+		
+		if (schedule.scheduleTask.havePreBatchTask){			
+			schedule.scheduleTask.preBatchTasks.forEach(preTask => {
+				const groupDevices = getGroupDevices(_devices, preTask.devices);
+				preTask.config.batch.groups = groupDevices;
+				preTask.task['paramsArray'] = preTask.params;
+				preTask.task['config'] = preTask.config;
+				preTask.task['paramsArray'].forEach(param => {					
+					if(Array.isArray(param.value)){			
+						params[param.id] = param.value;
+						return;
+					}
+					const paramLines = param.value.split('\n');
+					if (paramLines.length < 2) {
+						params[param.id] = param.value;
+					} else
+						params[param.id] = { random: false, index: 0, data: paramLines };
+					});
+					let batch = (cb)=>{
+						setTimeout(()=>{
+							self.startTaskBatch(groupDevices, preTask.task, ()=>{
+								cb();
+							});
+						},2000);
+					};
+					batchsPreArray.push(batch);
+				});
+			}
+			if (schedule.scheduleTask.havePostBatchTask){	
+				schedule.scheduleTask.postBatchTasks.forEach(postTask => {
+					const groupDevices = getGroupDevices(_devices, postTask.devices);
+					postTask.config.batch.groups = groupDevices;
+					postTask.task['paramsArray'] = postTask.params;
+					postTask.task['config'] = postTask.config;
+					postTask.task['paramsArray'].forEach(param => {					
+						if(Array.isArray(param.value)){			
+							params[param.id] = param.value;
+							return;
+						}
+						const paramLines = param.value.split('\n');
+						if (paramLines.length < 2) {
+							params[param.id] = param.value;
+						} else
+							params[param.id] = { random: false, index: 0, data: paramLines };
+						});
+				let batch = (cb)=>{
+					setTimeout(()=>{
+						self.startTaskBatch(groupDevices, postTask.task, ()=>{
+							cb();
+						});
+					},2000);
+				};
+				batchsPostArray.push(batch);
+			});
+		}
+		const mainTask = schedule.task;
+		const groupMainDevices = getGroupDevices(_devices, schdule.config.groupsText);		
+		let batch = (cb)=>{
+			setTimeout(()=>{
+				self.startTaskBatchEvents(groupMainDevices, mainTask, ()=>{
+					cb();
+				}, preBatchTasks, postBatchTasks);
+			},2000);
+		};
+		batchsPostArray.push(batch);
+				
+		console.log("starting batchArrayExecutor");
+		let batchArrayExecutor = (index)=>{
+			if (batchsArray[index]==undefined) {console.log("ending all batchArray"); batchsArray=null; return};
+			console.log("start batchArray " + index + " of " +batchsArray.length);
+			batchsArray[index](()=>{
+				console.log("ended batchArray " + index);				
+				batchArrayExecutor(index+1);
+			});
+		};
+		batchArrayExecutor(0);
+	}
+
 	resumeTask(devices, task) {
 		// eventNodes = [];  // TEST MULTIEXECUTE
 		clearEventNodes(devices);
