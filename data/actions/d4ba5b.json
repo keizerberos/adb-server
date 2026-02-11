@@ -62,7 +62,7 @@
 		"type": "static",
 		"preDelay": 2000,
 		"postDelay": 4000,
-		"maxLoop": 3,
+		"maxLoop": 2,
 		"loop": 0,
 		"maxTry": 1,
 		"try": 0,
@@ -554,7 +554,8 @@
 			"data": {
 				"command": "input tap {x} {y}"
 			}
-		},"trigger": [
+		},
+		"trigger": [
 			{
 				"crop": [
 					85,

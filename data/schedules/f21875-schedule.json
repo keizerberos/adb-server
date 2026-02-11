@@ -1,0 +1,269 @@
+{
+	"devices": [],
+	"schedule": {
+		"frequencyDay": "",
+		"frequencyDayArray": [
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false
+		],
+		"frequencyHour": "",
+		"frequencyHourArray": [
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			false
+		],
+		"repeatDay": false,
+		"repeatHour": false,
+		"haveEnd": false,
+		"endDate": "06/05/2025 14:00:00",
+		"startDate": "2026-01-16",
+		"name": "",
+		"group": "",
+		"startTime": "02:19",
+		"enabled": true
+	},
+	"scheduleTask": {
+		"preTasks": [
+			{
+				"id": "open_url",
+				"devices": "4-5",
+				"config": {
+					"offset": 5,
+					"isBatch": true,
+					"batch": {
+						"quantity": 0,
+						"explicit": false,
+						"offset": 5,
+						"groupsText": "",
+						"groups": []
+					}
+				},
+				"params": [
+					{
+						"id": "link",
+						"value": " https://www.facebook.com/groups/341494286689701/user/100083450043015/",
+						"collapsed": false,
+						"isArray": false
+					}
+				],
+				"task": {
+					"name": "Abrir Url",
+					"group": "Configuraciones",
+					"type": "config",
+					"description": "<i class=\"bi bi-gear\"></i> Abrir Url",
+					"params": {
+						"link": ""
+					},
+					"functions": {
+						"link": "fburl"
+					},
+					"start": "uri_1",
+					"end": "uri_1",
+					"progressPath": [
+						{
+							"id": "uri_1"
+						}
+					],
+					"id": "open_url",
+					"paramsArray": [
+						{
+							"id": "link",
+							"value": "",
+							"collapsed": false,
+							"isArray": false
+						}
+					]
+				}
+			},
+			{
+				"id": "open_url",
+				"devices": "6-7",
+				"config": {
+					"offset": 5,
+					"isBatch": true,
+					"batch": {
+						"quantity": 0,
+						"explicit": false,
+						"offset": 5,
+						"groupsText": "",
+						"groups": []
+					}
+				},
+				"params": [
+					{
+						"id": "link",
+						"value": "https://www.facebook.com/LaFokaMusica/posts/pfbid02Atj1EzQjqFQ8NmZ5H7WrdY5J7J5phgNeepevXbaFMYLrJghqig9i7FYD1JAEjx57l",
+						"collapsed": false,
+						"isArray": false
+					}
+				],
+				"task": {
+					"name": "Abrir Url",
+					"group": "Configuraciones",
+					"type": "config",
+					"description": "<i class=\"bi bi-gear\"></i> Abrir Url",
+					"params": {
+						"link": ""
+					},
+					"functions": {
+						"link": "fburl"
+					},
+					"start": "uri_1",
+					"end": "uri_1",
+					"progressPath": [
+						{
+							"id": "uri_1"
+						}
+					],
+					"id": "open_url",
+					"paramsArray": [
+						{
+							"id": "link",
+							"value": "",
+							"collapsed": false,
+							"isArray": false
+						}
+					]
+				}
+			}
+		],
+		"havePreTask": true,
+		"postTasks": [],
+		"havePostTask": false,
+		"preBatchTasks": [],
+		"havePreBatchTask": false,
+		"postBatchTasks": [],
+		"havePostBatchTask": false,
+		"scheduleTasks": [],
+		"haveScheduleTask": true,
+		"executed": true
+	},
+	"task": {
+		"id": "4ed348",
+		"name": "tiktok LIKE x3",
+		"description": "tiktok LIKE  x3",
+		"start": "4ed348-98bc",
+		"end": "4ed348-8638",
+		"group": "TikTok x3",
+		"type": "task",
+		"params": {
+			"link": "https://www.tiktok.com/@sunny.amigurumi/video/7583752093329100044",
+			"accounts": []
+		},
+		"functions": {
+			"link": "tkurl"
+		},
+		"progressPath": [
+			{
+				"id": "4ed348-98bc"
+			},
+			{
+				"id": "4ed348-b7cc"
+			},
+			{
+				"id": "4ed348-517f"
+			},
+			{
+				"id": "4ed348-f824"
+			},
+			{
+				"id": "4ed348-5e2d"
+			},
+			{
+				"id": "4ed348-f2b7"
+			},
+			{
+				"id": "4ed348-0180"
+			},
+			{
+				"id": "4ed348-67bb"
+			},
+			{
+				"id": "4ed348-e664"
+			},
+			{
+				"id": "4ed348-a20f"
+			},
+			{
+				"id": "4ed348-cbbe"
+			},
+			{
+				"id": "4ed348-7697"
+			},
+			{
+				"id": "4ed348-bc51"
+			},
+			{
+				"id": "4ed348-2409"
+			},
+			{
+				"id": "4ed348-6575"
+			},
+			{
+				"id": "4ed348-39e2"
+			},
+			{
+				"id": "4ed348-f0af"
+			},
+			{
+				"id": "4ed348-e726"
+			},
+			{
+				"id": "4ed348-8638"
+			}
+		],
+		"paramsArray": [
+			{
+				"id": "link",
+				"value": "https://www.tiktok.com/@sunny.amigurumi/video/7583752093329100044",
+				"collapsed": false,
+				"isArray": false
+			},
+			{
+				"id": "accounts",
+				"value": [],
+				"collapsed": false,
+				"isArray": true
+			}
+		],
+		"config": {
+			"offset": 5,
+			"isBatch": false,
+			"batch": {
+				"quantity": 0,
+				"explicit": false,
+				"offset": 5,
+				"groupsText": "",
+				"groups": []
+			}
+		}
+	},
+	"id": "f21875",
+	"state": "running"
+}

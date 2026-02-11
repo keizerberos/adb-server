@@ -1,5 +1,5 @@
 {
-	"099b35-211a": {
+	"2ee63e-5a6a": {
 		"name": "CH_BACK_0",
 		"desc": "CH_BACK_0",
 		"trigger": [],
@@ -20,10 +20,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-eb36"
+			"2ee63e-0f0a"
 		]
 	},
-	"099b35-5d1a": {
+	"2ee63e-f66b": {
 		"name": "CH_BACK",
 		"desc": "Back page to profile",
 		"trigger": [],
@@ -44,10 +44,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-3bc0"
+			"2ee63e-5b69"
 		]
 	},
-	"099b35-4e20": {
+	"2ee63e-a274": {
 		"name": "CH_BACK_2",
 		"desc": "Back page",
 		"trigger": [],
@@ -68,10 +68,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-11c5"
+			"2ee63e-a973"
 		]
 	},
-	"099b35-3bc0": {
+	"2ee63e-5b69": {
 		"name": "CH_CLICK_PROFILE",
 		"desc": "Click profile",
 		"trigger": [],
@@ -86,18 +86,18 @@
 		"type": "static",
 		"preDelay": 2000,
 		"postDelay": 6000,
-		"maxLoop": 3,
+		"maxLoop": 2,
 		"loop": 0,
 		"maxTry": 1,
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-64e5",
-			"099b35-ae51"
+			"2ee63e-aba1",
+			"2ee63e-72be"
 		],
-		"beforeLoop": "a7d8ea-c19f"
+		"beforeLoop": "2ee63e-67de"
 	},
-	"099b35-aaae": {
+	"2ee63e-08cc": {
 		"name": "CH_TK_READ_1",
 		"desc": "tiktok read",
 		"trigger": [
@@ -171,10 +171,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-4e20"
+			"2ee63e-a274"
 		]
 	},
-	"099b35-db56": {
+	"2ee63e-c3d6": {
 		"name": "CH_HOME",
 		"desc": "Back to home",
 		"trigger": [],
@@ -182,23 +182,23 @@
 			"action": "adb",
 			"devices": "{deviceId}",
 			"data": {
-				"command": "input keyevent 3"
+				"command": "input keyevent 4 & sleep 2; input keyevent 4 & sleep 2; input keyevent 4 & sleep 2; input keyevent 4 & sleep 2; input keyevent 4 "
 			}
 		},
 		"order": 0,
 		"type": "static",
 		"preDelay": 4000,
-		"postDelay": 1000,
+		"postDelay": 3000,
 		"maxLoop": 10,
 		"loop": 0,
 		"maxTry": 1,
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-c217"
+			"2ee63e-67de"
 		]
 	},
-	"099b35-11c5": {
+	"2ee63e-a973": {
 		"name": "START_APK",
 		"desc": "Start apk",
 		"trigger": [],
@@ -219,39 +219,16 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-1801",
-			"099b35-ed67",
-			"099b35-ed67",
-			"099b35-ed67",
-			"099b35-82a9"
+			"2ee63e-c4b4",
+			"4ed348-e75b",
+			"4ed348-e75b",
+			"4ed348-e75b",
+			"4ed348-e75b",
+			"4ed348-e75b"
 		],
 		"beforeLoop": "a7d8ea-efd3"
 	},
-	"099b35-ed67": {
-		"name": "PATTERN_FOLLOW",
-		"desc": "follow",
-		"trigger": [
-			{
-				"type": "pattern",
-				"pattern": "tk_follow_button_bw",
-				"condition": true,
-				"cmd": {
-					"action": "Screen",
-					"devices": "{deviceId}",
-					"data": {
-						"savePath": "{screen_path}"
-					}
-				},
-				"result": {
-					"x": -1,
-					"y": -1,
-					"w": -1,
-					"h": -1,
-					"wm": -1,
-					"hm": -1
-				}
-			}
-		],
+	"4ed348-e75b": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -259,27 +236,10 @@
 				"command": "input tap {wm} {hm}"
 			}
 		},
-		"order": 0,
-		"type": "pattern",
-		"preDelay": 1400,
-		"postDelay": 4000,
-		"maxLoop": 10,
-		"loop": 0,
-		"maxTry": 10,
-		"try": 0,
-		"timeout": 5000,
-		"next": [
-			"099b35-db56"
-		],
-		"beforeLoop": "tk03_tap"
-	},
-	"099b35-82a9": {
-		"name": "PATTERN_FOLLOW_MSG",
-		"desc": "follow msg",
 		"trigger": [
 			{
+				"pattern": "tk_share_icon_c3_inv10",
 				"type": "pattern",
-				"pattern": "tk_follow_msg",
 				"condition": true,
 				"cmd": {
 					"action": "Screen",
@@ -298,15 +258,160 @@
 				}
 			}
 		],
+		"id": "4ed348-e75b",
+		"name": "CLICK_SHARE",
+		"desc": "CLICK_SHARE",
+		"order": 0,
+		"type": "pattern",
+		"preDelay": 1000,
+		"postDelay": 3000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"4ed348-712b"
+		]
+	},
+	"4ed348-712b": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
 			"data": {
-				"command": ""
+				"command": "input tap 77 1382"
+			}
+		},
+		"trigger": [],
+		"id": "4ed348-e75b",
+		"name": "CLICK_DENUNC",
+		"desc": "CLICK_DENUNC",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 3000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"4ed348-842d"
+		]
+	},
+	"4ed348-842d": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap 329 1115"
+			}
+		},
+		"trigger": [],
+		"id": "4ed348-e75b",
+		"name": "CLICK_TYPE",
+		"desc": "CLICK_TYPE",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 3000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"4ed348-b107"
+		]
+	},
+	"4ed348-b107": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap 449 445"
+			}
+		},
+		"trigger": [],
+		"id": "4ed348-e75b",
+		"name": "CLICK_MOTIV",
+		"desc": "CLICK_MOTIV",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 3000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"4ed348-9aac"
+		]
+	},
+	"4ed348-9aac": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap 364 1471"
+			}
+		},
+		"trigger": [],
+		"id": "4ed348-e75b",
+		"name": "CLICK_SEND",
+		"desc": "CLICK_SEND",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 6000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"4ed348-da36"
+		]
+	},
+	"4ed348-da36": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap 360 1366"
+			}
+		},
+		"trigger": [],
+		"id": "4ed348-e75b",
+		"name": "CLICK_READY",
+		"desc": "CLICK_READY",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 6000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"2ee63e-5a6a"
+		]
+	},
+	"2ee63e-ea66": {
+		"name": "DO_LIKE",
+		"desc": "DO_LIKE",
+		"trigger": [],
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "\"input tap 324 521 & sleep 0.1; input tap 324 521\""
 			}
 		},
 		"order": 0,
-		"type": "pattern",
+		"type": "static",
 		"preDelay": 1400,
 		"postDelay": 4000,
 		"maxLoop": 10,
@@ -315,11 +420,11 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-db56"
+			"2ee63e-5a6a"
 		],
 		"beforeLoop": "tk03_tap"
 	},
-	"099b35-ae51": {
+	"2ee63e-72be": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -362,12 +467,12 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-aaae",
-			"099b35-aaae",
-			"099b35-db56"
+			"2ee63e-08cc",
+			"2ee63e-08cc",
+			"2ee63e-c3d6"
 		]
 	},
-	"099b35-64e5": {
+	"2ee63e-aba1": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -502,11 +607,11 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-ae51"
+			"2ee63e-72be"
 		],
 		"getScreen": true
 	},
-	"099b35-1801": {
+	"2ee63e-c4b4": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -611,16 +716,11 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-ed67",
-			"099b35-ed67",
-			"099b35-ed67",
-			"099b35-ed67",
-			"099b35-ed67",
-			"099b35-ed67"
+			"4ed348-e75b"
 		],
 		"getScreen": true
 	},
-	"099b35-6bf8": {
+	"2ee63e-6365": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -642,10 +742,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-11c5"
+			"2ee63e-a973"
 		]
 	},
-	"099b35-f06b": {
+	"2ee63e-428d": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -668,7 +768,7 @@
 		"timeout": 5000,
 		"next": []
 	},
-	"099b35-8c52": {
+	"2ee63e-d807": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -690,10 +790,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-4fdc"
+			"2ee63e-736e"
 		]
 	},
-	"099b35-e79d": {
+	"2ee63e-0e77": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -715,10 +815,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-11c5"
+			"2ee63e-a973"
 		]
 	},
-	"099b35-4fdc": {
+	"2ee63e-736e": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -740,10 +840,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-e79d"
+			"2ee63e-0e77"
 		]
 	},
-	"099b35-eb36": {
+	"2ee63e-0f0a": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -765,10 +865,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-c40c"
+			"2ee63e-9878"
 		]
 	},
-	"099b35-c40c": {
+	"2ee63e-9878": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -790,10 +890,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-3bc0"
+			"2ee63e-5b69"
 		]
 	},
-	"099b35-9962": {
+	"2ee63e-3baf": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -815,10 +915,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-57a4"
+			"2ee63e-e3d6"
 		]
 	},
-	"099b35-2a9b": {
+	"2ee63e-a147": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -840,10 +940,10 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-9962"
+			"2ee63e-3baf"
 		]
 	},
-	"099b35-c217": {
+	"2ee63e-67de": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -866,7 +966,7 @@
 		"timeout": 5000,
 		"next": []
 	},
-	"099b35-57a4": {
+	"2ee63e-e3d6": {
 		"command": {
 			"action": "adb",
 			"devices": "{deviceId}",
@@ -888,7 +988,7 @@
 		"try": 0,
 		"timeout": 5000,
 		"next": [
-			"099b35-8c52"
+			"2ee63e-d807"
 		]
 	}
 }

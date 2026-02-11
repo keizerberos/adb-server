@@ -1,0 +1,167 @@
+{
+	"c3ce2e05-a142": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "wm size 360x2048"
+			}
+		},
+		"trigger": [],
+		"id": "c3ce2e05-a142",
+		"name": "CHANGE_RES",
+		"desc": "change resolution",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 5000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"c3ce2e05-0f39"
+		]
+	},
+	"c3ce2e05-80e7": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "wm size 720x1612"
+			}
+		},
+		"trigger": [],
+		"id": "c3ce2e05-a142",
+		"name": "CHANGE_DEF_RES",
+		"desc": "change resolution default",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 1000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"c3ce2e05-c353"
+		]
+	},
+	"c3ce2e05-0f39": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap {wm} {hm}"
+			}
+		},
+		"trigger": [
+			{
+				"pattern": "tk_2048_share",
+				"type": "pattern",
+				"condition": true,
+				"cmd": {
+					"action": "Screen",
+					"devices": "{deviceId}",
+					"data": {
+						"savePath": "{screen_path}"
+					}
+				},
+				"result": {
+					"x": -1,
+					"y": -1,
+					"w": -1,
+					"h": -1,
+					"wm": -1,
+					"hm": -1
+				}
+			}
+		],
+		"id": "c3ce2e05-0f39",
+		"name": "CLICK_SHARE",
+		"desc": "click on share icon",
+		"order": 0,
+		"type": "pattern",
+		"preDelay": 1000,
+		"postDelay": 4000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"c3ce2e05-80e7"
+		]
+	},
+	"c3ce2e05-c353": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap {wm} {hm}"
+			}
+		},
+		"trigger": [
+			{
+				"pattern": "tk_icon_flag_bw_ncrop",
+				"type": "pattern",
+				"condition": true,
+				"cmd": {
+					"action": "Screen",
+					"devices": "{deviceId}",
+					"data": {
+						"savePath": "{screen_path}"
+					}
+				},
+				"result": {
+					"x": -1,
+					"y": -1,
+					"w": -1,
+					"h": -1,
+					"wm": -1,
+					"hm": -1
+				}
+			}
+		],
+		"id": "c3ce2e05-0f39",
+		"name": "CLICK_FLAG_ICON",
+		"desc": "click on flag icon",
+		"order": 0,
+		"type": "pattern",
+		"preDelay": 1000,
+		"postDelay": 4000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": [
+			"c3ce2e05-9a4e"
+		]
+	},
+	"c3ce2e05-9a4e": {
+		"command": {
+			"action": "adb",
+			"devices": "{deviceId}",
+			"data": {
+				"command": "input tap 294 1214"
+			}
+		},
+		"trigger": [],
+		"id": "c3ce2e05-9a4e",
+		"name": "CLICK_INFO",
+		"desc": "click info",
+		"order": 0,
+		"type": "static",
+		"preDelay": 1000,
+		"postDelay": 1000,
+		"maxLoop": 10,
+		"loop": 0,
+		"maxTry": 1,
+		"try": 0,
+		"timeout": 5000,
+		"next": []
+	}
+}

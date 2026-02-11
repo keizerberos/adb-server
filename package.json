@@ -12,6 +12,7 @@
     "skia-canvas": "^3.0.8",
     "socket.io": "^4.8.1",
     "sqlite3": "^5.1.7",
+    "webdriverio": "^9.23.0",
     "ws": "^8.18.3"
   }
 }

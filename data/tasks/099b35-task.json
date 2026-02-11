@@ -1,11 +1,11 @@
 {
 	"099b35": {
 		"id": "099b35",
-		"name": "tiktok follow x1",
-		"description": "tiktok follow x1",
+		"name": "tiktok follow x1 test",
+		"description": "tiktok follow x1 test",
 		"start": "099b35-2a9b",
 		"end": "099b35-c217",
-		"group": "TikTok x1",
+		"group": "Tiktok (Pruebas)",
 		"type": "task",
 		"params": {
 			"link": "https://www.tiktok.com/@sunny.amigurumi",
