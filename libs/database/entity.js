@@ -191,8 +191,18 @@ class Entity{
 			if (callback!=null) callback();
 		});
 	}
+	delete(){
+		if (!this._isNew){
+			const id = this._values[this._pk];
+			let sql = `DELETE FROM ${this._tableName} WHERE ${this._pk}='${id}'`;
+			this._db.executeParams(sql,[]);
+			return id;
+		}
+	}
 	save(){
-		//if (this._values[this._pk]==null){
+		if (this._values[this._pk]==null)
+			this._isNew = true;
+		
 		if (this._isNew){
 			let cParam = Object.keys(this._fields).map(fk=>'?');
 			let cFields = Object.keys(this._fields).map(fk=>`'${fk}'`);

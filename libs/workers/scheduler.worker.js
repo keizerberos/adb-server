@@ -111,19 +111,18 @@ function updateSchedule(id){
 scanScheduleFolder();
 
 setInterval(() => {
-	//parentPort.postMessage('Timer finished after '+timerEach+' seconds');
-	console.log("schedules total:", Object.keys(schedules).length);
+	//console.log("schedules total:", Object.keys(schedules).length);
 	const day = getDay();
-	console.log("day:",day);
+	//console.log("day:",day);
 	const todayTime = getToday();
 	const dayTime = TimestampToDate(todayTime);
 	const hour = TimestampToHourMin(todayTime);
-	console.log("hour:",hour);
-	console.log("");
+	//console.log("hour:",hour);
+	//console.log("");
 	Object.keys(schedules).forEach(k=>{
 		const uid = k;
 		const schedule = schedules[k];
-		//console.log("schedule",schedule.schedule);
+		
 		// IS ENABLED
 		if (schedule.enabled == false) return;	
 		// HAVE'NT SCHEDULE
