@@ -2,3 +2,4 @@
 2.1.1 (26/02/2026)	log debug, fps=1
 2.1.2 (26/02/2026)	prevent use delete deviceAction
 2.1.3 (26/02/2026 14:59)	disabling worker for test
+2.2.1 (26/02/2026 15:35)	install enableauth apk

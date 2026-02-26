@@ -783,6 +783,15 @@ class AdbSocketServer {
 						cluster.socket.emit("install.wifi", data);
 					}
 				});
+				socket.on("adb.install.auth", (data) => {
+					Log.i("adb.install.auth ");
+					//Log.o(data);				
+					const device = dget(devices, 'serial', data.devices);
+					if (device != null) {
+						const cluster = dget(clusters, 'uuid', device.clusterId);
+						cluster.socket.emit("install.auth", data);
+					}
+				});
 				socket.on("adb.install.gni", (data) => {
 					Log.i("adb.install.gni ");
 					//Log.o(data);				
