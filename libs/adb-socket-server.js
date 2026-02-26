@@ -815,6 +815,15 @@ class AdbSocketServer {
 						const cluster = dget(clusters, 'uuid', device.clusterId);
 						cluster.socket.emit("tethering.start", data);
 					}
+				});				
+				socket.on("tethering.run", (data) => {
+					Log.i("tethering.run");
+					//Log.o(data);				
+					const device = dget(devices, 'serial', data.devices);
+					if (device != null) {
+						const cluster = dget(clusters, 'uuid', device.clusterId);
+						cluster.socket.emit("tethering.run", data);
+					}
 				});
 				socket.on("tethering.stop", (data) => {
 					Log.i("tethering.stop");
