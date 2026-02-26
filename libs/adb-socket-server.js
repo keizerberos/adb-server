@@ -37,7 +37,7 @@ const schedulerWorker = new Worker('./libs/workers/scheduler.worker.js', {
     workerData: {	timerEach : 5000, schedulePath:schedulePath }
 });
 function setupConfig(){
-		const readmeContent = fs.readFileSync(`./../README.md`, 'utf8');
+		const readmeContent = fs.readFileSync(`./README.md`, 'utf8');
 		config.readme = readmeContent
 		const lines = readmeContent.split("\n");
 		config.version = lines[lines.length].split("\t")[0];
