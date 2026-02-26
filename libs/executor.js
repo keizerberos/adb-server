@@ -646,17 +646,17 @@ function executeTask(devices, task) {
 		//}
 		//devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
 		devicesActions[d.serial] = copyActionsOverrided(task);
-		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [], texts:{},screens:{}, current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false,batchIndex:batchIndex };
-		devicesActions[d.serial]['params'] = params;
+		if (devicesActions[d.serial]!=undefined) devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [], texts:{},screens:{}, current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false,batchIndex:batchIndex };
+		if (devicesActions[d.serial]!=undefined) devicesActions[d.serial]['params'] = params;
 		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 		executeGraph(task.config, task.start, d.serial, ii, params, null, () => {
 			countEnded++;
 			console.log("executeTask:executeGraph.ended")
 
-			devicesActions[d.serial]['progress']['state'] = 'ended';
-			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			devicesActions[d.serial]['progress'] = null;
-			devicesActions[d.serial]['params'] = null;
+			if (devicesActions[d.serial]!=undefined) devicesActions[d.serial]['progress']['state'] = 'ended';
+			if (devicesActions[d.serial]!=undefined) events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+			if (devicesActions[d.serial]!=undefined) devicesActions[d.serial]['progress'] = null;
+			if (devicesActions[d.serial]!=undefined) devicesActions[d.serial]['params'] = null;
 			devicesActions[d.serial] = null;
 			delete devicesActions[d.serial];
 			if ((countEnded ) == devices.length) {
@@ -698,11 +698,11 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 			countEnded++;
 			console.log("executeTaskBatch:executeGraph.ended countEnded",countEnded + "/" + devices.length)
 
-			devicesActions[d.serial]['progress']['state'] = 'ended';
-			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			devicesActions[d.serial]['progress'] = null;
-			devicesActions[d.serial]['params'] = null;
-			devicesActions[d.serial] = null;
+			if (devicesActions[d.serial]!=undefined) devicesActions[d.serial]['progress']['state'] = 'ended';
+			if (devicesActions[d.serial]!=undefined) events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+			if (devicesActions[d.serial]!=undefined) devicesActions[d.serial]['progress'] = null;
+			if (devicesActions[d.serial]!=undefined) devicesActions[d.serial]['params'] = null;
+			if (devicesActions[d.serial]!=undefined) devicesActions[d.serial] = null;
 			delete devicesActions[d.serial];
 			if ((countEnded) == devices.length) {				
 				console.log("[executeTaskBatch] all ended")
@@ -768,11 +768,11 @@ function resumeTask(devices, task) {
 			countEnded++;
 			console.log("executeTask:executeGraph.ended")
 
-			devicesActions[d.serial]['progress']['state'] = 'ended';
-			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			devicesActions[d.serial]['progress'] = null;
-			devicesActions[d.serial]['params'] = null;
-			devicesActions[d.serial] = null;
+			if (devicesActions[d.serial]!=undefined) devicesActions[d.serial]['progress']['state'] = 'ended';
+			if (devicesActions[d.serial]!=undefined) events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+			if (devicesActions[d.serial]!=undefined) devicesActions[d.serial]['progress'] = null;
+			if (devicesActions[d.serial]!=undefined) devicesActions[d.serial]['params'] = null;
+			if (devicesActions[d.serial]!=undefined) devicesActions[d.serial] = null;
 			delete devicesActions[d.serial];
 			if ((countEnded ) == devices.length) {
 				console.log("all ended")
