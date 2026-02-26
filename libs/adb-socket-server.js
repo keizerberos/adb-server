@@ -33,9 +33,9 @@ let saveProgrammed = false;
 let Log = null;
 let Dbm = null;
 
-const schedulerWorker = new Worker('./libs/workers/scheduler.worker.js', { 
+/*const schedulerWorker = new Worker('./libs/workers/scheduler.worker.js', { 
     workerData: {	timerEach : 5000, schedulePath:schedulePath }
-});
+});*/
 function setupConfig(){
 		const readmeContent = fs.readFileSync(`./README.md`, 'utf8');
 		config.readme = readmeContent;
@@ -312,9 +312,7 @@ class AdbSocketServer {
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
 		const httpServer = createServer(fastServer);
 		self.modules.forEach(m=>m.when("startServer.init", {fastServer:fastServer, clients:clients}));
-		/*schedulerWorker.on("message",(message)=>{
-			console.log("worker:",message);
-		});*/
+		/*
 		schedulerWorker.on("message",(message)=>{
 			//console.log("worker:",message.command);
 			if ( message.command == "schedule.run"){
@@ -325,7 +323,7 @@ class AdbSocketServer {
 				schedules = message.payload;
 				//console.log("schedules.payload",message.payload);
 			}
-		});
+		});*/
 		
 		fastServer.get("/tasks",(req,res)=>{ 
 			const task = tasks[req.query.id];
@@ -833,7 +831,7 @@ class AdbSocketServer {
 					//Log.o(data);
 					this.saveSchedule(data).then((res)=>{
 						//scanScheduleFolder();
-						schedulerWorker.postMessage({ command: 'schedule.loading', payload: null });
+						//schedulerWorker.postMessage({ command: 'schedule.loading', payload: null });
 					});
 					//this.executor.startTaskBatch(data.devices, data.task);
 				});				
