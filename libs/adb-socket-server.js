@@ -587,7 +587,7 @@ class AdbSocketServer {
 			clients.push(client);
 			Log.i("Socket connected " + uuid);
 			socket.on("disconnect", () => {
-				Log.i("socket disconnected " + uuid);		
+				Log.i("Socket disconnected " + uuid);		
 				disconnectRemoteWindows(client);
 				disconnectRemote(client);
 				ddelete(clients, 'uuid', uuid);
@@ -921,12 +921,12 @@ class AdbSocketServer {
 			let uuid = short.generate();
   			//var address = socket.handshake.address;
   			var address = socket.request.connection._peername;
-			Log.i("Cluster Socket connected " + uuid + " " +address.address );
+			Log.i("Cluster connected " + uuid + " " +address.address );
 			const cluster = { socket: socket, devices: [], uuid, uuid,address:address };
 			clusters.push(cluster);
 			clients.forEach(client => client.socket.emit("cluster.connect", {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address}));
 			socket.on("disconnect", () => {				
-				Log.i("Cluster Socket disconnected " + uuid + " " +address.address);
+				Log.i("Cluster disconnected " + uuid + " " +address.address);
 				let clusterDevices = devices.filter(d => d.clusterId == uuid);
 				Log.i("delete devices disconnected " + clusterDevices.length);
 				clusterDevices.forEach(device => clients.forEach(client => client.socket.emit("device.disconnect", device)));
