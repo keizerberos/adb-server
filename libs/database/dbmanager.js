@@ -77,7 +77,7 @@ class DBManager {
         return response;
     }
     sql(sql){
-        console.log("db.sql:",sql);
+        //console.log("db.sql:",sql);
         let res =null;
         try{
              res = this.database.db.prepare(sql).all();
@@ -87,7 +87,7 @@ class DBManager {
         return res;
     }
     sqlParams(sql,params){
-        console.log("db.sql:",sql);
+        //console.log("db.sql:",sql);
         let res =null;
         try{
              res = this.database.db.prepare(sql).all(params);

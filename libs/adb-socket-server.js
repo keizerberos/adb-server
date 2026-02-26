@@ -77,7 +77,7 @@ function scanTasksFolder() {
 		const file = listTask[i] ;
    		let base = taskPath + '/' + file;
 		if (!fs.statSync(base).isDirectory()) {
-			console.log("base",base);
+			//console.log("base",base);
 			const content = fs.readFileSync(base, 'utf8');
 			if (content=='') return;
 			const task =  JSON.parse(content);
@@ -95,7 +95,7 @@ function scanTasksFolder() {
 		const file = listAction[i] ;
    		let base = actionsPath + '/' + file;
 		if (!fs.statSync(base).isDirectory()) {
-			console.log("base",base);
+			//console.log("base",base);
 			const content = fs.readFileSync(base, 'utf8');
 			if (content=='') return;
 			const action =  JSON.parse(content);
@@ -155,7 +155,7 @@ class AdbSocketServer {
 		for (let i = 0; i< taskList.length ; i++){
 			const k = taskList[i];
 			tasks[k]['progressPath'] = genPlant(tasks[k]);
-			console.log("tasks[k]['progressPath'] = ", k , tasks[k]['progressPath'].length);
+			//console.log("tasks[k]['progressPath'] = ", k , tasks[k]['progressPath'].length);
 			//console.log("progressPath",tasks[k]['progressPath']);
 		};
 		console.log("drawing progress");
@@ -372,7 +372,7 @@ class AdbSocketServer {
 		fastServer.post("/adb",(req,res)=>{			
     		const data = req.body.data;
 			Log.i("fastServer.post " );
-			Log.o(data);
+			//Log.o(data);
 			if (data.action == 'adb') {
 				const device = dget(devices, 'serial', data.devices);
 				if (device != null) {
@@ -466,7 +466,9 @@ class AdbSocketServer {
 			}
 		});
 		this.executor.on('send', (data)=>{
-			console.log('send', data);
+			
+			if (data.action == 'adb')
+				console.log("send: adb -s"+data.devices+ " shell '"+data.data.command+"'");
 			const device = dget(devices, 'serial', data.devices);
 			if (device != null) {
 				const cluster = dget(clusters, 'uuid', device.clusterId);				
@@ -474,7 +476,7 @@ class AdbSocketServer {
 			}
 		});
 		this.executor.on('task.progress',(deviceId,progress)=>{
-			Log.i("task.progress");
+			//Log.i("task.progress");
 			//Log.o(progress);
 			const device = dget(devices, 'serial', deviceId);
 			if (device != null) {							
@@ -517,8 +519,8 @@ class AdbSocketServer {
 				console.log("socket reducing quality");
 				//socket.send(hexStringToUint8Array("6500020000000000050503840193000000000000000000ff000000000000000000000000"));
 				//socket.send(Buffer.from("6500020000000000050500b40193000000000000000000ff0000000000000000000000174f4d582e676f6f676c652e683236342e656e636f646572", "hex"));
-				const fps = "03";
-				const fpsr = "03";
+				const fps = "01";
+				const fpsr = "01";
 				const w = "0050";//"005A";
 				const h = "00c0";//"00C9";
 				const str = `6500020000000000${fps}${fpsr}${w}${h}000000000000000000ff0000000000000000000000174f4d582e676f6f676c652e683236342e656e636f646572`;
@@ -582,7 +584,7 @@ class AdbSocketServer {
 			
 			socket.emit("uuid", uuid);
 			const configSocket = ()=>{
-				console.log("setup socket");
+				//console.log("setup socket");
 				socket.emit("clusters", clusters.map(cluster => { return {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address};}));
 				socket.emit("tasks", tasks);
 				socket.emit("actions", actions);
@@ -637,14 +639,14 @@ class AdbSocketServer {
 				});
 				socket.on("window.update", (data)=>{
 					Log.i("window.update");
-					Log.o(data);
+					//Log.o(data);
 					clients.forEach(client=>{
 						client.socket.emit("window.update", data);
 					});
 				});
 				socket.on("window.open", (data)=>{
 					Log.i("window.open");
-					Log.o(data);
+					//Log.o(data);
 					client["parentUid"] = data.parentUid;
 					const clientParent = clients.find(c=>c.uuid == data.parentUid);
 					if (clientParent != undefined){
@@ -665,7 +667,7 @@ class AdbSocketServer {
 				});
 				socket.on("device.assign", (data) => {
 					Log.i("device.assign");				
-					Log.o(data);
+					//Log.o(data);
 					devicesData.devicesAssign[data.serial] = {"number": data.number};
 					this.saveDevices();				
 					
@@ -684,52 +686,52 @@ class AdbSocketServer {
 				});
 				socket.on("client.extra", (data) => {
 					Log.i("client.extra");
-					Log.o(data);
+					//Log.o(data);
 					client['extra']=data;
 				});
 				socket.on("client.type.progress", (data) => {
 					Log.i("client.type.progress");
-					Log.o(data);
+					//Log.o(data);
 					client.type = ClientType.PROGRESS;
 				});
 				socket.on("client.type.dashboard", (data) => {
 					Log.i("client.type.dashboard");
-					Log.o(data);
+					//Log.o(data);
 					client.type = ClientType.DASHBOARD;
 				});
 				socket.on("client.type.devices", (data) => {
 					Log.i("client.type.devices");
-					Log.o(data);
+					//Log.o(data);
 					client.type = ClientType.DEVICES;
 				});
 				socket.on("client.type.remote", (data) => {
 					Log.i("client.type.remote");
-					Log.o(data);
+					//Log.o(data);
 					client.type = ClientType.REMOTE;
 				});
 				socket.on("client.type.executor", (data) => {
 					Log.i("client.type.executor");
-					Log.o(data);
+					//Log.o(data);
 					client.type = ClientType.EXECUTOR;
 				});
 				socket.on("feature.capture.on", (data) => {
 					Log.i("feature.capture");
-					Log.o(data);
+					//Log.o(data);
 					client.features.capture = true;
 				});
 				socket.on("feature.capture.off", (data) => {
 					Log.i("feature.capture");
-					Log.o(data);
+					//Log.o(data);
 					client.features.capture = false;
 				});
 				socket.on("feature.progress.off", (data) => {
 					Log.i("feature.progress");
-					Log.o(data);
+					//Log.o(data);
 					client.features.progress = true;
 				});
 				socket.on("client.subscribe.devices", (data) => {
 					Log.i("client.subscribe.devices");
-					Log.o(data);
+					//Log.o(data);
 					if (Array.isArray(data))
 						data.forEach(d=>client.devices.push(d));
 					else
@@ -744,17 +746,17 @@ class AdbSocketServer {
 				});
 				socket.on("tasks.stop", (data) => {
 					Log.i("tasks.stop ");
-					Log.o(data);				
+					//Log.o(data);				
 					this.executor.stopAll();
 				});
 				socket.on("tasks.stop.device", (data) => {
 					Log.i("tasks.stop.device ");
-					Log.o(data);				
+					//Log.o(data);				
 					this.executor.stopTask(data.devices);
 				});
 				socket.on("adb.install.keyboard", (data) => {
 					Log.i("adb.install.keyboard ");
-					Log.o(data);				
+					//Log.o(data);				
 					const device = dget(devices, 'serial', data.devices);
 					if (device != null) {
 						const cluster = dget(clusters, 'uuid', device.clusterId);
@@ -763,7 +765,7 @@ class AdbSocketServer {
 				});
 				socket.on("adb.install.wifi", (data) => {
 					Log.i("adb.install.wifi ");
-					Log.o(data);				
+					//Log.o(data);				
 					const device = dget(devices, 'serial', data.devices);
 					if (device != null) {
 						const cluster = dget(clusters, 'uuid', device.clusterId);
@@ -772,7 +774,7 @@ class AdbSocketServer {
 				});
 				socket.on("adb.install.gni", (data) => {
 					Log.i("adb.install.gni ");
-					Log.o(data);				
+					//Log.o(data);				
 					const device = dget(devices, 'serial', data.devices);
 					if (device != null) {
 						const cluster = dget(clusters, 'uuid', device.clusterId);
@@ -781,13 +783,13 @@ class AdbSocketServer {
 				});
 				socket.on("cluster.commands", (data) => {
 					Log.i("cluster.commands");
-					Log.o(data);				
+					//Log.o(data);				
 					const cluster = dget(clusters, 'uuid', data.clusterId);
 					cluster.socket.emit("cluster.commands", data);
 				});
 				socket.on("tethering.start", (data) => {
 					Log.i("tethering.start");
-					Log.o(data);				
+					//Log.o(data);				
 					const device = dget(devices, 'serial', data.devices);
 					if (device != null) {
 						const cluster = dget(clusters, 'uuid', device.clusterId);
@@ -796,7 +798,7 @@ class AdbSocketServer {
 				});
 				socket.on("tethering.stop", (data) => {
 					Log.i("tethering.stop");
-					Log.o(data);				
+					//Log.o(data);				
 					const device = dget(devices, 'serial', data.devices);
 					if (device != null) {
 						const cluster = dget(clusters, 'uuid', device.clusterId);
@@ -805,17 +807,17 @@ class AdbSocketServer {
 				});
 				socket.on("tasks.execute", (data) => {
 					Log.i("tasks.execute ");
-					Log.o(data);
+					//Log.o(data);
 					this.executor.startTask(data.devices,data.task);
 				});
 				socket.on("tasks.execute.batch", (data) => {
 					Log.i("tasks.execute.batch");
-					Log.o(data);
+					//Log.o(data);
 					this.executor.startTaskBatch(data.devices, data.task);
 				});
 				socket.on("schedule.task", (data) => {
 					Log.i("schedule.task");
-					Log.o(data);
+					//Log.o(data);
 					this.saveSchedule(data).then((res)=>{
 						//scanScheduleFolder();
 						schedulerWorker.postMessage({ command: 'schedule.loading', payload: null });
@@ -824,7 +826,7 @@ class AdbSocketServer {
 				});				
 				socket.on("tasks.resume", (data) => {
 					Log.i("tasks.resume ");
-					Log.o(data);
+					//Log.o(data);
 					this.executor.resumeTask(data.devices,data.task);
 				});
 				socket.on("device.network", (data) => {
@@ -938,7 +940,7 @@ class AdbSocketServer {
 					device['clusterAddress'] = cluster.address?.address;
 				});
 				if(changes>0){
-					console.log("changes",changes);
+					//console.log("changes",changes);
 					clients.forEach(client => client.socket.emit("devices", devices));
 				}
 			});

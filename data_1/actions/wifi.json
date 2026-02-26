@@ -1,0 +1,54 @@
+{
+   "wifi_action_1":{
+      "name":"send adb command ",
+      "desc":"send ADB ",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am start -n com.steinwurf.adbjoinwifi/com.steinwurf.adbjoinwifi.MainActivity -e ssid {ssid} -e password_type {password_type} -e password {password}"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":1000,
+      "postDelay":6000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "wifi_action_2"
+      ]
+   },
+   "wifi_action_2":{
+      "name":"BACK",
+      "desc":"Back page",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"stopApk",
+         "devices":"{deviceId}",
+         "data":{
+            "apk":"com.steinwurf.adbjoinwifi"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":2000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         
+      ]
+   }
+}

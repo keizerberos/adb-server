@@ -1,0 +1,18 @@
+{
+	"5bd34022": {
+		"id": "5bd34022",
+		"name": "Comentarios en 3 cuentas (Post) Test",
+		"description": "<i class=\"bi bi-facebook\"></i> Facebook - Enviar comentarios 3 cuentas (Post) Test",
+		"start": "5bd34022-227b",
+		"end": "5bd34022-1afe",
+		"group": "Facebook Test",
+		"type": "task",
+		"params": {
+			"link": "https://www.facebook.com/100064177324343/posts/pfbid0V1QR37nGwNiAUwSeV3hF38fp7yNLNAuChtqnbR2VDradn64fwdDrBn8FSQwF6NePl",
+			"comment": ""
+		},
+		"functions": {
+			"link": "fburl"
+		}
+	}
+}

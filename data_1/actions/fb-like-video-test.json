@@ -1,0 +1,89 @@
+{
+   "fbv1_t1_like_pre_3":{
+      "name":"tap like",
+      "desc":"tap like",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 358 689"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":3000,
+      "post":" counter.push('data') ",
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[		
+         "fb_prevent","fbv1_t1_end"
+      ]
+   },
+   "fbv1_t1_end":{
+      "name":"tap like",
+      "desc":"tap like",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 358 689"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":500,
+      "postDelay":3000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[		
+      ]
+   },   
+   "fb_prevent":{
+      "name":"TK_READ_1",
+      "desc":"tiktok read",
+      "trigger":[
+            {
+                "crop": [33,1283,646,189],
+                "pre":[
+                    "if (text.includes('Quieres ver ma')){",
+                    "   send('input tap 637 1322')",
+                    "}"],       
+                "result": "false",
+                "post":[]
+            }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap {x} {y}"
+         }
+      },
+      "post":" counter.push('data') ",
+      "order":0,
+      "type":"reader",
+      "getScreen":true,
+      "preDelay":200,
+      "postDelay":5000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+      ]
+   }
+}

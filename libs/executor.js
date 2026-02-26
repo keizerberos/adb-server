@@ -103,12 +103,12 @@ function clearEventNodes(devices){
 		});		
 	}
 function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
-	console.log("executeNode init");
+	console.log("executeNode init ",deviceId,actionIndex);
 	if (action == null) { cbSuccess(); return; }
 	if (action.next == null) { cbSuccess(); return; }
-	const nodeAction = action.next[actionIndex];
+	const nodeAction = action.next[actionIndex];	
 	if (nodeAction == null || nodeAction == undefined) { cbSuccess(); return; }
-	
+	console.log("executeNode nodeAction ",nodeAction);
 	if (devicesActions[deviceId] == null ) { cbFail(); return; }
 	const currentAction = devicesActions[deviceId][nodeAction];
 	if (currentAction == null) { cbFail(); return; }
@@ -554,8 +554,8 @@ function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, 
 	//console.log("androidActions[actionId]",androidActions[actionId]);
 	let action = devicesActions[deviceId][actionId];
 	if (actionId == null) { cbSuccess(); return; }
-	console.log("--devicesActions[deviceId]--",devicesActions[deviceId]);
-	console.log("--action--",action);
+	//console.log("--devicesActions[deviceId]--",devicesActions[deviceId]);
+	console.log("--action.name--",action.name);
 	console.log("pre ejecutando comando ");
 	console.log("executeGraph.action.actionId", actionId);
 	console.log("executeGraph.action.preDelay", action.preDelay);
@@ -584,12 +584,12 @@ function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, 
 				Object.keys(command.data).forEach(k => {
 					command.data[k] = replaceParams(params, command.data[k]);
 				});
-				console.log("executeGraph.command", command);
+				//console.log("executeGraph.command", command);
 				//myWebSocket.send(JSON.stringify(command));
 				events['send'].forEach(fn => fn(command));
 			} else if (action.type == "pattern") {
 				//never start with a pattern, but...
-				console.log("executeGraph.pattern test", JSON.stringify(action.command));
+				//console.log("executeGraph.pattern test", JSON.stringify(action.command));
 			}
 			console.log("executeGraph.action.postDelay", action.postDelay);
 			setTimeout(() => {

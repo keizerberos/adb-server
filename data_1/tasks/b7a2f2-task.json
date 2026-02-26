@@ -1,0 +1,15 @@
+{
+	"b7a2f2": {
+		"id": "b7a2f2",
+		"name": "Facebook Reaccion \"Me enoja\" (Post)",
+		"description": " Facebook Reaccion \"Me enoja\" (Post)",
+		"start": "b7a2f2-f2d0",
+		"end": "b7a2f2-2efa",
+		"group": "Facebook Reacciones",
+		"type": "task",
+		"params": {
+			"link": "https://www.facebook.com/MUNDOIOSAC/posts/pfbid0213Hqyg49tVNtxkhs68XMC24CHnLbK1y6XAxiEquj6SRgDhjzGg36iVjzrg3gBbbyl"
+		},
+		"function": {}
+	}
+}

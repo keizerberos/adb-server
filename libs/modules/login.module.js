@@ -43,7 +43,6 @@ class LoginModule {
 	}
 	loadUsers(dbm) {
 		const users = new UserEntity(dbm).all();
-		console.log("users", this.users);
 		return users;
 	}
 	on(ev, fn) {
@@ -69,14 +68,14 @@ class LoginModule {
 			//socket.removeAllListeners();
 
 			socket.on("auth.login", (data) => {
-				console.log("auth", data);
+				//console.log("auth", data);
 				self.users = new UserEntity(self.dbm).all();
 				const user = self.users.find(u => u.username == data.user && u.password == data.pass && u.enabled == 1);
-				console.log("user",user);
+				//console.log("user",user);
 				if (user != undefined) {
 					console.log("auth login");
 					const tokenId = CRP(Date.now());
-					console.log("tokenId",tokenId);
+					//console.log("tokenId",tokenId);
 					const token = createToken({id:user.id,username:user.username,fullname:user.fullname,roles:user.roles,enabled:user.enabled});
 					self.tokens[tokenId] = { token: token, uuid: uuid, socket:socket, client: { type: client.type, devices: client.devices, uuid: client.uuid, features: client.features, address: client.address, windows: client.windows, parentUid: client.parentUid } };
 					
@@ -86,20 +85,20 @@ class LoginModule {
 				} else {
 					if (data.i != undefined && data.t != undefined) {
 
-						console.log("auth test t i",data.t,data.i);
+						//console.log("auth test t i",data.t,data.i);
 						//console.log("auth token", self.tokens[data.t]);
 						if (self.tokens[data.t] != undefined) {
-							console.log("auth token mem");
+							//console.log("auth token mem");
 							self.tokens[data.t].socket = socket;
 							socket.emit("auth", { t: data.t, i: data.i, n: data.n });
 							_data.configSocket();
 						} else {
-							console.log("auth token resolve");
+							//console.log("auth token resolve");
 							try {
 								const decoded = jwt.verify(data.i, secretKey);
 								const tokenId = CRP(Date.now());
-								console.log("tokenId",tokenId);
-								console.log("decoded", decoded);
+								//console.log("tokenId",tokenId);
+								//console.log("decoded", decoded);
 								const user = JSON.parse(decoded.data);
 								const token = createToken(user);
 								self.tokens[tokenId] = { token: token, uuid: uuid, socket:socket, client: { type: client.type, devices: client.devices, uuid: client.uuid, features: client.features, address: client.address, windows: client.windows, parentUid: client.parentUid } };
@@ -107,7 +106,7 @@ class LoginModule {
 								client['login'] = { user: user, tokenId: tokenId }
 								_data.configSocket();
 							} catch (e) {
-								console.log("auth.bad json", {});
+								//console.log("auth.bad json", {});
 								socket.emit("auth.bad", {});
 							}
 							//console.log("bad auth token");
@@ -124,12 +123,12 @@ class LoginModule {
 				
 			});
 			socket.on("user.load", (data) => {
-				console.log("load users");
+				//console.log("load users");
 				const users = new UserEntity(self.dbm).all();
 				socket.emit("user.load", users.map(u => { return {id:u.id, username:u.username, fullname:u.fullname, roles:u.roles, mail:u.mail, enabled:u.enabled}; }));
 			});
 			socket.on("user.create", (data) => {
-				console.log("user.create", data);
+				//console.log("user.create", data);
 
 				const user = new UserEntity(self.dbm);
 				user.setUsername(data.username);

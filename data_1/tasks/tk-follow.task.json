@@ -1,0 +1,16 @@
+{
+   "tiktok_follow":{
+      "name":"Follow en 3 cuentas",
+      "group":"TikTok",
+      "type":"task",
+      "description":"<i class=\"bi bi-tiktok\"></i> Tiktok - Follow",
+      "params":{
+         "link":"https://vt.tiktok.com/ZSHsyQMPepXRs-pzOHi/"
+      },
+      "functions":{
+         
+      },
+      "start":"tk_follow_open",
+      "end":"tk_follow_end_3"
+   }
+}

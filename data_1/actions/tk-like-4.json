@@ -1,0 +1,217 @@
+{
+   "tk_x3c_open_apk":{
+      "name":"START_APK",
+      "desc":"Open apk",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"am start -a android.intent.action.VIEW -d {link} com.zhiliaoapp.musically"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":2000,
+      "postDelay":10500,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":5,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_x3c_tap"
+      ]
+   },
+   "tk_x3c_tap":{
+      "name":"TK_LIVE_LIKE",
+      "desc":"tiktok Live send like",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"\"input tap 324 521 & sleep 0.1; input tap 324 521\""
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":200,
+      "postDelay":4000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":500,
+      "next":[
+         "tk_x3c_back"
+      ]
+   },
+   "tk_x3c_back":{
+      "name":"BACK",
+      "desc":"Back page",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input keyevent 4"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":2000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_x3c_click"
+      ]
+   },
+   "tk_x3c_click":{
+      "name":"CLICK_PROFILE",
+      "desc":"Click profile",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 648 1461"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":2000,
+      "postDelay":4000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_x3c2_click"
+      ]
+   },
+   "tk_x3c2_click":{
+      "name":"CLICK_PROFILE_2",
+      "desc":"Click profile 2",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap 362 395"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":2000,
+      "postDelay":8000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":5,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_x3c_reader","tk_x3c_home"
+      ]
+   },
+   "tk_x3c_reader":{
+      "name":"TK_READ_1",
+      "desc":"tiktok read",
+      "trigger":[
+            {
+                "crop": [153, 957, 444, 60],
+                "pre":[
+                    "if (!accounts.includes(text)&&text!=''){",
+                    "   accounts.push(text)",
+                    "   result=true",
+                    "}"],       
+                "result": "result",
+                "post":[]
+            },
+            {
+                "crop": [153, 1100, 444, 60],
+                "pre":[
+                    "if (!accounts.includes(text)&&x==-1&&text!=''){",
+                    "   accounts.push(text)",
+                    "   x=xm",
+                    "   y=ym",
+                    "}"
+                ],
+                "result":"result",
+                "post":[]
+            },
+            {
+                "crop": [153, 1260, 444, 60],
+                "pre":[
+                    "if (!accounts.includes(text)&&x==-1&&text!=''){",
+                    "   accounts.push(text)",
+                    "   x=xm",
+                    "   y=ym",
+                    "}",
+                    "if(x==-1) result = false"
+                ],
+                "result":"result",
+                "post":[]
+            }
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input tap {x} {y}"
+         }
+      },
+      "order":0,
+      "type":"reader",
+      "getScreen":true,
+      "preDelay":200,
+      "postDelay":12000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":10,
+      "try":0,
+      "timeout":5000,
+      "next":[
+         "tk_x3c_open_apk"
+      ]
+   },
+   "tk_x3c_home":{
+      "name":"HOME",
+      "desc":"Back to home",
+      "trigger":[
+         
+      ],
+      "command":{
+         "action":"adb",
+         "devices":"{deviceId}",
+         "data":{
+            "command":"input keyevent 3"
+         }
+      },
+      "order":0,
+      "type":"static",
+      "preDelay":4000,
+      "postDelay":1000,
+      "maxLoop":10,
+      "loop":0,
+      "maxTry":1,
+      "try":0,
+      "timeout":5000,
+      "next":[ ]
+   }
+}

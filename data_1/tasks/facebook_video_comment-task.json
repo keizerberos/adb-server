@@ -1,0 +1,18 @@
+{
+	"facebook_video_comment": {
+		"id": "facebook_video_comment",
+		"name": "Comentarios en 3 cuentas (Reel)",
+		"description": "<i class=\"bi bi-facebook\"></i> Facebook - 3 comentarios(Reel)",
+		"start": "fbvcc2_prep_action0_1",
+		"end": "fbvcc2_action2_5_x3_post",
+		"group": "Facebook",
+		"type": "task",
+		"params": {
+			"link": "https://www.facebook.com/watch?v=1735879630466204",
+			"comment": ""
+		},
+		"function": {
+			"link": "fburl"
+		}
+	}
+}
