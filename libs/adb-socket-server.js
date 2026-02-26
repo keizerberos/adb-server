@@ -22,6 +22,9 @@ let networksData = JSON.parse(fs.readFileSync('./data/networks.json', 'utf8'));
 let tasks = {};
 let actions = {};
 let schedules = {};
+let config = {
+	version : "2.0.0"
+}
 const taskPath = "./data/tasks";
 const schedulePath = "./data/schedules";
 const actionsPath = "./data/actions";
@@ -33,6 +36,12 @@ let Dbm = null;
 const schedulerWorker = new Worker('./libs/workers/scheduler.worker.js', { 
     workerData: {	timerEach : 5000, schedulePath:schedulePath }
 });
+function setupConfig(){
+		const readmeContent = fs.readFileSync(`./../README.md`, 'utf8');
+		config.readme = readmeContent
+		const lines = readmeContent.split("\n");
+		config.version = lines[lines.length].split("\t")[0];
+	}
 function generateShortHexId(length) {
     let result = '';
     const characters = '0123456789abcdef';
@@ -142,9 +151,11 @@ class AdbSocketServer {
 		this.loginModule = new LoginModule(Dbm);
 		this.FBQuery = new FBQuery();
 		this.modules.push(this.loginModule);
+		setupConfig();
 		this.startServer(clients, clusters, devices);
 		this.startServerCluster(clients, clusters, devices);
 		scanTasksFolder();
+		
 		this.executor.setActions(actions);
 		this.executor.setPatterns(patternsData);
 		this.drawProgressForm();		
@@ -582,6 +593,7 @@ class AdbSocketServer {
 				self.modules.forEach(m=>m.when("io.disconnect", {socket:socket}));
 			});
 			
+			socket.emit("version", config.version);
 			socket.emit("uuid", uuid);
 			const configSocket = ()=>{
 				//console.log("setup socket");

@@ -464,6 +464,8 @@ async function doReader(currentAction, nodeAction, action, actionIndex, deviceId
 		if(trigger.pre!=undefined) eval(trigger.pre.join(";"));
 		console.log("----x,y", x,y);
 		result = eval(trigger.result);
+		devicesActions[deviceId]['blobLastScreen'] = null;	
+		devicesActions[deviceId]['imageDataLastScreen'] = null;
 		if ( !result )
 			resultGlobal=false;
 		if(trigger.post!=undefined) eval(trigger.post.join(";"));
@@ -902,8 +904,7 @@ class Executor {
 				console.log("bimg.length",bimg.length);
 				
   				const memory = process.memoryUsage();
-				console.log('Memory Usage:');
-				console.log(`  RSS (Resident Set Size): ${formatBytes(memory.rss)}`);
+				console.log(`Memory Usage RSS (Resident Set Size): ${formatBytes(memory.rss)}`);
 				if (reportCB!=null)
 					reportCB(memory);
 			try {
@@ -925,7 +926,7 @@ class Executor {
 
 					eventNodes.forEach((e, i) => {
 						if (e.deviceId == id) {
-							console.log("event success", e);
+							console.log("eventNodes event success");
 							e.cbSuccess(img,bimg,imgPath);
 							eventNodes.splice(i, 1);
 						}
