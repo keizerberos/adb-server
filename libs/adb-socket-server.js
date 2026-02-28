@@ -4,7 +4,7 @@ const { FastServer } = require('./fast-server');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const { Worker } = require('node:worker_threads');
-
+const { spawn } = require('child_process');
 
 const WebSocket	= require('ws');
 
@@ -36,6 +36,31 @@ let Dbm = null;
 /*const schedulerWorker = new Worker('./libs/workers/scheduler.worker.js', { 
     workerData: {	timerEach : 5000, schedulePath:schedulePath }
 });*/
+	function updateGit(){
+
+
+	function runCommand(command, args) {
+		return new Promise((resolve, reject) => {
+			const child = spawn(command, args, { stdio: 'inherit' });
+
+			child.on('close', (code) => {
+				if (code === 0) resolve();
+				else reject(new Error(`Command failed with code ${code}`));
+			});
+		});
+	}
+
+	(async () => {
+		try {
+			await runCommand('git', ['add','.']);
+			await runCommand('git', ['commit','.','-m',"update"]); 
+			await runCommand('git', ['push','origin','main']); 
+		} catch (err) {
+			console.error(err);
+		}
+	})();
+
+}
 function setupConfig(){
 		const readmeContent = fs.readFileSync(`./README.md`, 'utf8');
 		config.readme = readmeContent;
@@ -618,6 +643,12 @@ class AdbSocketServer {
 				socket.on("server.end", ()=>{
 					Log.i("server end");
 					process.exit(0)
+				});
+				socket.on("server.update", ()=>{
+					Log.i("server update");
+					updateGit();
+					
+					
 				});
 				socket.on("networks.delete", (network)=>{
 					const existNetwork = oget(networksData,'uuid',network.uuid);
