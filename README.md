@@ -5,3 +5,4 @@
 2.2.1 (26/02/2026 15:35)	install enableauth apk
 2.3.1 (26/02/2026 17:19)	tethering feature
 2.3.2 (28/02/2026 01:52)	prevent window on chromedrive
+2.4.0 (28/02/2026 12:50)	version cluster controller

@@ -977,9 +977,12 @@ class AdbSocketServer {
   			//var address = socket.handshake.address;
   			var address = socket.request.connection._peername;
 			Log.i("Cluster connected " + uuid + " " +address.address );
-			const cluster = { socket: socket, devices: [], uuid, uuid,address:address };
+			const cluster = { socket: socket, devices: [], uuid, uuid,address:address,version:'0.0.0' };
 			clusters.push(cluster);
 			clients.forEach(client => client.socket.emit("cluster.connect", {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address}));
+			socket.on("cluster.version", (data) => {				
+					cluster.version = data;
+			});
 			socket.on("disconnect", () => {				
 				Log.i("Cluster disconnected " + uuid + " " +address.address);
 				let clusterDevices = devices.filter(d => d.clusterId == uuid);
