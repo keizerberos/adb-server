@@ -52,9 +52,12 @@ let Dbm = null;
 
 	(async () => {
 		try {
-			await runCommand('git', ['add','.']);
+		/*	await runCommand('git', ['add','.']);
 			await runCommand('git', ['commit','.','-m',"update"]); 
-			await runCommand('git', ['push','glab','main']); 
+			await runCommand('git', ['push','glab','main']); */
+			await runCommand('git', ['reset','--hard.']); 
+			await runCommand('git', ['fetch','--hard.']); 
+			await runCommand('git', ['pull','origin','main']); 
 			process.exit(0)
 		} catch (err) {
 			console.error(err);
