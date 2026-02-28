@@ -979,7 +979,7 @@ class AdbSocketServer {
 			Log.i("Cluster connected " + uuid + " " +address.address );
 			const cluster = { socket: socket, devices: [], uuid, uuid,address:address,version:'0.0.0' };
 			clusters.push(cluster);
-			clients.forEach(client => client.socket.emit("cluster.connect", {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address}));
+			clients.forEach(client => client.socket.emit("cluster.connect", {uuid:cluster.uuid,devices:cluster.devices,network:cluster.address,version:cluster.version}));
 			socket.on("cluster.version", (data) => {				
 					cluster.version = data;
 			});
