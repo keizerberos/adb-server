@@ -615,6 +615,9 @@ class AdbSocketServer {
 						clients.forEach(client => client.socket.emit("networks", networksData));							
 					});
 				});
+				socket.on("server.end", ()=>{
+					Log.i("server end");
+				});
 				socket.on("networks.delete", (network)=>{
 					const existNetwork = oget(networksData,'uuid',network.uuid);
 					if (existNetwork!=undefined){
