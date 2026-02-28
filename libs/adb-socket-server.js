@@ -55,6 +55,7 @@ let Dbm = null;
 			await runCommand('git', ['add','.']);
 			await runCommand('git', ['commit','.','-m',"update"]); 
 			await runCommand('git', ['push','glab','main']); 
+			
 		} catch (err) {
 			console.error(err);
 		}
