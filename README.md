@@ -6,3 +6,5 @@
 2.3.1 (26/02/2026 17:19)	tethering feature
 2.3.2 (28/02/2026 01:52)	prevent window on chromedrive
 2.4.0 (28/02/2026 12:50)	version cluster controller
+2.5.0 (07/03/2026 12:18)	Client Center Server
+2.6.0 (10/03/2026 12:18)	Perform memory
