@@ -56,7 +56,7 @@ function updateGit() {
 			/*	await runCommand('git', ['add','.']);
 				await runCommand('git', ['commit','.','-m',"update"]); 
 				await runCommand('git', ['push','glab','main']); */
-			await runCommand('git', ['reset', '--hard.']);
+			await runCommand('git', ['reset', '--hard']);
 			await runCommand('git', ['fetch']);
 			await runCommand('git', ['pull', 'origin', 'main']);
 			process.exit(0)
