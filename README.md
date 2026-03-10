@@ -8,3 +8,4 @@
 2.4.0 (28/02/2026 12:50)	version cluster controller
 2.5.0 (07/03/2026 12:18)	Client Center Server
 2.6.0 (10/03/2026 12:18)	Perform memory
+2.6.1 (10/03/2026 16:23)	fix clusters memory
