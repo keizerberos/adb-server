@@ -34,9 +34,10 @@ let saveProgrammed = false;
 let Log = null;
 let Dbm = null;
 
-/*const schedulerWorker = new Worker('./libs/workers/scheduler.worker.js', { 
+const schedulerWorker = new Worker('./libs/workers/scheduler.worker.js', { 
 		workerData: {	timerEach : 5000, schedulePath:schedulePath }
-});*/
+});
+
 function updateGit() {
 
 
@@ -361,7 +362,7 @@ class AdbSocketServer {
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
 		const httpServer = createServer(fastServer);
 		self.modules.forEach(m => m.when("startServer.init", { fastServer: fastServer, clients: clients }));
-		/*
+		
 		schedulerWorker.on("message",(message)=>{
 			//console.log("worker:",message.command);
 			if ( message.command == "schedule.run"){
@@ -372,7 +373,7 @@ class AdbSocketServer {
 				schedules = message.payload;
 				//console.log("schedules.payload",message.payload);
 			}
-		});*/
+		});
 
 		fastServer.get("/tasks", (req, res) => {
 			const task = tasks[req.query.id];
