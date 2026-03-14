@@ -65,7 +65,9 @@ function updateGit() {
 			console.error(err);
 		}
 	})();
-
+}
+function syncTasks(){
+	
 }
 function setupConfig() {
 	const readmeContent = fs.readFileSync(`./README.md`, 'utf8');
@@ -1048,7 +1050,7 @@ class AdbSocketServer {
 			});
 
 			socket.on("device.connect", (device) => {
-				//console.log("device.connect", device)
+				console.log("device.connect", device)
 				const createdDevice = dget(devices, 'serial', device.serial);
 
 				if (createdDevice == null)
@@ -1075,6 +1077,7 @@ class AdbSocketServer {
 				} else
 					device['number'] = -1;
 				const findDevice = dget(devices, 'serial', device.serial);
+				Object.keys(device).forEach(k=>findDevice[k]=device[k]);
 				findDevice['status'] = device.status;
 				findDevice['clusterId'] = uuid;
 				findDevice['clusterAddress'] = cluster.address?.address;
