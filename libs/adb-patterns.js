@@ -76,7 +76,7 @@ function findPattern(ctx, ctx1, canvas, pattern, first, crop) {
 
     for (var i = 0; i < d.length; i += 4) {
         if (d[i] == 254) continue;
-        if (first && ow > 0) { console.log("break"); break; }
+        //if (first && ow > 0) { console.log("break"); break; }
         jump = pathPattern(d, i, ww, hh, pattern)
         if (jump > 0) {
             console.log("equal", jump, i);
@@ -107,7 +107,7 @@ function findPattern(ctx, ctx1, canvas, pattern, first, crop) {
             d[i + 1] = 0;
             d[i + 2] = 0;
         }
-    console.log("ok");
+    //console.log("ok");
     if (crop == null) {
         ctx1.putImageData(id, 0, 0);
         return [ofx, ofy, ow, oh, owm, ohm]

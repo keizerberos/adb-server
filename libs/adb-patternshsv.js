@@ -329,7 +329,7 @@
         d[i + 2] = 0;
         d[i + 3] = 255;
       }
-    console.log("ok");
+    //console.log("ok");
     if (crop == null) {
       //ctx1.putImageData(id, 0, 0);
       if (ofx > 0){
@@ -412,7 +412,7 @@
         d[i + 1] = 0;
         d[i + 2] = 0;
       }
-    console.log("ok");
+    //console.log("ok");
     if (crop == null) {
       ctx1.putImageData(id, 0, 0);
       return [ofx, ofy, ow, oh, owm, ohm]

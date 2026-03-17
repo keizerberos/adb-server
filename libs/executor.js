@@ -1,11 +1,9 @@
 const { Logger } = require('atx-logger');
-//const { createCanvas, loadImage } = require('canvas');
 const process = require('process');
-const {Canvas, loadImage} = require('skia-canvas');
-const {bwImage,findPattern} = require('./adb-patterns');
+const { Canvas, loadImage } = require('skia-canvas');
+const { bwImage, findPattern } = require('./adb-patterns');
 //const {findPatternCrow,cropFromFast,countRow,findPatternHsv,getPatternHsv,cropFromHsv,cropFromHsvNoFilter,rgbToHsvImage,hsvImage,compareHsv,getPixel,rgb2hsv2,rgb2hsv_hsl,rgb2hsv} = require('./adb-patternshsv');
-const {findPatternHsv,rgbToHsvImage} = require('./adb-patternshsv');
-//const tesseract = require ("node-tesseract-ocr");
+const { findPatternHsv, rgbToHsvImage } = require('./adb-patternshsv');
 const AdbOcr = require('./adb-ocr');
 const fs = require('fs');
 const e = require('cors');
@@ -64,7 +62,7 @@ function replaceParams(params, str) {
 			//console.log("k",k);
 			if (Array.isArray(params[k])) {
 				//str = str.replace("{" + k + "}", "[]");
-			}else if (params[k].random) {
+			} else if (params[k].random) {
 				//console.log("Math.round(params[k].data.length*Math.random())",Math.round(params[k].data.length*Math.random()));
 				//console.log("str",str);
 				str = str.replaceAll("{" + k + "}", params[k].data[Math.round((params[k].data.length - 1) * Math.random())])
@@ -83,42 +81,41 @@ function replaceParams(params, str) {
 	});
 	return str;
 }
-function sendCommand(command){
+function sendCommand(command) {
 	events['send'].forEach(fn => fn(command));
 }
-function updateParams(data,params){
+function updateParams(data, params) {
 	Object.keys(data).forEach(k => {
-		if(data[k]==undefined) return;
+		if (data[k] == undefined) return;
 		data[k] = replaceParams(params, data[k]);
 	})
 }
-
-function clearEventNodes(devices){
-		devices.forEach((device)=>{
-			eventNodes.forEach((e,i)=>{
-				if(e.deviceId == device.serial){
-					eventNodes.splice(i,1);
-				}
-			});
-		});		
-	}
+function clearEventNodes(devices) {
+	devices.forEach((device) => {
+		eventNodes.forEach((e, i) => {
+			if (e.deviceId == device.serial) {
+				eventNodes.splice(i, 1);
+			}
+		});
+	});
+}
 function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
-	console.log("executeNode init");
+	console.log("executeNode init ", deviceId, actionIndex);
 	if (action == null) { cbSuccess(); return; }
 	if (action.next == null) { cbSuccess(); return; }
 	const nodeAction = action.next[actionIndex];
 	if (nodeAction == null || nodeAction == undefined) { cbSuccess(); return; }
-	
-	if (devicesActions[deviceId] == null ) { cbFail(); return; }
+	console.log("executeNode nodeAction ", nodeAction);
+	if (devicesActions[deviceId] == null) { cbFail(); return; }
 	const currentAction = devicesActions[deviceId][nodeAction];
 	if (currentAction == null) { cbFail(); return; }
 
-	if (signalStop || devicesActions[deviceId]['progress']['signalStop']) {		
+	if (signalStop || devicesActions[deviceId]['progress']['signalStop']) {
 		//devicesActions[deviceId]['progress']['completed'].push(nodeAction);
-		devicesActions[deviceId]['progress']['current'] = nodeAction;	
+		devicesActions[deviceId]['progress']['current'] = nodeAction;
 		devicesActions[deviceId]['progress']['state'] = 'ended';
 		events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
-		
+
 		devicesActions[deviceId]['progress'] = null;
 		devicesActions[deviceId]['params'] = null;
 		devicesActions[deviceId] = null;
@@ -126,8 +123,8 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 		return;
 	}
 
-	
-	console.log("executeNode currentAction.preDelay actionIndex currentAction.loop", nodeAction, currentAction.preDelay, actionIndex,currentAction.loop);
+
+	console.log("executeNode currentAction.preDelay actionIndex currentAction.loop", nodeAction, currentAction.preDelay, actionIndex, currentAction.loop);
 	setTimeout(() => {
 		doPreTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail);
 	}, currentAction.preDelay);
@@ -143,30 +140,30 @@ function executeNode(action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 		executeNode(beforeLoop,0,deviceId,params,cbSuccess,cbFail);
 		return;
 	}*/
-function getGroupDevices(devicesAll, devicesTxt){
-		let splitGroups = devicesTxt.split(',');//ev.target.value.split(',');
-		let groups = [];
-		splitGroups.forEach((grp) => {
-			let group = [];
-			groups.push(group);
-			if (grp.includes('-')) {
-				let st = parseInt(grp.split('-')[0]);
-				let en = parseInt(grp.split('-')[1]);
-				devicesAll.forEach((device) => {
-					if (parseInt(device.number) >= st && parseInt(device.number) <= en)
-						group.push(device);
-				});
-			} else {
-				let st = parseInt(grp);
-				devicesAll.forEach((device) => {
-					if (parseInt(device.number) == st) group.push(device);
-				});
-			}
-		});
-		return groups; 
-	}
-async function doPreTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail){
-	if ( devicesActions[deviceId] == undefined) {cbFail(); return;}
+function getGroupDevices(devicesAll, devicesTxt) {
+	let splitGroups = devicesTxt.split(',');//ev.target.value.split(',');
+	let groups = [];
+	splitGroups.forEach((grp) => {
+		let group = [];
+		groups.push(group);
+		if (grp.includes('-')) {
+			let st = parseInt(grp.split('-')[0]);
+			let en = parseInt(grp.split('-')[1]);
+			devicesAll.forEach((device) => {
+				if (parseInt(device.number) >= st && parseInt(device.number) <= en)
+					group.push(device);
+			});
+		} else {
+			let st = parseInt(grp);
+			devicesAll.forEach((device) => {
+				if (parseInt(device.number) == st) group.push(device);
+			});
+		}
+	});
+	return groups;
+}
+async function doPreTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail) {
+	if (devicesActions[deviceId] == undefined) { cbFail(); return; }
 	devicesActions[deviceId]['progress']['completed'].push(nodeAction);
 	devicesActions[deviceId]['progress']['current'] = nodeAction;
 	events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
@@ -174,19 +171,19 @@ async function doPreTask(currentAction, nodeAction, action, actionIndex, deviceI
 		doStaticTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail);
 	} else if (currentAction.type == "pattern") {
 		doPatternTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail);
-	}else if (currentAction.type == "reader") {
+	} else if (currentAction.type == "reader") {
 		doReaderTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail);
 	}
 }
-async function doStaticTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail){
+async function doStaticTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 	console.log("executeNode static loop", currentAction.loop,);
 	if (currentAction.loop >= currentAction.maxLoop) {
 		let beforeLoop = devicesActions[deviceId][currentAction.beforeLoop];
 		console.log("executeNode is max loop", true);
-		if ( beforeLoop == undefined){
+		if (beforeLoop == undefined) {
 			console.log("no have beforeLoop ", currentAction.beforeLoop);
 			cbFail();
-		}else{							
+		} else {
 			console.log("have beforeLoop ", currentAction.beforeLoop);
 			setTimeout(() => {
 				executeNode(beforeLoop, 0, deviceId, params, cbSuccess, cbFail);
@@ -197,15 +194,15 @@ async function doStaticTask(currentAction, nodeAction, action, actionIndex, devi
 	let command = JSON.parse(JSON.stringify(currentAction.command));
 	let tempParams = { deviceId: deviceId };
 	command.devices = replaceParams(tempParams, command.devices);
-	if (currentAction.pre!=undefined) eval(currentAction.pre);
+	if (currentAction.pre != undefined) eval(currentAction.pre);
 	let result = true;
-	if (currentAction.result!=undefined) eval(currentAction.result);
-	if (result){
-		if (currentAction.post!=undefined) eval(currentAction.post);
+	if (currentAction.result != undefined) eval(currentAction.result);
+	if (result) {
+		if (currentAction.post != undefined) eval(currentAction.post);
 		//console.log("executeNode.cmd",JSON.stringify(currentAction.command));		
-		
-		updateParams(command.data,params);
-		updateParams(command.data,tempParams);
+
+		updateParams(command.data, params);
+		updateParams(command.data, tempParams);
 		sendCommand(command);
 		currentAction.loop++;
 		console.log("currentAction.postDelay", currentAction.postDelay);
@@ -219,29 +216,29 @@ async function doStaticTask(currentAction, nodeAction, action, actionIndex, devi
 				}
 			);
 		}, currentAction.postDelay);
-	}else{
-		if (currentAction.post!=undefined) eval(currentAction.post);
-		console.log(deviceId +" executeNode.static false");
+	} else {
+		if (currentAction.post != undefined) eval(currentAction.post);
+		console.log(deviceId + " executeNode.static false");
 		currentAction.try++;
 		setTimeout(() => {
 			executeNode(action, actionIndex + 1, deviceId, params, () => {
-					cbSuccess();
-				},
+				cbSuccess();
+			},
 				() => {
 					cbFail();
 				});
 		}, currentAction.postDelay);
 	}
 }
-async function doPatternTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail){	
-	console.log(deviceId +" new eventNodes");
+async function doPatternTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail) {
+	console.log(deviceId + " new eventNodes");
 	eventNodes.push({
 		deviceId: deviceId,
 		action: nodeAction,
 		state: true,
 		cbSuccess: (img) => {
 			executeNode(currentAction.next[0], 0, deviceId, params, () => {
-				const constStates = Object.keys(params).map(k=>k+" = params['"+k+"']");
+				const constStates = Object.keys(params).map(k => k + " = params['" + k + "']");
 				console.log("constStates:");
 				console.log(constStates.join(";\n"));
 				eval(constStates.join(";"));
@@ -262,23 +259,23 @@ async function doPatternTask(currentAction, nodeAction, action, actionIndex, dev
 					let canvasctxP = outputcanvasP.getContext("2d");
 					let canvasctxF = outputcanvasF.getContext("2d");
 					canvasctx.drawImage(img, 0, 0);
-					let [ox, oy, ow, oh, owm, ohm] = [-1,-1,-1,-1,-1,-1];
-					if (pattern.type=='hsv'){
+					let [ox, oy, ow, oh, owm, ohm] = [-1, -1, -1, -1, -1, -1];
+					if (pattern.type == 'hsv') {
 						//rgbToHsvImage(canvasctx,outputcanvas,canvasctxP,outputcanvasP);
-						[ox,oy,ow,oh,owm,ohm] = findPatternHsv(canvasctx,canvasctxF ,outputcanvasF, pattern, true, pattern.rectCrop);
-					}else{
+						[ox, oy, ow, oh, owm, ohm] = findPatternHsv(canvasctx, canvasctxF, outputcanvasF, pattern, true, pattern.rectCrop);
+					} else {
 						bwImage(canvasctx, outputcanvas, canvasctxP, outputcanvasP, pattern.umbral);
 						[ox, oy, ow, oh, owm, ohm] = findPattern(canvasctxP, canvasctxF, outputcanvasF, pattern, true, pattern.rectCrop);
 					}
-					console.log("ox,oy,ow,oh,owm,ohm",trigger.pattern, [ox, oy, ow, oh, owm, ohm]);
+					console.log("ox,oy,ow,oh,owm,ohm", trigger.pattern, [ox, oy, ow, oh, owm, ohm]);
 					//if ((ox>0 && currentAction.condition)||(!currentAction.condition&&ox<0)){
-										
-					if (currentAction.pre!=undefined) eval(currentAction.pre);
+
+					if (currentAction.pre != undefined) eval(currentAction.pre);
 					result = ox > 0;
-					if (currentAction.result!=undefined) result = eval(currentAction.result);
+					if (currentAction.result != undefined) result = eval(currentAction.result);
 					if (result) {
-						if (currentAction.post!=undefined) eval(currentAction.post);
-						console.log(deviceId +" executeNode.pattern true");
+						if (currentAction.post != undefined) eval(currentAction.post);
+						console.log(deviceId + " executeNode.pattern true");
 						let command = JSON.parse(JSON.stringify(currentAction.command));
 						if (command != null) {
 							let tempParams = {
@@ -303,15 +300,15 @@ async function doPatternTask(currentAction, nodeAction, action, actionIndex, dev
 							);
 						}, currentAction.postDelay);
 
-					} else {						
-						if (currentAction.post!=undefined) eval(currentAction.post);
+					} else {
+						if (currentAction.post != undefined) eval(currentAction.post);
 
-						console.log(deviceId +" executeNode.pattern false");
+						console.log(deviceId + " executeNode.pattern false");
 						currentAction.try++;
 						setTimeout(() => {
 							executeNode(action, actionIndex + 1, deviceId, params, () => {
-									cbSuccess();
-								},
+								cbSuccess();
+							},
 								() => {
 									cbFail();
 								});
@@ -336,8 +333,8 @@ async function doPatternTask(currentAction, nodeAction, action, actionIndex, dev
 		},
 		cbError: () => {
 			//BAD SCREEN
-			
-				cbFail();
+
+			cbFail();
 			//myWebSocket.send(JSON.stringify(data));
 		},
 	});
@@ -366,19 +363,19 @@ async function doPatternTask(currentAction, nodeAction, action, actionIndex, dev
 	events['send'].forEach(fn => fn(data));
 	//myWebSocket.send(JSON.stringify(data));
 }
-async function doReaderTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail){
-	if(currentAction.getScreen)
+async function doReaderTask(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail) {
+	if (currentAction.getScreen)
 		doReaderTaskNewScreen(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail);
 	else
 		doReaderTaskLastScreen(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail);
 }
-async function doReaderTaskNewScreen(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail){
+async function doReaderTaskNewScreen(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail) {
 	console.log(deviceId + " new eventNodes[reader]");
 	eventNodes.push({
 		deviceId: deviceId,
 		action: nodeAction,
 		state: true,
-		cbSuccess: async(img,bimg) => {
+		cbSuccess: async (img, bimg) => {
 			doReader(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail, bimg, img);
 		},
 		cbFail: () => {
@@ -392,7 +389,7 @@ async function doReaderTaskNewScreen(currentAction, nodeAction, action, actionIn
 			events['send'].forEach(fn => fn(data));
 		}
 	});
-	
+
 	setTimeout(() => {
 		if (eventNodes.find(d => d.deviceId == deviceId) != undefined) {
 			console.log("timeout for ", deviceId);
@@ -417,16 +414,16 @@ async function doReaderTaskNewScreen(currentAction, nodeAction, action, actionIn
 	};
 	events['send'].forEach(fn => fn(data));
 }
-async function doReaderTaskLastScreen(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail){
-	console.log("doReaderTaskLastScreen reading start");		
-	const bimg = devicesActions[deviceId]['blobLastScreen'] ;	
-	const img =  devicesActions[deviceId]['imageDataLastScreen'] ;
-	
+async function doReaderTaskLastScreen(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail) {
+	console.log("doReaderTaskLastScreen reading start");
+	const bimg = devicesActions[deviceId]['blobLastScreen'];
+	const img = devicesActions[deviceId]['imageDataLastScreen'];
+
 	doReader(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail, bimg, img);
 }
-async function doReader(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail, bimg, img){
+async function doReader(currentAction, nodeAction, action, actionIndex, deviceId, params, cbSuccess, cbFail, bimg, img) {
 	console.log("reading");
-	const constStates = Object.keys(params).map(k=>k+" = params['"+k+"']");
+	const constStates = Object.keys(params).map(k => k + " = params['" + k + "']");
 	let resultGlobal = true;
 	let x = -1;
 	let y = -1;
@@ -436,62 +433,64 @@ async function doReader(currentAction, nodeAction, action, actionIndex, deviceId
 	console.log(constStates.join(";\n"));
 	eval(constStates.join(";"));
 	//currentAction.trigger.forEach(async (trigger,i) => {	
-	for(let i = 0; i < currentAction.trigger.length;i++){
+	for (let i = 0; i < currentAction.trigger.length; i++) {
 		const trigger = currentAction.trigger[i];
-		const send = (shellString)=>{
+		const send = (shellString) => {
 			//console.log(" pre send ");
 			const command = JSON.parse(JSON.stringify(currentAction.command));
-			command.data.command = shellString;		
+			command.data.command = shellString;
 
 			let tempParams = {
-				x: x, y: y, xm:xm, ym:ym
+				x: x, y: y, xm: xm, ym: ym
 				, deviceId: deviceId
-			}	
-			command.devices = replaceParams(tempParams, command.devices);	
-			updateParams(command.data,params);
-			updateParams(command.data,tempParams);
+			}
+			command.devices = replaceParams(tempParams, command.devices);
+			updateParams(command.data, params);
+			updateParams(command.data, tempParams);
 			//console.log(" pre send command",command);
 			sendCommand(command);
 		}
-		let result = true;					
-		xm = Math.round(trigger.crop[0]+trigger.crop[2]/2);
-		ym = Math.round(trigger.crop[1]+trigger.crop[3]/2);
+		let result = true;
+		xm = Math.round(trigger.crop[0] + trigger.crop[2] / 2);
+		ym = Math.round(trigger.crop[1] + trigger.crop[3] / 2);
 		const blobCrop = await getBlobCrop(img, trigger.crop);
-		const text = ( await adbocr.readFromBuffer( blobCrop)).trim();
-		console.log("text",text);
+		const text = (await adbocr.readFromBuffer(blobCrop)).trim();
+		console.log("text", text);
 		//console.log("trigger.pre.join",trigger.pre.join(";"));
-		
-		if(trigger.pre!=undefined) eval(trigger.pre.join(";"));
-		console.log("----x,y", x,y);
+
+		if (trigger.pre != undefined) eval(trigger.pre.join(";"));
+		console.log("----x,y", x, y);
 		result = eval(trigger.result);
-		if ( !result )
-			resultGlobal=false;
-		if(trigger.post!=undefined) eval(trigger.post.join(";"));
-		
+		devicesActions[deviceId]['blobLastScreen'] = null;
+		devicesActions[deviceId]['imageDataLastScreen'] = null;
+		if (!result)
+			resultGlobal = false;
+		if (trigger.post != undefined) eval(trigger.post.join(";"));
+
 	}
 	//});
-	console.log("accounts",params);
-	console.log("resultGlobal",resultGlobal);
+	console.log("accounts", params);
+	console.log("resultGlobal", resultGlobal);
 
 	console.log("xm,ym", xm, ym);
 	console.log("x,y", x, y);
-	
-	if (currentAction.pre!=undefined) eval(currentAction.pre);
-	if (currentAction.result!=undefined) resultGlobal = eval(currentAction.result);
-	if (resultGlobal){				
-		if (currentAction.post!=undefined) eval(currentAction.post);
-		console.log(deviceId +" executeNode.reader true");
+
+	if (currentAction.pre != undefined) eval(currentAction.pre);
+	if (currentAction.result != undefined) resultGlobal = eval(currentAction.result);
+	if (resultGlobal) {
+		if (currentAction.post != undefined) eval(currentAction.post);
+		console.log(deviceId + " executeNode.reader true");
 
 		const command = JSON.parse(JSON.stringify(currentAction.command));
 		if (command != null) {
 			let tempParams = {
-				x: x, y: y, xm:xm, ym:ym
+				x: x, y: y, xm: xm, ym: ym
 				, deviceId: deviceId
-			}	
-			command.devices = replaceParams(tempParams, command.devices);	
-			updateParams(command.data,params);
-			updateParams(command.data,tempParams);
-			sendCommand(command);	
+			}
+			command.devices = replaceParams(tempParams, command.devices);
+			updateParams(command.data, params);
+			updateParams(command.data, tempParams);
+			sendCommand(command);
 		}
 
 		currentAction.loop++;
@@ -505,71 +504,71 @@ async function doReader(currentAction, nodeAction, action, actionIndex, deviceId
 				}
 			);
 		}, currentAction.postDelay);
-	}else{
-		if (currentAction.post!=undefined) eval(currentAction.post);
-		console.log(deviceId +" executeNode.reader false");
+	} else {
+		if (currentAction.post != undefined) eval(currentAction.post);
+		console.log(deviceId + " executeNode.reader false");
 		currentAction.try++;
-			setTimeout(() => {
-				executeNode(action, actionIndex + 1, deviceId, params, () => {
-						cbSuccess();
-					},
-					() => {
-						cbFail();
-					});
-			}, currentAction.postDelay);
+		setTimeout(() => {
+			executeNode(action, actionIndex + 1, deviceId, params, () => {
+				cbSuccess();
+			},
+				() => {
+					cbFail();
+				});
+		}, currentAction.postDelay);
 	}
 }
-function ocr(blob){
-	return new Promise((resolve,reject) =>{		
-		tesseract.recognize(blob, {							
+function ocr(blob) {
+	return new Promise((resolve, reject) => {
+		tesseract.recognize(blob, {
 			lang: "eng",
 			oem: 1,
 			psm: 3,
 			//tessedit_char_whitelist: "0123456789X",
 		})
-		.then((text) => {
-			//console.log("triger " + i +" text:",text)
-			resolve(text);
-		})
-		.catch((error) => {
-			console.error("[reader]error:",error)
-		})
+			.then((text) => {
+				//console.log("triger " + i +" text:",text)
+				resolve(text);
+			})
+			.catch((error) => {
+				console.error("[reader]error:", error)
+			})
 	})
 }
-function getBlobCrop(img, crop){
-		const x = crop[0];
-		const y = crop[1];
-		const w = crop[2];
-		const h = crop[3];
-		//const outputcanvas = createCanvas(w,h);
-		const outputcanvas = new Canvas(w,h);
-		const canvasctx = outputcanvas.getContext("2d");
-		outputcanvas.width = w;
-		outputcanvas.height = h;
-		canvasctx.drawImage(img, x, y, w, h, 0, 0, w, h);
-		const image = canvasctx.getImageData(0, 0, w, h);
-		return outputcanvas.toBuffer('image/png');
+function getBlobCrop(img, crop) {
+	const x = crop[0];
+	const y = crop[1];
+	const w = crop[2];
+	const h = crop[3];
+	//const outputcanvas = createCanvas(w,h);
+	const outputcanvas = new Canvas(w, h);
+	const canvasctx = outputcanvas.getContext("2d");
+	outputcanvas.width = w;
+	outputcanvas.height = h;
+	canvasctx.drawImage(img, x, y, w, h, 0, 0, w, h);
+	const image = canvasctx.getImageData(0, 0, w, h);
+	return outputcanvas.toBuffer('image/png');
 }
-function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, cbSuccess, cbFail) {
+function executeGraph(config, actionId, deviceId, ii, params, offsetDelay = null, cbSuccess, cbFail) {
 	//console.log("androidActions[actionId]",androidActions[actionId]);
 	let action = devicesActions[deviceId][actionId];
 	if (actionId == null) { cbSuccess(); return; }
-	console.log("--devicesActions[deviceId]--",devicesActions[deviceId]);
-	console.log("--action--",action);
+	//console.log("--devicesActions[deviceId]--",devicesActions[deviceId]);
+	console.log("--action.name--", action.name);
 	console.log("pre ejecutando comando ");
 	console.log("executeGraph.action.actionId", actionId);
 	console.log("executeGraph.action.preDelay", action.preDelay);
 
-	let timeExecute = offsetDelay==null?action.preDelay + 2500 * ii + Math.random() * 5000:action.preDelay+offsetDelay;
-	if (config != null){
+	let timeExecute = offsetDelay == null ? action.preDelay + 2500 * ii + Math.random() * 5000 : action.preDelay + offsetDelay;
+	if (config != null) {
 		timeExecute = action.preDelay + (config.offset * 1000 * ii);
-	}	
+	}
 	timeExecute = Math.round(timeExecute);
 	console.log("executeGraph.action.timeExecute", timeExecute);
 	let sended = false;
 	setTimeout(() => {
-		if (!sended){
-			sended =true;
+		if (!sended) {
+			sended = true;
 			if (action.type == "static") {
 				//$(".act-" + deviceId).html(action.name + "<br> " + action.desc);
 				devicesActions[deviceId]['progress']['completed'].push(actionId);
@@ -584,29 +583,29 @@ function executeGraph(config, actionId, deviceId, ii, params, offsetDelay=null, 
 				Object.keys(command.data).forEach(k => {
 					command.data[k] = replaceParams(params, command.data[k]);
 				});
-				console.log("executeGraph.command", command);
+				//console.log("executeGraph.command", command);
 				//myWebSocket.send(JSON.stringify(command));
 				events['send'].forEach(fn => fn(command));
 			} else if (action.type == "pattern") {
 				//never start with a pattern, but...
-				console.log("executeGraph.pattern test", JSON.stringify(action.command));
+				//console.log("executeGraph.pattern test", JSON.stringify(action.command));
 			}
 			console.log("executeGraph.action.postDelay", action.postDelay);
 			setTimeout(() => {
 				console.log("executeGraph starting send executeNode");
 				executeNode(action, 0, deviceId, params,
-					() => {					
-						
-						if (devicesActions[deviceId]!=undefined){
+					() => {
+
+						if (devicesActions[deviceId] != undefined) {
 							devicesActions[deviceId]['progress']['state'] = 'ended';
 							events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
 						}
 						cbSuccess();
 					},
-					() => {					
-						if (devicesActions[deviceId]!=undefined){
+					() => {
+						if (devicesActions[deviceId] != undefined) {
 							devicesActions[deviceId]['progress']['state'] = 'ended';
-							devicesActions[deviceId]['progress']['fail'] = true;						
+							devicesActions[deviceId]['progress']['fail'] = true;
 							events['task.progress'].forEach(fn => fn(deviceId, devicesActions[deviceId]['progress']));
 						}
 						cbFail();
@@ -621,7 +620,7 @@ function executeTask(devices, task) {
 	let params = {};
 
 	task.paramsArray.forEach(param => {
-		if(Array.isArray(param.value)){			
+		if (Array.isArray(param.value)) {
 			params[param.id] = param.value;
 			return;
 		}
@@ -636,35 +635,35 @@ function executeTask(devices, task) {
 	let countEnded = 0;
 	devices.forEach((d, ii) => {
 		let batchIndex = -1;
-		if (task.config!=null)
+		if (task.config != null)
 			if (task.config.isBatch)
-				task.config.batch.groups.forEach((gd,gi)=>batchIndex=gd.find(gdd=>gdd.serial==d.serial)?gi:batchIndex);
+				task.config.batch.groups.forEach((gd, gi) => batchIndex = gd.find(gdd => gdd.serial == d.serial) ? gi : batchIndex);
 		//if (devicesActions[d.serial] != undefined){			
-			clearScreens(d.serial);
+		clearScreens(d.serial);
 		//}
 		//devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
 		devicesActions[d.serial] = copyActionsOverrided(task);
-		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [], texts:{},screens:{}, current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false,batchIndex:batchIndex };
-		devicesActions[d.serial]['params'] = params;
+		if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['progress'] = { taskId: task.id, path: task.progressPath, state: 'progress', completed: [], texts: {}, screens: {}, current: [task.start], start: task.start, end: task.end, signalStop: false, fail: false, batchIndex: batchIndex };
+		if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['params'] = params;
 		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 		executeGraph(task.config, task.start, d.serial, ii, params, null, () => {
 			countEnded++;
 			console.log("executeTask:executeGraph.ended")
 
-			devicesActions[d.serial]['progress']['state'] = 'ended';
-			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			devicesActions[d.serial]['progress'] = null;
-			devicesActions[d.serial]['params'] = null;
+			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['progress']['state'] = 'ended';
+			if (devicesActions[d.serial] != undefined) events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['progress'] = null;
+			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['params'] = null;
 			devicesActions[d.serial] = null;
 			delete devicesActions[d.serial];
-			if ((countEnded ) == devices.length) {
-				console.log("params",params);
+			if ((countEnded) == devices.length) {
+				console.log("params", params);
 				console.log("[executeTask] all ended ")
 				countEnded = 0;
 				signalStop = false;
 			}
 		}, () => {
-			if ((countEnded) == devices.length && devicesActions[d.serial]!=undefined) {
+			if ((countEnded) == devices.length && devicesActions[d.serial] != undefined) {
 				devicesActions[d.serial]['progress'] = null;
 				devicesActions[d.serial]['params'] = null;
 				devicesActions[d.serial] = null;
@@ -681,28 +680,28 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 	let countEnded = 0;
 	devices.forEach((d, ii) => {
 		let batchIndex = -1;
-		if (task.config!=null)
+		if (task.config != null)
 			if (task.config.isBatch)
-				task.config.batch.groups.forEach((gd,gi)=>batchIndex=gd.find(gdd=>gdd.serial==d.serial)?gi:batchIndex);
+				task.config.batch.groups.forEach((gd, gi) => batchIndex = gd.find(gdd => gdd.serial == d.serial) ? gi : batchIndex);
 		//if (devicesActions[d.serial] != undefined){			
-			clearScreens(d.serial);
+		clearScreens(d.serial);
 		//}
 		//devicesActions[d.serial] = JSON.parse(JSON.stringify(nodeActions));
 		devicesActions[d.serial] = copyActionsOverrided(task);
-		devicesActions[d.serial]['progress'] = {taskId:task.id, path: task.progressPath, state: 'progress', completed: [],texts:{},screens:{}, current: [task.start], start: task.start, end: task.end,signalStop:false,fail:false,batchIndex:batchIndex };
+		devicesActions[d.serial]['progress'] = { taskId: task.id, path: task.progressPath, state: 'progress', completed: [], texts: {}, screens: {}, current: [task.start], start: task.start, end: task.end, signalStop: false, fail: false, batchIndex: batchIndex };
 		devicesActions[d.serial]['params'] = params;
 		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 		executeGraph(task.config, task.start, d.serial, ii, params, null, () => {
 			countEnded++;
-			console.log("executeTaskBatch:executeGraph.ended countEnded",countEnded + "/" + devices.length)
+			console.log("executeTaskBatch:executeGraph.ended countEnded", countEnded + "/" + devices.length)
 
-			devicesActions[d.serial]['progress']['state'] = 'ended';
-			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			devicesActions[d.serial]['progress'] = null;
-			devicesActions[d.serial]['params'] = null;
-			devicesActions[d.serial] = null;
+			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['progress']['state'] = 'ended';
+			if (devicesActions[d.serial] != undefined) events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['progress'] = null;
+			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['params'] = null;
+			if (devicesActions[d.serial] != undefined) devicesActions[d.serial] = null;
 			delete devicesActions[d.serial];
-			if ((countEnded) == devices.length) {				
+			if ((countEnded) == devices.length) {
 				console.log("[executeTaskBatch] all ended")
 				countEnded = 0;
 				signalStop = false;
@@ -712,7 +711,7 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 			countEnded++;
 			console.log("executeTask:executeGraph.incomplete")
 
-			if ((countEnded) == devices.length && devicesActions[d.serial]!=undefined) {
+			if ((countEnded) == devices.length && devicesActions[d.serial] != undefined) {
 				devicesActions[d.serial]['progress']['state'] = 'ended';
 				events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 				devicesActions[d.serial]['progress'] = null;
@@ -720,7 +719,7 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 				devicesActions[d.serial] = null;
 				delete devicesActions[d.serial];
 			}
-			if ((countEnded) == devices.length) {				
+			if ((countEnded) == devices.length) {
 				console.log("all ended with fails")
 				countEnded = 0;
 				signalStop = false;
@@ -732,11 +731,11 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 function resumeTask(devices, task) {
 	let tasks = [];
 	let params = {};
-	
+
 	devicesActions = {};
 
 	task.paramsArray.forEach(param => {
-		if(Array.isArray(param.value)){			
+		if (Array.isArray(param.value)) {
 			params[param.id] = param.value;
 			return;
 		}
@@ -766,20 +765,20 @@ function resumeTask(devices, task) {
 			countEnded++;
 			console.log("executeTask:executeGraph.ended")
 
-			devicesActions[d.serial]['progress']['state'] = 'ended';
-			events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
-			devicesActions[d.serial]['progress'] = null;
-			devicesActions[d.serial]['params'] = null;
-			devicesActions[d.serial] = null;
+			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['progress']['state'] = 'ended';
+			if (devicesActions[d.serial] != undefined) events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
+			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['progress'] = null;
+			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['params'] = null;
+			if (devicesActions[d.serial] != undefined) devicesActions[d.serial] = null;
 			delete devicesActions[d.serial];
-			if ((countEnded ) == devices.length) {
+			if ((countEnded) == devices.length) {
 				console.log("all ended")
 				countEnded = 0;
 				signalStop = false;
 			}
 		}, () => {
-			
-			if ((countEnded) == devices.length && devicesActions[d.serial]!=undefined) {
+
+			if ((countEnded) == devices.length && devicesActions[d.serial] != undefined) {
 				devicesActions[d.serial]['progress'] = null;
 				devicesActions[d.serial]['params'] = null;
 				devicesActions[d.serial] = null;
@@ -814,49 +813,49 @@ function executeTasks(tasks, callback) {
 	};
 	executor();
 }
-function copyActionsOverrided(task){
-	const newActions  = JSON.parse(JSON.stringify(nodeActions))
-	if (task.nextMatrix!=null)
-		Object.keys(task.nextMatrix).forEach(k=>{
+function copyActionsOverrided(task) {
+	const newActions = JSON.parse(JSON.stringify(nodeActions))
+	if (task.nextMatrix != null)
+		Object.keys(task.nextMatrix).forEach(k => {
 			newActions[k].next = task.nextMatrix[k];
 		});
-	if (task.scriptMatrix!=null)
-		Object.keys(task.scriptMatrix).forEach(k=>{
-			if (task.scriptMatrix[k].pre!=undefined)
+	if (task.scriptMatrix != null)
+		Object.keys(task.scriptMatrix).forEach(k => {
+			if (task.scriptMatrix[k].pre != undefined)
 				newActions[k]['pre'] = task.scriptMatrix[k].pre;
-			if (task.scriptMatrix[k].result!=undefined)
+			if (task.scriptMatrix[k].result != undefined)
 				newActions[k]['result'] = task.scriptMatrix[k].result;
-			if (task.scriptMatrix[k].post!=undefined)
+			if (task.scriptMatrix[k].post != undefined)
 				newActions[k]['post'] = task.scriptMatrix[k].post;
 		});
-	return newActions ;
+	return newActions;
 }
-function clearScreens(serialFullName){
-    var files = [];
-	const serial = serialFullName.replaceAll(":","_");
-	const pathScreens = __dirname+"/../screens/";
+function clearScreens(serialFullName) {
+	var files = [];
+	const serial = serialFullName.replaceAll(":", "_");
+	const pathScreens = __dirname + "/../screens/";
 	//console.log("clearScreens",__dirname+"/"+pathScreens);
-    fs.readdir(pathScreens, function(err,list){
-        if(err) throw err;
-        for(var i=0; i<list.length; i++){
+	fs.readdir(pathScreens, function (err, list) {
+		if (err) throw err;
+		for (var i = 0; i < list.length; i++) {
 			//console.log("test",list[i]); 
-            if(list[i].includes(serial)){
-                //console.log("deleting",list[i]); 
-                //files.push(list[i]);
-				if(fs.existsSync(pathScreens+list[i]))
-					fs.unlinkSync(pathScreens+list[i]);
-            }
-        }
-    });
+			if (list[i].includes(serial)) {
+				//console.log("deleting",list[i]); 
+				//files.push(list[i]);
+				if (fs.existsSync(pathScreens + list[i]))
+					fs.unlinkSync(pathScreens + list[i]);
+			}
+		}
+	});
 }
 function formatBytes(bytes) {
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-  if (bytes === 0) return '0 Byte';
-  const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-  return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+	const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+	if (bytes === 0) return '0 Byte';
+	const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+	return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
-function cleanVar(variable){
-	Object.keys(variable).forEach(k=>{
+function cleanVar(variable) {
+	Object.keys(variable).forEach(k => {
 		variable[k] = null;
 		delete variable[k];
 	});
@@ -864,20 +863,20 @@ function cleanVar(variable){
 class Executor {
 	constructor() {
 	}
-	async ocr(blob){
+	async ocr(blob) {
 		return await adbocr.readFromBuffer(blob);
 	}
 	/** Register Screen for progress */
-	async regScreen(id,img){		
+	async regScreen(id, img) {
 		const pathScreens = "screens/";
-		const serial = id.replaceAll(":","_");
-		if (devicesActions[id]==undefined) return;
-		if (devicesActions[id]['progress']==undefined) return;
-		
+		const serial = id.replaceAll(":", "_");
+		if (devicesActions[id] == undefined) return;
+		if (devicesActions[id]['progress'] == undefined) return;
+
 		const timestamp = Date.now();
 		const screenUid = timestamp;
-		const actionIdCurrent = devicesActions[id]['progress']['current'];		
-		if (devicesActions[id]['progress']['screens'][actionIdCurrent]==undefined)
+		const actionIdCurrent = devicesActions[id]['progress']['current'];
+		if (devicesActions[id]['progress']['screens'][actionIdCurrent] == undefined)
 			devicesActions[id]['progress']['screens'][actionIdCurrent] = [];
 		devicesActions[id]['progress']['screens'][actionIdCurrent].push(screenUid);
 		//screensCache[screenUid] = img;
@@ -887,29 +886,28 @@ class Executor {
 				devicesActions[id]['progress']['texts'][actionIdCurrent] = [];
 			devicesActions[id]['progress']['texts'][actionIdCurrent].push(text);
 		});*/
-		
-		devicesActions[id]['lastScreenPath'] = pathScreens+serial+'-'+timestamp+'.png';
-		fs.writeFileSync(pathScreens+serial+'-'+timestamp+'.png', img);
-		return pathScreens+serial+'-'+timestamp+'.png', img;
+
+		devicesActions[id]['lastScreenPath'] = pathScreens + serial + '-' + timestamp + '.png';
+		fs.writeFileSync(pathScreens + serial + '-' + timestamp + '.png', img);
+		return pathScreens + serial + '-' + timestamp + '.png', img;
 	}
 	screen(id, bimg, reportCB) {
-		
-		const imgPath = this.regScreen(id,bimg);
-		if ( eventNodes.find(e=>e.deviceId == id )==undefined ) {
+
+		const imgPath = this.regScreen(id, bimg);
+		if (eventNodes.find(e => e.deviceId == id) == undefined) {
 			return;
 		}
 		if (bimg.length > 0) {
-				console.log("bimg.length",bimg.length);
-				
-  				const memory = process.memoryUsage();
-				console.log('Memory Usage:');
-				console.log(`  RSS (Resident Set Size): ${formatBytes(memory.rss)}`);
-				if (reportCB!=null)
-					reportCB(memory);
+			console.log("bimg.length", bimg.length);
+
+			const memory = process.memoryUsage();
+			console.log(`Memory Usage RSS (Resident Set Size): ${formatBytes(memory.rss)}`);
+			if (reportCB != null)
+				reportCB(memory);
 			try {
 				loadImage(bimg).then(async (img) => {
-					if(img==undefined) {
-						
+					if (img == undefined) {
+
 						return;
 					}
 					/*const text = await adbocr.readFromBuffer(bimg);
@@ -925,15 +923,15 @@ class Executor {
 
 					eventNodes.forEach((e, i) => {
 						if (e.deviceId == id) {
-							console.log("event success", e);
-							e.cbSuccess(img,bimg,imgPath);
+							console.log("eventNodes event success");
+							e.cbSuccess(img, bimg, imgPath);
 							eventNodes.splice(i, 1);
 						}
 					});
 					bimg = null;
 					img = null;
-				}).catch(err=>{
-					console.log("---- ERROR LOADING IMAGE---- ",err);
+				}).catch(err => {
+					console.log("---- ERROR LOADING IMAGE---- ", err);
 					let data = {
 						"action": "Screen",
 						"devices": id,
@@ -941,12 +939,12 @@ class Executor {
 							"savePath": "{screen_path}"
 						}
 					};
-					if ( eventNodes.find(e=>e.deviceId == id )!=undefined ) {
+					if (eventNodes.find(e => e.deviceId == id) != undefined) {
 						events['send'].forEach(fn => fn(data));
 					}
 				});
 			} catch (e) {
-				console.log("executor.screen ERROR",e);
+				console.log("executor.screen ERROR", e);
 				let data = {
 					"action": "Screen",
 					"devices": id,
@@ -957,24 +955,24 @@ class Executor {
 				events['send'].forEach(fn => fn(data));
 			}
 		} else {
-			if(devicesActions[id]==null) { 
+			if (devicesActions[id] == null) {
 				eventNodes.forEach((e, i) => {
-						if (e.deviceId == id) {
-							console.log("event fail", e);
-							e.cbFail();
-							eventNodes.splice(i, 1);
-						}
-					});
+					if (e.deviceId == id) {
+						console.log("event fail", e);
+						e.cbFail();
+						eventNodes.splice(i, 1);
+					}
+				});
 				return;
 			}
-			if(devicesActions[id]['reimage']==undefined || devicesActions[id]['reimage']>10) devicesActions[id]['reimage'] = 0;
-			devicesActions[id]['reimage'] ++;
-			console.log("screen try lengh=0:",devicesActions[id]['reimage']);
-			if (devicesActions[id]['reimage']>10){		
+			if (devicesActions[id]['reimage'] == undefined || devicesActions[id]['reimage'] > 10) devicesActions[id]['reimage'] = 0;
+			devicesActions[id]['reimage']++;
+			console.log("screen try lengh=0:", devicesActions[id]['reimage']);
+			if (devicesActions[id]['reimage'] > 10) {
 				eventNodes.forEach((e, i) => {
 					if (e.deviceId == id) {
 						console.error("event fail");
-						if (e.cbError!=null) e.cbError();
+						if (e.cbError != null) e.cbError();
 						eventNodes.splice(i, 1);
 					}
 				});
@@ -989,7 +987,7 @@ class Executor {
 					"savePath": "{screen_path}"
 				}
 			};
-			if ( eventNodes.find(e=>e.deviceId == id )!=undefined ) {
+			if (eventNodes.find(e => e.deviceId == id) != undefined) {
 				events['send'].forEach(fn => fn(data));
 			}
 		}
@@ -1000,18 +998,18 @@ class Executor {
 	stopAll() {
 		signalStop = true;
 	}
-	stopTask(devices) {		
-		devices.forEach(d=>{
-			if (devicesActions[d.serial]!=null){			
+	stopTask(devices) {
+		devices.forEach(d => {
+			if (devicesActions[d.serial] != null) {
 				devicesActions[d.serial]['progress']['signalStop'] = true;
 			}
 		});
 	}
 	setActions(_nodeActions) {
 		nodeActions = _nodeActions;
-		console.log("Executor.setActions","setted actions");
-	}		
-	
+		console.log("Executor.setActions", "setted actions");
+	}
+
 	setPatterns(_patterns) {
 		androidPattern = _patterns;
 	}
@@ -1025,18 +1023,18 @@ class Executor {
 		//eventNodes = []; //TEST MULTIEXECUTE
 		clearEventNodes(_devices);
 		signalStop = false;
-	
+
 		//devicesActions = {};
 		let batchs = [];
 		let params = [];
 		console.log("building batch");
 
-		if (!task.config.isBatch){
+		if (!task.config.isBatch) {
 			executeTask(_devices, task);
 			return;
 		}
-		task.paramsArray.forEach(param => {				
-			if(Array.isArray(param.value)){			
+		task.paramsArray.forEach(param => {
+			if (Array.isArray(param.value)) {
 				params[param.id] = param.value;
 				return;
 			}
@@ -1047,50 +1045,51 @@ class Executor {
 				params[param.id] = { random: false, index: 0, data: paramLines };
 		});
 
-		task.config.batch.groups.forEach(groupDevices=>{
-			let batch = (cb)=>{
-				setTimeout(()=>{
-					executeTaskBatch(groupDevices, params, task, ()=>{
+		task.config.batch.groups.forEach(groupDevices => {
+			let batch = (cb) => {
+				setTimeout(() => {
+					executeTaskBatch(groupDevices, params, task, () => {
 						cb();
 					});
-				},task.config.batch.offset*1000);
+				}, task.config.batch.offset * 1000);
 			};
 			batchs.push(batch);
 		});
 
 		console.log("starting batch executor");
-		let batchExecutor = (index)=>{
-			if (batchs[index]==undefined) {
-					console.log("ending all batch"); 
-					batchs=null; 
-					cleanVar(_devices);cleanVar(task); 
-					if (cbEnd!=null) cbEnd(); 
-					return};
-			console.log("start batch " + index + " of " +batchs.length);
-			batchs[index](()=>{
-				console.log("ended batch " + index);				
-				batchExecutor(index+1);
+		let batchExecutor = (index) => {
+			if (batchs[index] == undefined) {
+				console.log("ending all batch");
+				batchs = null;
+				cleanVar(_devices); cleanVar(task);
+				if (cbEnd != null) cbEnd();
+				return
+			};
+			console.log("start batch " + index + " of " + batchs.length);
+			batchs[index](() => {
+				console.log("ended batch " + index);
+				batchExecutor(index + 1);
 			});
 		};
 		batchExecutor(0);
 	}
-	
+
 	startTaskBatchEvents(_devices, task, cbEnd, preTasks, postTasks) {
 		//eventNodes = []; //TEST MULTIEXECUTE
 		clearEventNodes(_devices);
 		signalStop = false;
-	
+
 		//devicesActions = {};
 		let batchs = [];
 		let params = [];
 		console.log("building batch");
 
-		if (!task.config.isBatch){
+		if (!task.config.isBatch) {
 			executeTask(_devices, task);
 			return;
 		}
-		task.paramsArray.forEach(param => {				
-			if(Array.isArray(param.value)){			
+		task.paramsArray.forEach(param => {
+			if (Array.isArray(param.value)) {
 				params[param.id] = param.value;
 				return;
 			}
@@ -1101,37 +1100,38 @@ class Executor {
 				params[param.id] = { random: false, index: 0, data: paramLines };
 		});
 
-		task.config.batch.groups.forEach(groupDevices=>{
-			preTasks.forEach(preTask=>{				
+		task.config.batch.groups.forEach(groupDevices => {
+			preTasks.forEach(preTask => {
 				batchs.push(preTask);
 			});
-			
-			let batch = (cb)=>{
-				setTimeout(()=>{
-					executeTaskBatch(groupDevices, params, task, ()=>{
+
+			let batch = (cb) => {
+				setTimeout(() => {
+					executeTaskBatch(groupDevices, params, task, () => {
 						cb();
 					});
-				},task.config.batch.offset*1000);
+				}, task.config.batch.offset * 1000);
 			};
 			batchs.push(batch);
-			
-			postTasks.forEach(postTask=>{				
+
+			postTasks.forEach(postTask => {
 				batchs.push(postTask);
 			});
 		});
-		
+
 		console.log("starting batch executor");
-		let batchExecutor = (index)=>{
-			if (batchs[index]==undefined) {
-					console.log("ending all batch"); 
-					batchs=null; 
-					cleanVar(_devices);cleanVar(task); 
-					if (cbEnd!=null) cbEnd(); 
-					return};
-			console.log("start batch " + index + " of " +batchs.length);
-			batchs[index](()=>{
-				console.log("ended batch " + index);				
-				batchExecutor(index+1);
+		let batchExecutor = (index) => {
+			if (batchs[index] == undefined) {
+				console.log("ending all batch");
+				batchs = null;
+				cleanVar(_devices); cleanVar(task);
+				if (cbEnd != null) cbEnd();
+				return
+			};
+			console.log("start batch " + index + " of " + batchs.length);
+			batchs[index](() => {
+				console.log("ended batch " + index);
+				batchExecutor(index + 1);
 			});
 		};
 		batchExecutor(0);
@@ -1141,7 +1141,7 @@ class Executor {
 		const self = this;;
 		clearEventNodes(_devices);
 		signalStop = false;
-	
+
 		//devicesActions = {};
 		let batchsArray = [];
 		let params = [];
@@ -1152,12 +1152,12 @@ class Executor {
 		//ADD PRE TASKS
 		if (schedule.scheduleTask.havePreTask)
 			schedule.scheduleTask.preTasks.forEach(task => {
-				const groupDevices = getGroupDevices(_devices,task.devices);
+				const groupDevices = getGroupDevices(_devices, task.devices);
 				task.config.batch.groups = groupDevices;
 				task.task['paramsArray'] = task.params;
 				task.task['config'] = task.config;
-				task.task['paramsArray'].forEach(param => {					
-					if(Array.isArray(param.value)){			
+				task.task['paramsArray'].forEach(param => {
+					if (Array.isArray(param.value)) {
 						params[param.id] = param.value;
 						return;
 					}
@@ -1168,28 +1168,28 @@ class Executor {
 						params[param.id] = { random: false, index: 0, data: paramLines };
 				});
 
-				let batch = (cb)=>{
-					setTimeout(()=>{
-						self.startTaskBatch(groupDevices, task.task, ()=>{
+				let batch = (cb) => {
+					setTimeout(() => {
+						self.startTaskBatch(groupDevices, task.task, () => {
 							cb();
 						});
-					},5000);
+					}, 5000);
 				};
 				batchsArray.push(batch);
 			});
 
 		//ADD PRE BATCH TASKS
-		const batchsPreArray = [];		
+		const batchsPreArray = [];
 		const batchsPostArray = [];
-		
-		if (schedule.scheduleTask.havePreBatchTask){			
+
+		if (schedule.scheduleTask.havePreBatchTask) {
 			schedule.scheduleTask.preBatchTasks.forEach(preTask => {
 				const groupDevices = getGroupDevices(_devices, preTask.devices);
 				preTask.config.batch.groups = groupDevices;
 				preTask.task['paramsArray'] = preTask.params;
 				preTask.task['config'] = preTask.config;
-				preTask.task['paramsArray'].forEach(param => {					
-					if(Array.isArray(param.value)){			
+				preTask.task['paramsArray'].forEach(param => {
+					if (Array.isArray(param.value)) {
 						params[param.id] = param.value;
 						return;
 					}
@@ -1198,62 +1198,62 @@ class Executor {
 						params[param.id] = param.value;
 					} else
 						params[param.id] = { random: false, index: 0, data: paramLines };
-					});
-					let batch = (cb)=>{
-						setTimeout(()=>{
-							self.startTaskBatch(groupDevices, preTask.task, ()=>{
-								cb();
-							});
-						},2000);
-					};
-					batchsPreArray.push(batch);
 				});
-			}
-			if (schedule.scheduleTask.havePostBatchTask){	
-				schedule.scheduleTask.postBatchTasks.forEach(postTask => {
-					const groupDevices = getGroupDevices(_devices, postTask.devices);
-					postTask.config.batch.groups = groupDevices;
-					postTask.task['paramsArray'] = postTask.params;
-					postTask.task['config'] = postTask.config;
-					postTask.task['paramsArray'].forEach(param => {					
-						if(Array.isArray(param.value)){			
-							params[param.id] = param.value;
-							return;
-						}
-						const paramLines = param.value.split('\n');
-						if (paramLines.length < 2) {
-							params[param.id] = param.value;
-						} else
-							params[param.id] = { random: false, index: 0, data: paramLines };
-						});
-				let batch = (cb)=>{
-					setTimeout(()=>{
-						self.startTaskBatch(groupDevices, postTask.task, ()=>{
+				let batch = (cb) => {
+					setTimeout(() => {
+						self.startTaskBatch(groupDevices, preTask.task, () => {
 							cb();
 						});
-					},2000);
+					}, 2000);
+				};
+				batchsPreArray.push(batch);
+			});
+		}
+		if (schedule.scheduleTask.havePostBatchTask) {
+			schedule.scheduleTask.postBatchTasks.forEach(postTask => {
+				const groupDevices = getGroupDevices(_devices, postTask.devices);
+				postTask.config.batch.groups = groupDevices;
+				postTask.task['paramsArray'] = postTask.params;
+				postTask.task['config'] = postTask.config;
+				postTask.task['paramsArray'].forEach(param => {
+					if (Array.isArray(param.value)) {
+						params[param.id] = param.value;
+						return;
+					}
+					const paramLines = param.value.split('\n');
+					if (paramLines.length < 2) {
+						params[param.id] = param.value;
+					} else
+						params[param.id] = { random: false, index: 0, data: paramLines };
+				});
+				let batch = (cb) => {
+					setTimeout(() => {
+						self.startTaskBatch(groupDevices, postTask.task, () => {
+							cb();
+						});
+					}, 2000);
 				};
 				batchsPostArray.push(batch);
 			});
 		}
 		const mainTask = schedule.task;
-		const groupMainDevices = getGroupDevices(_devices, schedule.config.groupsText);		
-		let batch = (cb)=>{
-			setTimeout(()=>{
-				self.startTaskBatchEvents(groupMainDevices, mainTask, ()=>{
+		const groupMainDevices = getGroupDevices(_devices, schedule.config.groupsText);
+		let batch = (cb) => {
+			setTimeout(() => {
+				self.startTaskBatchEvents(groupMainDevices, mainTask, () => {
 					cb();
 				}, preBatchTasks, postBatchTasks);
-			},2000);
+			}, 2000);
 		};
 		batchsPostArray.push(batch);
-				
+
 		console.log("starting batchArrayExecutor");
-		let batchArrayExecutor = (index)=>{
-			if (batchsArray[index]==undefined) {console.log("ending all batchArray"); batchsArray=null; return};
-			console.log("start batchArray " + index + " of " +batchsArray.length);
-			batchsArray[index](()=>{
-				console.log("ended batchArray " + index);				
-				batchArrayExecutor(index+1);
+		let batchArrayExecutor = (index) => {
+			if (batchsArray[index] == undefined) { console.log("ending all batchArray"); batchsArray = null; return };
+			console.log("start batchArray " + index + " of " + batchsArray.length);
+			batchsArray[index](() => {
+				console.log("ended batchArray " + index);
+				batchArrayExecutor(index + 1);
 			});
 		};
 		batchArrayExecutor(0);
@@ -1262,7 +1262,7 @@ class Executor {
 	resumeTask(devices, task) {
 		// eventNodes = [];  // TEST MULTIEXECUTE
 		clearEventNodes(devices);
-		devices.forEach(d=>{
+		devices.forEach(d => {
 			devicesActions[d.serial]['progress']['signalStop'] = false;
 		});
 		resumeTask(devices, task);
