@@ -12,3 +12,4 @@
 2.7.0 (12/03/2026 1:14)	update schedule module
 2.7.1 (14/03/2026 2:09)	fix for properties device
 2.8.0 (17/03/2026 2:38)	link analizer
+2.9.0 (19/03/2026 1:22)	Center core sync
