@@ -440,7 +440,10 @@ class FBQuery {
 				textCount[3] = share;
 
 
-				let mainHref = await browser.$(`#media-card-0 .link-a11y-focus`).getAttribute("href"); 
+				let mainHrefDom = await browser.$$(`#media-card-0 .link-a11y-focus`);
+				const mainHrefs = await mainHrefDom.map(a=>a.getAttribute("href"));
+				const mainHref = mainHrefs.find(a=>a.includes("@"));
+				//.getAttribute("href"); 
 				//console.log("mainTitle", "https://www.tiktok.com"+mainHref);
 				title = await mainHref;
 				title = await title.replaceAll("/@","");
@@ -453,7 +456,8 @@ class FBQuery {
 				let searching = true;
 				while ( searching && trys < 50){
 					await browser.action('wheel').scroll({deltaX: 0, deltaY: Math.round(700+ Math.random()*100) , duration: Math.round(400+ Math.random()*100),
-								origin: await browser.$('#main-content-effect_detail') 
+								//origin: await browser.$('#main-content-effect_detail') 
+								origin: await browser.$('#main-content-others_homepage') 
 				  }).perform();
 					await browser.pause(500+Math.random(1000)); // Waits for 2 seconds
 
