@@ -14,3 +14,4 @@
 2.8.0 (17/03/2026 2:38)	link analizer
 2.9.0 (19/03/2026 1:22)	Center core sync
 2.10.0 (20/03/2026 2:59)	Added uri analyzer methods
+2.10.1 (20/03/2026 11:16)	update cookies
