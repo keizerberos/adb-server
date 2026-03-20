@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { remote, attach } = require('webdriverio');
-const hostDriver = '172.20.50.123'; //'192.168.100.7';// '172.20.50.123';
+const hostDriver = '172.20.50.123';//'192.168.100.7';// '172.20.50.123';
 const fs = require("fs");
 
 const cookies_fb = JSON.parse(fs.readFileSync('./cookies_fb.json', 'utf8'));
@@ -243,6 +243,7 @@ class FBQuery {
 					title, desc, textCount, srcImg, type
 				});
 			} catch (e) {
+				this.sessionIdDesk = null;
 				console.error("e", e);
 				//this.sessionId = null;
 				rej(e)
@@ -272,7 +273,7 @@ class FBQuery {
 					});
 					this.sessionIdDesk = browser.sessionId;
 				  browser.setCookies(cookies_fb);
-				} else
+				} else{
 					browser = await attach({
 						// For a Selenium Grid or local standalone server
 						sessionId: this.sessionIdDesk,
@@ -284,7 +285,7 @@ class FBQuery {
 						},
 						logLevel: 'error', // 'trace', 'debug', 'info', 'warn', 'error'
 					});
-			
+				}
 				console.log("sessionIdDesk browser.sessionId",browser.sessionIdDesk);
 
 				console.log("urlText", urlText);
@@ -359,6 +360,7 @@ class FBQuery {
 					title, desc, textCount, srcImg, type, views
 				});
 			} catch (e) {
+				this.sessionIdDesk = null;
 				console.error("e", e);
 				//this.sessionId = null;
 				rej(e)
@@ -489,6 +491,7 @@ class FBQuery {
 					title, desc, textCount, srcImg, type, views
 				});
 			} catch (e) {
+				this.sessionIdDesk = null;
 				console.error("e", e);
 				//this.sessionId = null;
 				rej(e)
@@ -574,6 +577,7 @@ class FBQuery {
 					title, desc, textCount, srcImg, type
 				});
 			} catch (e) {
+				this.sessionIdMov = null;
 				console.error("e", e);
 				//this.sessionId = null;
 				rej(e)
@@ -684,6 +688,7 @@ class FBQuery {
 					title, desc, textCount, srcImg, type
 				});
 			} catch (e) {
+				this.sessionIdDesk = null;
 				console.error("e", e);
 				//this.sessionId = null;
 				rej(e)
@@ -828,6 +833,7 @@ class FBQuery {
 					title, desc, textCount, srcImg, type, views
 				});
 			} catch (e) {
+				this.sessionIdMov = null;
 				console.error("e", e);
 				//this.sessionId = null;
 				rej(e)
