@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { remote, attach } = require('webdriverio');
-const hostDriver = '192.168.100.7';// '172.20.50.123';
+const hostDriver = '172.20.50.123'; //'192.168.100.7';// '172.20.50.123';
 const fs = require("fs");
 
 const cookies_fb = JSON.parse(fs.readFileSync('./cookies_fb.json', 'utf8'));
