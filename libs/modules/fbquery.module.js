@@ -445,16 +445,18 @@ class FBQuery {
 				title = await mainHref;
 				title = await title.replaceAll("/@","");
 				await browser.navigateTo("https://www.tiktok.com"+mainHref);
-				await browser.pause(2000+Math.random(1000)); // Waits for 2 seconds
+				await browser.pause(4000+Math.random(2000)); // Waits for 2 seconds
 
 
 
 				let trys = 0;
 				let searching = true;
-				while ( searching && trys < 30){
-					await browser.action('wheel').scroll({deltaX: 0, deltaY: Math.round(800+ Math.random()*100) , duration: Math.round(400+ Math.random()*100),
-								origin: await browser.$('#main-content-others_homepage') 
+				while ( searching && trys < 50){
+					await browser.action('wheel').scroll({deltaX: 0, deltaY: Math.round(700+ Math.random()*100) , duration: Math.round(400+ Math.random()*100),
+								origin: await browser.$('#main-content-effect_detail') 
 				  }).perform();
+					await browser.pause(500+Math.random(1000)); // Waits for 2 seconds
+
 
 					const videos = await browser.$$(`div[data-e2e="user-post-item"] a`); 					
 					const reelshref = await videos.map(async r=> { return {content: await r.getText(), href:await r.getAttribute('href')}; } );
