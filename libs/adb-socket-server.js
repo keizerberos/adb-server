@@ -662,7 +662,7 @@ class AdbSocketServer {
 
 			socket.emit("version", config.version);
 			socket.emit("config", config);
-			socket.emit("clusters", clusters);
+			socket.emit("clusters", clusters.map(cluster => { return { uuid: cluster.uuid, devices: cluster.devices, network: cluster.address, config: cluster.config }; }));
 			socket.emit("uuid", uuid);
 			const configSocket = () => {
 				//console.log("setup socket");
