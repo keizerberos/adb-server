@@ -191,6 +191,19 @@ const ClientType = Object.freeze({
 	EXECUTOR: 3,
 	DEVICES: 4,
 });
+class Events{
+	constructor(){
+		this._events = {};
+	}
+	on(ev,fn){
+		if (this._events[ev] == null) this._events[ev] = [];
+		this._events[ev].push(fn);
+	}
+	emit(ev, ...args){
+		if (this._events[ev] == null) this._events[ev] = [];
+		this._events[ev].forEach(fn=>fn(...args));
+	}
+};
 class AdbSocketServer {
 	constructor(Logger, Dbm) {
 		Log = Logger;
@@ -199,14 +212,15 @@ class AdbSocketServer {
 		const clients = [];
 		const devices = [];
 		const clusters = [];
+		const events = new Events();
 		this.modules = [];
 		this.loginModule = new LoginModule(Dbm);
 		this.FBQuery = new FBQuery();
 		this.modules.push(this.loginModule);
 		setupConfig();
-		this.startServer(clients, clusters, devices);
-		this.startServerCluster(clients, clusters, devices);
-		this.startClientCenter(clients, clusters, devices);
+		this.startServer(clients, clusters, devices, events);
+		this.startServerCluster(clients, clusters, devices, events);
+		this.startClientCenter(clients, clusters, devices, events);
 		scanTasksFolder();
 
 		this.executor.setActions(actions);
@@ -359,7 +373,7 @@ class AdbSocketServer {
 		}
 		device.config[name].push(value);
 	}
-	startServer(clients, clusters, devices) {
+	startServer(clients, clusters, devices, events) {
 		const self = this;
 		const fastServer = new FastServer(Log, "7000", __dirname + '/public');
 		const httpServer = createServer(fastServer);
@@ -648,6 +662,7 @@ class AdbSocketServer {
 
 			socket.emit("version", config.version);
 			socket.emit("config", config);
+			socket.emit("clusters", clusters.map(cluster => { return { uuid: cluster.uuid, devices: cluster.devices, network: cluster.address, config: cluster.config }; }));
 			socket.emit("uuid", uuid);
 			const configSocket = () => {
 				//console.log("setup socket");
@@ -987,7 +1002,7 @@ class AdbSocketServer {
 		});
 	}
 	//CLUSTER
-	startServerCluster(clients, clusters, devices) {
+	startServerCluster(clients, clusters, devices, events) {
 		const httpCluster = createServer();
 		const ioCluster = new Server(httpCluster, {
 			pingInterval: 94800,
@@ -1006,11 +1021,13 @@ class AdbSocketServer {
 			Log.i("Cluster connected " + uuid + " " + address.address);
 			const cluster = { socket: socket, devices: [], uuid, uuid, address: address, version: '0.0.0', config: {} };
 			clusters.push(cluster);
+			events.emit('cluster.connect',{ uuid: cluster.uuid, devices: cluster.devices, network: cluster.address, version: cluster.version, config: cluster.config });
 			socket.on("cluster.version", (data) => {
 				cluster.version = data;
 			});
 			socket.on("cluster.config", (data) => {
 				cluster['config'] = data;
+				events.emit('cluster.config', {uuid:cluster.uuid,config:cluster['config']});
 				clients.forEach(client => client.socket.emit("cluster.connect", { uuid: cluster.uuid, devices: cluster.devices, network: cluster.address, version: cluster.version, config: cluster.config }));
 			});
 			clients.forEach(client => client.socket.emit("cluster.connect", { uuid: cluster.uuid, devices: cluster.devices, network: cluster.address, version: cluster.version, config: cluster.config }));
@@ -1019,6 +1036,7 @@ class AdbSocketServer {
 				Log.i("Cluster disconnected " + uuid + " " + address.address);
 				let clusterDevices = devices.filter(d => d.clusterId == uuid);
 				Log.i("delete devices disconnected " + clusterDevices.length);
+				events.emit('cluster.disconnect',{ uuid: cluster.uuid});
 				clusterDevices.forEach(device => clients.forEach(client => client.socket.emit("device.disconnect", device)));
 				clusterDevices.forEach(device => { ddelete(devices, 'serial', device.serial) });
 				ddelete(clusters, 'uuid', uuid);
@@ -1157,7 +1175,7 @@ class AdbSocketServer {
 			Log.i("Cluster Server connected");
 		});
 	}
-	startClientCenter(clients, clusters, devices){
+	startClientCenter(clients, clusters, devices, events){
 		const io = new SocketIo(process.env['ADB_CENTER'], {
 			pingInterval: 155000,
 			pingTimeout: 90500,
@@ -1169,7 +1187,26 @@ class AdbSocketServer {
 		io.on("connect", () => {
 			Log.i("Connected to " + process.env['ADB_CENTER']);
 			//console.log("connect devices ",devices);
-			io.emit("devices", devices);
+			Log.i("--center emit devices");
+			io.emit("server.devices", devices);
+			Log.i("--center emit version");
+			io.emit("server.version", config.version);
+			Log.i("--center emit config");
+			io.emit("server.config", config);
+			Log.i("--center emit clusters");
+			io.emit("server.clusters", clusters.map(cluster => { return { uuid: cluster.uuid, devices: cluster.devices, network: cluster.address, config: cluster.config }; }));
+		});
+		events.on('cluster.connect', (cluster)=>{
+			console.log("Events cluster connected", cluster);
+			io.emit("server.cluster.connect", cluster);
+		});
+		events.on('cluster.disconnect', (cluster)=>{
+			console.log("Events cluster disconnected", cluster);
+			io.emit("server.cluster.disconnect", cluster);
+		});
+		events.on('cluster.config', (cluster)=>{
+			console.log("Events cluster config", cluster.uuid);
+			io.emit("server.cluster.config", cluster);
 		});
 	}
 }

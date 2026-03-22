@@ -12,3 +12,8 @@
 2.7.0 (12/03/2026 1:14)	update schedule module
 2.7.1 (14/03/2026 2:09)	fix for properties device
 2.8.0 (17/03/2026 2:38)	link analizer
+2.9.0 (19/03/2026 1:22)	Center core sync
+2.10.0 (20/03/2026 2:59)	Added uri analyzer methods
+2.10.1 (20/03/2026 11:16)	update cookies
+2.10.2 (20/03/2026 12:20)	update cookies
+2.10.3 (20/03/2026 12:34)	update cookies
