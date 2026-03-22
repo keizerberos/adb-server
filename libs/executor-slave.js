@@ -1328,6 +1328,17 @@ module.exports = ({ type, patterns, actions, data_devices, data_task }) => {
 			const executor = new Executor();
 			executor.setActions(actions);
 			executor.setPatterns(patterns);
+			parentPort.on(message=>{
+				if (message.type=="screen"){
+					executor.screen(message.payload.id,message.payload.bimg);
+				}
+				if (message.type=="stopAll"){
+					executor.stopAll();
+				}
+				if (message.type=="stopTask"){
+					executor.stopTask(message.payload.devices);
+				}
+			});
 			executor.on("send",(data)=>{
 				 parentPort.postMessage({type:"send",payload:{data:data}});
 			});
