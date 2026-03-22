@@ -4,6 +4,7 @@ const { Canvas, loadImage } = require('skia-canvas');
 const { bwImage, findPattern } = require('./adb-patterns');
 //const {findPatternCrow,cropFromFast,countRow,findPatternHsv,getPatternHsv,cropFromHsv,cropFromHsvNoFilter,rgbToHsvImage,hsvImage,compareHsv,getPixel,rgb2hsv2,rgb2hsv_hsl,rgb2hsv} = require('./adb-patternshsv');
 const { findPatternHsv, rgbToHsvImage } = require('./adb-patternshsv');
+const v8 = require('node:v8');
 const AdbOcr = require('./adb-ocr');
 const fs = require('fs');
 const e = require('cors');
@@ -656,6 +657,10 @@ function executeTask(devices, task) {
 			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['params'] = null;
 			devicesActions[d.serial] = null;
 			delete devicesActions[d.serial];
+			
+			const serialized = v8.serialize(devicesActions);
+			console.log(`devicesActions in bytes: ${serialized.byteLength}`);
+
 			if ((countEnded) == devices.length) {
 				console.log("params", params);
 				console.log("[executeTask] all ended ")
@@ -1050,7 +1055,7 @@ class Executor {
 				setTimeout(() => {
 					executeTaskBatch(groupDevices, params, task, () => {
 						cb();
-					});
+					});	
 				}, task.config.batch.offset * 1000);
 			};
 			batchs.push(batch);
