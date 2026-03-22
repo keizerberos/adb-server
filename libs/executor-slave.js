@@ -1,3 +1,4 @@
+const { parentPort } = require('worker_threads');
 const { Logger } = require('atx-logger');
 const process = require('process');
 const { Canvas, loadImage } = require('skia-canvas');
@@ -1292,4 +1293,35 @@ class Executor {
 	}
 }
 
-module.exports = { Executor, genPlant, replaceParams, executeNode, executeGraph, executeTask, executeTasks }
+module.exports = ({ type, patterns, actions, data_devices, data_task }) => {
+	return new Promise((res,rej)=>{
+		if (type=="startTask"){
+			const executor = new Executor();
+			executor.setActions(actions);
+			executor.setPatterns(patterns);
+			executor.startTask(data_devices, data_task);
+			executor.on("send",(data)=>{
+				 parentPort.postMessage({type:"send",payload:{data:data}});
+			});
+			executor.on("task.progress",(deviceId, progress)=>{
+				 parentPort.postMessage({type:"task.progress",payload:{deviceId:deviceId, progress:progress}});
+			});
+			executor.startTaskBatch(data_devices, data_task);			
+			res();
+		}if (type=="startTaskBatch"){
+			
+			const executor = new Executor();
+			executor.setActions(actions);
+			executor.setPatterns(patterns);
+			executor.on("send",(data)=>{
+				 parentPort.postMessage({type:"send",payload:{data:data}});
+			});
+			executor.on("task.progress",(deviceId, progress)=>{
+				 parentPort.postMessage({type:"task.progress",payload:{deviceId:deviceId, progress:progress}});
+			});
+			executor.startTaskBatch(data_devices, data_task, ()=>{
+				res();
+			});			
+		}
+	});
+};
