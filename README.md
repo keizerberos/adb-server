@@ -17,3 +17,5 @@
 2.10.1 (20/03/2026 11:16)	update cookies
 2.10.2 (20/03/2026 12:20)	update cookies
 2.10.3 (20/03/2026 12:34)	update cookies
+2.11.0 (22/03/2026 12:34)	measure bytes
+2.12.0 (22/03/2026 1:04)	Fix memory 

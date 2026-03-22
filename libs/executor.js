@@ -250,6 +250,9 @@ async function doPatternTask(currentAction, nodeAction, action, actionIndex, dev
 					let outputcanvas = new Canvas(720, 2048);
 					let outputcanvasP = new Canvas(720, 2048);
 					let outputcanvasF = new Canvas(720, 2048);
+					outputcanvas.gpu = false;
+					outputcanvasP.gpu = false;
+					outputcanvasF.gpu = false;
 					outputcanvas.width = 720;
 					outputcanvas.height = 2048;
 					outputcanvasP.width = 720;
@@ -268,6 +271,15 @@ async function doPatternTask(currentAction, nodeAction, action, actionIndex, dev
 						bwImage(canvasctx, outputcanvas, canvasctxP, outputcanvasP, pattern.umbral);
 						[ox, oy, ow, oh, owm, ohm] = findPattern(canvasctxP, canvasctxF, outputcanvasF, pattern, true, pattern.rectCrop);
 					}
+					outputcanvas.width = 0;
+					outputcanvas.height = 0;
+					outputcanvas = null; 
+					outputcanvasP.width = 0;
+					outputcanvasP.height = 0;
+					outputcanvasP = null; 
+					outputcanvasF.width = 0;
+					outputcanvasF.height = 0;
+					outputcanvasF = null; 
 					console.log("ox,oy,ow,oh,owm,ohm", trigger.pattern, [ox, oy, ow, oh, owm, ohm]);
 					//if ((ox>0 && currentAction.condition)||(!currentAction.condition&&ox<0)){
 
@@ -329,7 +341,7 @@ async function doPatternTask(currentAction, nodeAction, action, actionIndex, dev
 					"savePath": "{screen_path}"
 				}
 			};
-			events['send'].forEach(fn => fn(command));
+			events['send'].forEach(fn => fn(data));
 			//myWebSocket.send(JSON.stringify(data));
 		},
 		cbError: () => {
@@ -695,9 +707,9 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 		devicesActions[d.serial]['params'] = params;
 
 	
-		let serialized = v8.serialize(devicesActions);
-		console.log(`devicesActions start in bytes: ${serialized.byteLength}`);
-		serialized = null
+		//let serialized = v8.serialize(devicesActions);
+		//console.log(`devicesActions start in bytes: ${serialized.byteLength}`);
+		//serialized = null
 		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 		executeGraph(task.config, task.start, d.serial, ii, params, null, () => {
 			countEnded++;
@@ -708,9 +720,9 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['progress'] = null;
 			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['params'] = null;
 			if (devicesActions[d.serial] != undefined) devicesActions[d.serial] = null;
-			let serializedx = v8.serialize(devicesActions);
-			console.log(`devicesActions end in bytes: ${serializedx.byteLength}`);
-			serializedx = null
+			//let serializedx = v8.serialize(devicesActions);
+			//console.log(`devicesActions end in bytes: ${serializedx.byteLength}`);
+			//serializedx = null
 			delete devicesActions[d.serial];
 			if ((countEnded) == devices.length) {
 				console.log("[executeTaskBatch] all ended")
