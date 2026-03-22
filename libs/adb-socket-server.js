@@ -9,7 +9,7 @@ const SocketIo = require("socket.io-client");
 const WebSocket = require('ws');
 const os = require('os');
 
-const { Executor, genPlant } = require("./executor.js");
+const { Executor, genPlant } = require("./executor-master.js");
 const short = require('short-uuid');
 const fs = require('fs');
 const path = require('path');

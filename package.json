@@ -8,6 +8,7 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "node-tesseract-ocr": "^2.2.1",
+    "piscina": "^5.1.4",
     "short-uuid": "^5.2.0",
     "skia-canvas": "^3.0.8",
     "socket.io": "^4.8.1",
