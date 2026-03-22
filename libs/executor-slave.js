@@ -866,8 +866,12 @@ function clearScreens(serialFullName) {
 			if (list[i].includes(serial)) {
 				//console.log("deleting",list[i]); 
 				//files.push(list[i]);
-				if (fs.existsSync(pathScreens + list[i]))
+				if (fs.existsSync(pathScreens + list[i])){
+					try{
 					fs.unlinkSync(pathScreens + list[i]);
+					}catch(e){
+					}
+				}
 			}
 		}
 	});
@@ -1300,6 +1304,17 @@ module.exports = ({ type, patterns, actions, data_devices, data_task }) => {
 			executor.setActions(actions);
 			executor.setPatterns(patterns);
 			executor.startTask(data_devices, data_task);
+			parentPort.on(message=>{
+				if (message.type=="screen"){
+					executor.screen(message.payload.id,message.payload.bimg);
+				}
+				if (message.type=="stopAll"){
+					executor.stopAll();
+				}
+				if (message.type=="stopTask"){
+					executor.stopTask(message.payload.devices);
+				}
+			});
 			executor.on("send",(data)=>{
 				 parentPort.postMessage({type:"send",payload:{data:data}});
 			});
