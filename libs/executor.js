@@ -658,8 +658,6 @@ function executeTask(devices, task) {
 			devicesActions[d.serial] = null;
 			delete devicesActions[d.serial];
 			
-			const serialized = v8.serialize(devicesActions);
-			console.log(`devicesActions in bytes: ${serialized.byteLength}`);
 
 			if ((countEnded) == devices.length) {
 				console.log("params", params);
@@ -695,6 +693,11 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 		devicesActions[d.serial] = copyActionsOverrided(task);
 		devicesActions[d.serial]['progress'] = { taskId: task.id, path: task.progressPath, state: 'progress', completed: [], texts: {}, screens: {}, current: [task.start], start: task.start, end: task.end, signalStop: false, fail: false, batchIndex: batchIndex };
 		devicesActions[d.serial]['params'] = params;
+
+	
+		let serialized = v8.serialize(devicesActions);
+		console.log(`devicesActions start in bytes: ${serialized.byteLength}`);
+		serialized = null
 		events['task.progress'].forEach(fn => fn(d.serial, devicesActions[d.serial]['progress']));
 		executeGraph(task.config, task.start, d.serial, ii, params, null, () => {
 			countEnded++;
@@ -705,6 +708,9 @@ function executeTaskBatch(devices, params, task, cbEnd) {
 			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['progress'] = null;
 			if (devicesActions[d.serial] != undefined) devicesActions[d.serial]['params'] = null;
 			if (devicesActions[d.serial] != undefined) devicesActions[d.serial] = null;
+			let serializedx = v8.serialize(devicesActions);
+			console.log(`devicesActions end in bytes: ${serializedx.byteLength}`);
+			serializedx = null
 			delete devicesActions[d.serial];
 			if ((countEnded) == devices.length) {
 				console.log("[executeTaskBatch] all ended")
