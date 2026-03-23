@@ -60,6 +60,7 @@ function updateGit() {
 			await runCommand('git', ['reset', '--hard']);
 			await runCommand('git', ['fetch']);
 			await runCommand('git', ['pull', 'origin', 'main']);
+			await runCommand('npm', ['i', '--force']);
 			process.exit(0)
 		} catch (err) {
 			console.error(err);
