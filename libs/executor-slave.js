@@ -1,4 +1,6 @@
 const { parentPort } = require('worker_threads');
+const { BroadcastChannel } = require('worker_threads');
+const bc = new BroadcastChannel('my_secret_channel');
 const { Logger } = require('atx-logger');
 const process = require('process');
 const { Canvas, loadImage } = require('skia-canvas');
@@ -629,7 +631,7 @@ function executeGraph(config, actionId, deviceId, ii, params, offsetDelay = null
 		}
 	}, timeExecute);
 }
-function executeTask(devices, task) {
+function executeTask(devices, task, cbEnd) {
 	let tasks = [];
 	let params = {};
 
@@ -677,6 +679,9 @@ function executeTask(devices, task) {
 				console.log("[executeTask] all ended ")
 				countEnded = 0;
 				signalStop = false;
+				if (cbEnd!=null){
+					cbEnd();
+				}``
 			}
 		}, () => {
 			if ((countEnded) == devices.length && devicesActions[d.serial] != undefined) {
@@ -1041,11 +1046,11 @@ class Executor {
 	setPatterns(_patterns) {
 		androidPattern = _patterns;
 	}
-	startTask(devices, task) {
+	startTask(devices, task,cbEnd) {
 		//eventNodes = []; //TEST MULTIEXECUTE
 		clearEventNodes(devices);
 		signalStop = false;
-		executeTask(devices, task);
+		executeTask(devices, task, cbEnd);
 	}
 	startTaskBatch(_devices, task, cbEnd) {
 		//eventNodes = []; //TEST MULTIEXECUTE
@@ -1298,50 +1303,64 @@ class Executor {
 }
 
 module.exports = ({ type, patterns, actions, data_devices, data_task }) => {
+	
+  
 	return new Promise((res,rej)=>{
+
 		if (type=="startTask"){
 			const executor = new Executor();
 			executor.setActions(actions);
 			executor.setPatterns(patterns);
 			executor.startTask(data_devices, data_task);
-			parentPort.on(message=>{
-				if (message.type=="screen"){
-					executor.screen(message.payload.id,message.payload.bimg);
+			bc.onmessage = (message) =>{
+				if (message.data.type=="screen"){
+					const bimg = Buffer.from(message.data.payload.bimg);	
+					executor.screen(message.data.payload.id, bimg, (data)=>{ 
+						parentPort.postMessage({type:"reportCB",payload:{data:data}});
+					});
 				}
-				if (message.type=="stopAll"){
+				if (message.data.type=="stopAll"){
 					executor.stopAll();
+					res();
 				}
-				if (message.type=="stopTask"){
-					executor.stopTask(message.payload.devices);
+				if (message.data.type=="stopTask"){
+					executor.stopTask(message.data.payload.devices);
 				}
-			});
+			};
 			executor.on("send",(data)=>{
 				 parentPort.postMessage({type:"send",payload:{data:data}});
 			});
 			executor.on("task.progress",(deviceId, progress)=>{
 				 parentPort.postMessage({type:"task.progress",payload:{deviceId:deviceId, progress:progress}});
 			});
-			executor.startTaskBatch(data_devices, data_task);			
-			res();
+			executor.startTask(data_devices, data_task,()=>{
+				res();
+			});			
 		}if (type=="startTaskBatch"){
 			
 			const executor = new Executor();
 			executor.setActions(actions);
 			executor.setPatterns(patterns);
-			parentPort.on(message=>{
-				if (message.type=="screen"){
-					executor.screen(message.payload.id,message.payload.bimg);
+			bc.onmessage = (message) =>{
+				if (message.data.type=="screen"){
+					const bimg = Buffer.from(message.data.payload.bimg);	
+					executor.screen(message.data.payload.id, bimg, (data)=>{ 
+						parentPort.postMessage({type:"reportCB",payload:{data:data}});
+					});
 				}
-				if (message.type=="stopAll"){
+				if (message.data.type=="stopAll"){
 					executor.stopAll();
+					res();
+			//		throw "stopAll";
 				}
-				if (message.type=="stopTask"){
-					executor.stopTask(message.payload.devices);
+				if (message.data.type=="stopTask"){
+					executor.stopTask(message.data.payload.devices);
 				}
-			});
+			};
 			executor.on("send",(data)=>{
 				 parentPort.postMessage({type:"send",payload:{data:data}});
 			});
+			
 			executor.on("task.progress",(deviceId, progress)=>{
 				 parentPort.postMessage({type:"task.progress",payload:{deviceId:deviceId, progress:progress}});
 			});

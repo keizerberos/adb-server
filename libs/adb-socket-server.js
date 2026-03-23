@@ -60,6 +60,7 @@ function updateGit() {
 			await runCommand('git', ['reset', '--hard']);
 			await runCommand('git', ['fetch']);
 			await runCommand('git', ['pull', 'origin', 'main']);
+			await runCommand('npm', ['i', '--force']);
 			process.exit(0)
 		} catch (err) {
 			console.error(err);
@@ -82,15 +83,16 @@ function setupConfig() {
 	config.freeMem = freeMemory;
 	config.usedMem = totalMemory-freeMemory;
 }
-function getMemory(){
+function getMemory(executor){
 	const totalMemory = os.totalmem();
 	const freeMemory = os.freemem();
 	config.totalMem = totalMemory;
 	config.freeMem = freeMemory;
 	config.usedMem = totalMemory-freeMemory;
+	config.workers = executor.getWorkers();
 }
-function reportMemory(clients){
-	getMemory();
+function reportMemory(clients,executor){
+	getMemory(executor);
 	clients.forEach(client => client.socket.emit("config", config));
 }
 
@@ -544,7 +546,7 @@ class AdbSocketServer {
 			}
 		});
 		this.executor.on('send', (data) => {
-				reportMemory(clients);
+				reportMemory(clients,self.executor);
 			if (data.action == 'adb')
 				console.log("send: adb -s" + data.devices + " shell '" + data.data.command + "'");
 			const device = dget(devices, 'serial', data.devices);
@@ -554,7 +556,7 @@ class AdbSocketServer {
 			}
 		});
 		this.executor.on('task.progress', (deviceId, progress) => {
-			reportMemory(clients);
+			reportMemory(clients,self.executor);
 			//Log.i("task.progress");
 			//Log.o(progress);
 			const device = dget(devices, 'serial', deviceId);
@@ -562,6 +564,10 @@ class AdbSocketServer {
 				device['progress'] = progress;
 				clients.filter(client => client.features.progress).forEach(client => client.socket.emit("task.progress", { serial: deviceId, data: progress }));
 			}
+		});
+		this.executor.on('reportCB', (memory) => {
+					reportMemory(clients,self.executor);
+					clients.filter(client => client.features.capture).forEach(client => client.socket.emit("server.memory", memory));									
 		});
 		let getDeviceRemoteList = () => {
 			let devicesList = {};
@@ -1108,11 +1114,7 @@ class AdbSocketServer {
 			});
 			socket.on("device.capture", (data) => {
 				//console.log("device.capture",data.data.length);
-				this.executor.screen(data.serial, data.data, (memory) => {
-					reportMemory(clients);
-					clients.filter(client => client.features.capture).forEach(client => client.socket.emit("server.memory", memory));
-					
-				});
+				this.executor.screen(data.serial, data.data);
 				clients.filter(client => client.features.capture).forEach(client => client.socket.emit("device.capture", data));
 			});
 			socket.on("device.ping", (data) => {

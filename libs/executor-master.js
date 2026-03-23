@@ -1,14 +1,22 @@
 
 const AdbOcr = require('./adb-ocr');
+const os = require('os');
 const fs = require('fs');
+const { Worker } = require('worker_threads');
 const Piscina = require('piscina');
 const { BroadcastChannel } = require('worker_threads');
 const { resolve } = require('path');
 const bc = new BroadcastChannel('my_secret_channel');
 
+
+const adbocr = new AdbOcr();		
+const maxWorkers = os.cpus().length;
 const piscina = new Piscina({
-  filename: './libs/executor-slave.js',
-  maxQueue: 10 // Limit the queue size
+  filename: './libs/executor-slave.js',	
+  //minThreads: 2,   // Always keep 2 workers ready
+  //maxThreads: 16,  // Never grow beyond 16 workers
+  maxQueue: 10, // Limit the queue size
+  //useAtomics: false // Try setting this to false
 });
 
 let nodeActions = null;
@@ -38,8 +46,10 @@ function genPlant(action) {
 }
 class Executor {
 	constructor() {
+		
 	}
 	async ocr(blob) {
+		return await adbocr.readFromBuffer(blob);
 	}
 	async regScreen(id, img) {	
     bc.postMessage({			
@@ -61,7 +71,8 @@ class Executor {
 		if (events[ev]==null) events[ev] = [];
 		events[ev].push(fn);
 	}
-	stopAll() {		
+	async stopAll() {		
+		
     bc.postMessage({			
 			type: 'stopAll',
 			payload: null})
@@ -80,7 +91,7 @@ class Executor {
 	setPatterns(_patterns) {
 		patterns = _patterns;
 	}
-	startTask(devices, task) {
+	startTask(_devices, task) {
 		piscina.run({ type:"startTask", patterns:patterns, actions:nodeActions, data_devices:_devices, data_task:task }).then(res=>{
 			console.log("-WORKER --");
 		});
@@ -95,10 +106,15 @@ class Executor {
 		});
 	}
 	startTaskBatch(_devices, task, cbEnd) {
+		//const worker = new Worker('./worker.js');
+		
 		piscina.run({ type:"startTaskBatch", patterns:patterns, actions:nodeActions, data_devices:_devices, data_task:task }).then(res=>{
 			console.log("-WORKER ENDED");
 		});
 		piscina.on('message', (message) => {
+			if(message.type=="reportCB"){
+				events["reportCB"].forEach(fn=>fn(message.payload.data));
+			}
 			if(message.type=="send"){
 				events["send"].forEach(fn=>fn(message.payload.data));
 			}
@@ -107,15 +123,23 @@ class Executor {
 				events["task.progress"].forEach(fn=>fn(message.payload.deviceId, message.payload.progress));
 			}
 		});
-	}
+		piscina.on('workerDestroy', () => {
+			console.log('A physical worker thread was terminated and removed from the pool.');
+		});
+		piscina.on('error', () => {
+			console.log('A physical worker thread was terminated and removed from the pool.');
+		});
 
+	}
+	getWorkers(){
+		return {current:piscina.threads.length,max:maxWorkers};
+	}
 	startTaskBatchEvents(_devices, task, cbEnd, preTasks, postTasks) {
 		
 	}
 	startTaskSchedule(_devices, schedule) {
 		
 	}
-
 	resumeTask(devices, task) {
 		
 	}
