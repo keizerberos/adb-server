@@ -1313,21 +1313,21 @@ class Executor {
 			executor.setActions(actions);
 			executor.setPatterns(patterns);
 			executor.startTask(data_devices, data_task);
-			parentPort.on("message",(_message) =>{				
-				const message = _message.data;
+			parentPort.on("message",(message) =>{				
+				console.log("parentPort data.type",message.type);
 				if (message.data.type=="screen"){
-					const bimg = Buffer.from(message.data.payload.bimg);	
-					executor.screen(message.data.payload.id, bimg, (data)=>{ 
+					const bimg = Buffer.from(message.payload.bimg);	
+					executor.screen(message.payload.id, bimg, (data)=>{ 
 						parentPort.postMessage({type:"reportCB",payload:{data:data}});
 					});
 				}
-				if (message.data.type=="stopAll"){
+				if (message.type=="stopAll"){
 					executor.stopAll();
 					res();
 					process.exit(0)
 				}
-				if (message.data.type=="stopTask"){
-					executor.stopTask(message.data.payload.devices);
+				if (message.type=="stopTask"){
+					executor.stopTask(message.payload.devices);
 					process.exit(0)
 				}
 			});
@@ -1345,22 +1345,22 @@ class Executor {
 			const executor = new Executor();
 			executor.setActions(actions);
 			executor.setPatterns(patterns);
-			parentPort.on("message",(_message) =>{
-				const message = _message.data;
+			parentPort.on("message",(message) =>{
+				console.log("parentPort data.type",message.type);
 				if (message.type=="screen"){
-					const bimg = Buffer.from(message.data.payload.bimg);	
-					executor.screen(message.data.payload.id, bimg, (data)=>{ 
+					const bimg = Buffer.from(message.payload.bimg);	
+					executor.screen(message.payload.id, bimg, (data)=>{ 
 						parentPort.postMessage({type:"reportCB",payload:{data:data}});
 					});
 				}
-				if (message.data.type=="stopAll"){
+				if (message.type=="stopAll"){
 					executor.stopAll();
 					res();
 					process.exit(0)
 			//		throw "stopAll";
 				}
-				if (message.data.type=="stopTask"){
-					executor.stopTask(message.data.payload.devices);
+				if (message.type=="stopTask"){
+					executor.stopTask(message.payload.devices);
 					process.exit(0)
 				}
 			});
