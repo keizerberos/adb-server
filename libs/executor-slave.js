@@ -1313,7 +1313,7 @@ class Executor {
 			executor.setActions(actions);
 			executor.setPatterns(patterns);
 			executor.startTask(data_devices, data_task);
-			parentPort.onmessage = (message) =>{
+			parentPort.on("message",(message) =>{
 				if (message.data.type=="screen"){
 					const bimg = Buffer.from(message.data.payload.bimg);	
 					executor.screen(message.data.payload.id, bimg, (data)=>{ 
@@ -1327,7 +1327,7 @@ class Executor {
 				if (message.data.type=="stopTask"){
 					executor.stopTask(message.data.payload.devices);
 				}
-			};
+			});
 			executor.on("send",(data)=>{
 				 parentPort.postMessage({type:"send",payload:{data:data}});
 			});
@@ -1342,7 +1342,7 @@ class Executor {
 			const executor = new Executor();
 			executor.setActions(actions);
 			executor.setPatterns(patterns);
-			parentPort.onmessage = (message) =>{
+			parentPort.on("message",(message) =>{
 				if (message.data.type=="screen"){
 					const bimg = Buffer.from(message.data.payload.bimg);	
 					executor.screen(message.data.payload.id, bimg, (data)=>{ 
@@ -1357,7 +1357,7 @@ class Executor {
 				if (message.data.type=="stopTask"){
 					executor.stopTask(message.data.payload.devices);
 				}
-			};
+			});
 			executor.on("send",(data)=>{
 				 parentPort.postMessage({type:"send",payload:{data:data}});
 			});
