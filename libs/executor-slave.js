@@ -1,4 +1,5 @@
-const { parentPort } = require('worker_threads');
+const { parentPort,workerData } = require('worker_threads');
+//const { parentPort, workerData } = require('node:worker_threads');
 const { BroadcastChannel } = require('worker_threads');
 const bc = new BroadcastChannel('my_secret_channel');
 const { Logger } = require('atx-logger');
@@ -1302,8 +1303,9 @@ class Executor {
 	}
 }
 
-module.exports = ({ type, patterns, actions, data_devices, data_task }) => {
-	
+//module.exports = ({ type, patterns, actions, data_devices, data_task }) => {
+module.exports = () => {
+	const  {type, patterns, actions, data_devices, data_task } = workerData;
   
 	return new Promise((res,rej)=>{
 
