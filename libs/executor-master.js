@@ -107,7 +107,7 @@ class Executor {
 	}
 	startTaskBatch(_devices, task, cbEnd) {
 		//const worker = new Worker('./worker.js');
-		const worker = new Worker(path.resolve(__dirname, './libs/executor-slave.js'), {
+		const worker = new Worker('./libs/executor-slave.js', {
 			workerData: { type:"startTaskBatch", patterns:patterns, actions:nodeActions, data_devices:_devices, data_task:task }// Datos iniciales opcionales
 		});
 		worker.on('message', (msg) => {
