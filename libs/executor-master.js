@@ -92,7 +92,7 @@ class Executor {
 		patterns = _patterns;
 	}
 	startTask(_devices, task) {
-		piscina.run({ type:"startTask", patterns:patterns, actions:nodeActions, data_devices:_devices, data_task:task }).then(res=>{
+		/*piscina.run({ type:"startTask", patterns:patterns, actions:nodeActions, data_devices:_devices, data_task:task }).then(res=>{
 			console.log("-WORKER --");
 		});
 		piscina.on('message', (message) => {
@@ -103,15 +103,24 @@ class Executor {
 				console.log("PROGRESS");
 				events["task.progress"].forEach(fn=>fn(message.payload.deviceId, message.payload.progress));
 			}
+		});*/
+		const worker = new Worker('./libs/executor-slave.js', {
+			workerData: { type:"startTaskBatch", patterns:patterns, actions:nodeActions, data_devices:_devices, data_task:task }// Datos iniciales opcionales
 		});
+		worker.on('message', (message) => {
+			if(message.type=="send"){
+				events["send"].forEach(fn=>fn(message.payload.data));
+			}
+			if(message.type=="task.progress"){
+				console.log("PROGRESS");
+				events["task.progress"].forEach(fn=>fn(message.payload.deviceId, message.payload.progress));
+			}
+		});*/
 	}
 	startTaskBatch(_devices, task, cbEnd) {
 		//const worker = new Worker('./worker.js');
 		const worker = new Worker('./libs/executor-slave.js', {
 			workerData: { type:"startTaskBatch", patterns:patterns, actions:nodeActions, data_devices:_devices, data_task:task }// Datos iniciales opcionales
-		});
-		worker.on('message', (msg) => {
-			console.log('Recibido del worker:', msg);
 		});
 		worker.on('message', (message) => {
 			if(message.type=="reportCB"){

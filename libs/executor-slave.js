@@ -1313,7 +1313,7 @@ class Executor {
 			executor.setActions(actions);
 			executor.setPatterns(patterns);
 			executor.startTask(data_devices, data_task);
-			bc.onmessage = (message) =>{
+			parentPort.onmessage = (message) =>{
 				if (message.data.type=="screen"){
 					const bimg = Buffer.from(message.data.payload.bimg);	
 					executor.screen(message.data.payload.id, bimg, (data)=>{ 
@@ -1342,7 +1342,7 @@ class Executor {
 			const executor = new Executor();
 			executor.setActions(actions);
 			executor.setPatterns(patterns);
-			bc.onmessage = (message) =>{
+			parentPort.onmessage = (message) =>{
 				if (message.data.type=="screen"){
 					const bimg = Buffer.from(message.data.payload.bimg);	
 					executor.screen(message.data.payload.id, bimg, (data)=>{ 
