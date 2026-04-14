@@ -22,3 +22,4 @@
 2.13.0 (22/03/2026 1:04)	Update NPM
 3.0.0 (22/03/2026 4:05)	implement workers
 3.1.0 (23/03/2026 1:22)	Workers single and batch
+3.2.0 (13/04/2026 21:47)	Implement Native Workers
