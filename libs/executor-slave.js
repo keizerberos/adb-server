@@ -1306,7 +1306,6 @@ class Executor {
 //module.exports = ({ type, patterns, actions, data_devices, data_task }) => {
 //module.exports = () => {
 	const  {type, patterns, actions, data_devices, data_task } = workerData;
-  console.log("executor slave", {type, patterns, actions, data_devices, data_task });
 	return new Promise((res,rej)=>{
 
 		if (type=="startTask"){

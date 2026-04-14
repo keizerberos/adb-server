@@ -155,7 +155,7 @@ class Executor {
 
 	}
 	getWorkers(){
-		return {current:piscina.threads.length,max:maxWorkers};
+		return {current:0,max:maxWorkers};
 	}
 	startTaskBatchEvents(_devices, task, cbEnd, preTasks, postTasks) {
 		
