@@ -115,7 +115,7 @@ class Executor {
 				console.log("PROGRESS");
 				events["task.progress"].forEach(fn=>fn(message.payload.deviceId, message.payload.progress));
 			}
-		});*/
+		});
 	}
 	startTaskBatch(_devices, task, cbEnd) {
 		//const worker = new Worker('./worker.js');
