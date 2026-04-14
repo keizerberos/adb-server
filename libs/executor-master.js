@@ -9,6 +9,7 @@ const { resolve } = require('path');
 const bc = new BroadcastChannel('my_secret_channel');
 
 
+const workers = [];
 const adbocr = new AdbOcr();		
 const maxWorkers = os.cpus().length;
 /*const piscina = new Piscina({
@@ -52,20 +53,29 @@ class Executor {
 		return await adbocr.readFromBuffer(blob);
 	}
 	async regScreen(id, img) {	
-    bc.postMessage({			
+   /* bc.postMessage({			
 			type: 'regScreen',
 			payload: {
 				id:id, 
 				img:img
-			}})
+			}})*/
+			workers.forEach(worker=>worker.postMessage({			
+					type: 'regScreen',
+					payload: {
+						id:id, 
+						img:img
+					}					
+			}));
 	}
 	screen(id, bimg, reportCB) {		
-    bc.postMessage({			
+    //bc.postMessage({			
+		workers.forEach(worker=>worker.postMessage({			
 			type: 'screen',
 			payload: {
 				id: id,
 				bimg: bimg
-			}})
+				}}));
+			//}})
 	}
 	on(ev, fn) {
 		if (events[ev]==null) events[ev] = [];
@@ -73,16 +83,22 @@ class Executor {
 	}
 	async stopAll() {		
 		
-    bc.postMessage({			
+    //bc.postMessage({			
+		workers.forEach(worker=>worker.postMessage({			
 			type: 'stopAll',
-			payload: null})
+			payload: null
+		}));
+		//})
 	}
 	stopTask(devices) {		
-    bc.postMessage({			
+    //bc.postMessage({		
+			workers.forEach(worker=>worker.postMessage({				
 			type: 'stopTask',
 			payload: {
 				devices:devices
-			}})
+			}
+			}));
+			//}})
 	}
 	setActions(_nodeActions) {
 		nodeActions = _nodeActions;
@@ -107,6 +123,7 @@ class Executor {
 		const worker = new Worker('./libs/executor-slave.js', {
 			workerData: { type:"startTaskBatch", patterns:patterns, actions:nodeActions, data_devices:_devices, data_task:task }// Datos iniciales opcionales
 		});
+		workers.push(worker);
 		worker.on('message', (message) => {
 			if(message.type=="send"){
 				events["send"].forEach(fn=>fn(message.payload.data));
@@ -116,12 +133,17 @@ class Executor {
 				events["task.progress"].forEach(fn=>fn(message.payload.deviceId, message.payload.progress));
 			}
 		});
+		worker.on('exit', () => {
+			console.log('worker exit');
+			workers.splice(workers.indexOf(worker),1);
+		});
 	}
 	startTaskBatch(_devices, task, cbEnd) {
 		//const worker = new Worker('./worker.js');
 		const worker = new Worker('./libs/executor-slave.js', {
 			workerData: { type:"startTaskBatch", patterns:patterns, actions:nodeActions, data_devices:_devices, data_task:task }// Datos iniciales opcionales
 		});
+		workers.push(worker);
 		worker.on('message', (message) => {
 			if(message.type=="reportCB"){
 				events["reportCB"].forEach(fn=>fn(message.payload.data));
@@ -139,6 +161,10 @@ class Executor {
 		});
 		worker.on('error', () => {
 			console.log('A physical worker thread was terminated and removed from the pool.');
+		});
+		worker.on('exit', () => {
+			console.log('worker exit');
+			workers.splice(workers.indexOf(worker),1);
 		});
 		/*piscina.run({ type:"startTaskBatch", patterns:patterns, actions:nodeActions, data_devices:_devices, data_task:task }).then(res=>{
 			console.log("-WORKER ENDED");
