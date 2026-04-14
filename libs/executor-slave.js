@@ -1313,7 +1313,8 @@ class Executor {
 			executor.setActions(actions);
 			executor.setPatterns(patterns);
 			executor.startTask(data_devices, data_task);
-			parentPort.on("message",(message) =>{
+			parentPort.on("message",(_message) =>{				
+				const message = _message.data;
 				if (message.data.type=="screen"){
 					const bimg = Buffer.from(message.data.payload.bimg);	
 					executor.screen(message.data.payload.id, bimg, (data)=>{ 
@@ -1323,9 +1324,11 @@ class Executor {
 				if (message.data.type=="stopAll"){
 					executor.stopAll();
 					res();
+					process.exit(0)
 				}
 				if (message.data.type=="stopTask"){
 					executor.stopTask(message.data.payload.devices);
+					process.exit(0)
 				}
 			});
 			executor.on("send",(data)=>{
@@ -1342,8 +1345,9 @@ class Executor {
 			const executor = new Executor();
 			executor.setActions(actions);
 			executor.setPatterns(patterns);
-			parentPort.on("message",(message) =>{
-				if (message.data.type=="screen"){
+			parentPort.on("message",(_message) =>{
+				const message = _message.data;
+				if (message.type=="screen"){
 					const bimg = Buffer.from(message.data.payload.bimg);	
 					executor.screen(message.data.payload.id, bimg, (data)=>{ 
 						parentPort.postMessage({type:"reportCB",payload:{data:data}});
@@ -1352,10 +1356,12 @@ class Executor {
 				if (message.data.type=="stopAll"){
 					executor.stopAll();
 					res();
+					process.exit(0)
 			//		throw "stopAll";
 				}
 				if (message.data.type=="stopTask"){
 					executor.stopTask(message.data.payload.devices);
+					process.exit(0)
 				}
 			});
 			executor.on("send",(data)=>{
