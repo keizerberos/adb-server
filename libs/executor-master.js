@@ -121,7 +121,7 @@ class Executor {
 			}
 		});*/
 		const worker = new Worker('./libs/executor-slave.js', {
-			workerData: { type:"startTaskBatch", patterns:patterns, actions:nodeActions, data_devices:_devices, data_task:task }// Datos iniciales opcionales
+			workerData: { type:"startTask", patterns:patterns, actions:nodeActions, data_devices:_devices, data_task:task }// Datos iniciales opcionales
 		});
 		workers.push(worker);
 		worker.on('message', (message) => {

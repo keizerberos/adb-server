@@ -24,3 +24,4 @@
 3.1.0 (23/03/2026 1:22)	Workers single and batch
 3.2.0 (13/04/2026 21:47)	Implement Native Workers
 3.2.1 (13/04/2026 22:43)	Fix workers master/slave broadcast
+3.2.2 (16/04/2026 15:59)	Fix single task sending
