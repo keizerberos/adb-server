@@ -1315,7 +1315,7 @@ class Executor {
 			executor.startTask(data_devices, data_task);
 			parentPort.on("message",(message) =>{				
 				console.log("parentPort data.type",message.type);
-				if (message.data.type=="screen"){
+				if (message.type=="screen"){
 					const bimg = Buffer.from(message.payload.bimg);	
 					executor.screen(message.payload.id, bimg, (data)=>{ 
 						parentPort.postMessage({type:"reportCB",payload:{data:data}});
