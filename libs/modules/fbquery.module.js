@@ -1024,5 +1024,12 @@ class FBQuery {
 			});
 	}
 }
+class FBQueryClient {
+	constructor() {
+	}
+	async url(urlText) {
+		
+	}
+}
 
-module.exports = { FBQuery };
+module.exports = { FBQuery, FBQueryClient };

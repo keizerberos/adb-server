@@ -1,5 +1,6 @@
 const { LoginModule } = require('./modules/login.module');
-const { FBQuery } = require('./modules/fbquery.module.js');
+const { FBQueryClient } = require('./modules/fbquery.module.js');
+
 const { FastServer } = require('./fast-server');
 const { createServer } = require("http");
 const { Server } = require("socket.io");
@@ -217,7 +218,7 @@ class AdbSocketServer {
 		const events = new Events();
 		this.modules = [];
 		this.loginModule = new LoginModule(Dbm);
-		this.FBQuery = new FBQuery();
+		this.FBQuery = new FBQueryClient();
 		this.modules.push(this.loginModule);
 		setupConfig();
 		this.startServer(clients, clusters, devices, events);
